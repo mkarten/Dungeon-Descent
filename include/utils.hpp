@@ -2,14 +2,11 @@
 
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "../include/tile_info.hpp"
 
 
-namespace utils
-{
-    inline float hireTimeInSeconds() // Retourne le temps depuis le lancement du programme en secondes
-    {
-        float t = SDL_GetTicks(); // Récupère le temps depuis le lancement du programme en millisecondes
-        t *= 0.001f; // Convertit le temps en secondes
-        return t;
-    }
-}
+float hireTimeInSeconds(); // Retourne le temps depuis le lancement du programme en secondes
+
+SDL_Texture* loadTileFromTileset(SDL_Texture* tileset, TileInfo tileInfo, SDL_Renderer* renderer);
+

@@ -8,7 +8,8 @@ Renderer::Renderer(const char* title, int width, int height){
 }
 
 void Renderer::render(Level &level){
-    // clear the renderer
+    // clear the screen
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     // send the renderer to the level
     level.render(renderer);

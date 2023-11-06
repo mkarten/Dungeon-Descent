@@ -7,6 +7,7 @@
 class Renderer{
 public:
     Renderer(const char* title, int width, int height);
+    Renderer() {}
     void render(Level &level);
     SDL_Window* getWindow(){
         return window;

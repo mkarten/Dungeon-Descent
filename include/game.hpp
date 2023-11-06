@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../include/renderer.hpp"
+#include "../include/level.hpp"
 
 class Game
 {
