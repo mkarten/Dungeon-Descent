@@ -1,5 +1,6 @@
 #include "../include/level.hpp"
 #include "../include/utils.hpp"
+#include "../include/event_manager.hpp"
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -30,9 +31,8 @@ Level::Level(std::string levelDataFileName, std::map<std::string, TileInfo> &til
 }
 
 
-void Level::update(std::vector<SDL_Event> &events){
-
-    player.update(events);
+void Level::update(EventManager &eventManager){
+    player.update(eventManager);
 }
 
 void Level::render(SDL_Renderer *renderer){

@@ -67,7 +67,8 @@ void Game::run()
                 events.push_back(event);
             }
         }
-        currentLevel.update(events);
+        eventManager.update(events);
+        currentLevel.update(eventManager);
         events.clear();
         renderer.render(currentLevel);
     }

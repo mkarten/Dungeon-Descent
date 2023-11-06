@@ -4,6 +4,7 @@
 #include <vector>
 #include "../include/renderer.hpp"
 #include "../include/level.hpp"
+#include "../include/event_manager.hpp"
 
 class Game
 {
@@ -17,4 +18,5 @@ private:
     float currentTime, accumulator{0.0f}, timeStep; // Membres pour le calcul des frames de logique de jeu
     Level currentLevel;
     Renderer renderer;
+    EventManager eventManager;
 };

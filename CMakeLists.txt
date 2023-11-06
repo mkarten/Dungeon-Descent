@@ -9,4 +9,4 @@ set(SDL_LIBRARY_DIR "C:/SDL2/lib/x86")
 include_directories(${SDL_INCLUDE_DIR})
 link_directories(${SDL_LIBRARY_DIR})
 
-add_executable(Dungeon-Descent src/main.cpp include/renderer.hpp include/utils.hpp include/constants.hpp src/renderer.cpp src/game.cpp include/level.hpp src/level.cpp include/vector.hpp include/entity.hpp src/player.cpp include/player.hpp include/tile_info.hpp include/tile_info.hpp include/tile_info.hpp src/utils.cpp)
+add_executable(Dungeon-Descent src/main.cpp include/renderer.hpp include/utils.hpp include/constants.hpp src/renderer.cpp src/game.cpp include/level.hpp src/level.cpp include/vector.hpp include/entity.hpp src/player.cpp include/player.hpp include/tile_info.hpp include/tile_info.hpp include/tile_info.hpp src/utils.cpp include/event_manager.hpp src/event_manager.cpp)
