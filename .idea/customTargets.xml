@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="c0d1d70f-b38f-4828-aa62-5ca4feab9b5a" name="build-debug" defaultType="TOOL">
+      <configuration id="e12d2fa2-8bcc-446c-8c24-aa03db2e9d1d" name="build-debug">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_g++" />
+        </build>
+      </configuration>
+    </target>
+  </component>
+</project>

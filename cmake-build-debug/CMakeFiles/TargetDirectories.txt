@@ -1,0 +1,3 @@
+C:/Users/Mkarten/CLionProjects/Dungeon-Descent/cmake-build-debug/CMakeFiles/Dungeon-Descent.dir
+C:/Users/Mkarten/CLionProjects/Dungeon-Descent/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Mkarten/CLionProjects/Dungeon-Descent/cmake-build-debug/CMakeFiles/rebuild_cache.dir
