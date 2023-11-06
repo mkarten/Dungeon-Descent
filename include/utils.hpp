@@ -10,3 +10,6 @@ float hireTimeInSeconds(); // Retourne le temps depuis le lancement du programme
 
 SDL_Texture* loadTileFromTileset(SDL_Texture* tileset, TileInfo tileInfo, SDL_Renderer* renderer);
 
+SDL_Texture* rotateTexture(SDL_Texture* texture, SDL_Renderer* renderer, double angle);
+
+
