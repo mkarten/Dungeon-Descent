@@ -16,6 +16,7 @@ public:
 private:
     void cleanUp(); // Ajout de la méthode cleanUp
     float currentTime, accumulator{0.0f}, timeStep; // Membres pour le calcul des frames de logique de jeu
+    Player player;
     Level currentLevel;
     Renderer renderer;
     EventManager eventManager;

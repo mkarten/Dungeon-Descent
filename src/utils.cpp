@@ -1,4 +1,7 @@
 #include "../include/utils.hpp"
+#include <SDL2/SDL.h>
+#include <iostream>
+#include <fstream>
 
 namespace utils{
 
@@ -53,6 +56,27 @@ namespace utils{
         // lines to across the box
         SDL_RenderDrawLine(renderer, x, y, x + w, y + h);
         SDL_RenderDrawLine(renderer, x + w, y, x, y + h);
+    }
+
+    TileMap LoadTileInfo(const std::string& filename) {
+        TileMap tileInfoMap;
+
+        std::ifstream inputFile(filename);
+        if (!inputFile.is_open()) {
+            std::cerr << "Erreur lors de l'ouverture du fichier " << filename << std::endl;
+            return tileInfoMap;
+        }
+
+        std::string tileName;
+        int x, y, w, h;
+
+        while (inputFile >> tileName >> x >> y >> w >> h) {
+            // Insérer les informations de la tuile dans la map
+            tileInfoMap[tileName] = {x, y, w, h};
+        }
+
+        inputFile.close();
+        return tileInfoMap;
     }
 }
 

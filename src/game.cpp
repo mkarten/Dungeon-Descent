@@ -5,30 +5,8 @@
 #include <iostream>
 #include <map>
 #include <fstream>
+#include "../include/utils.hpp"
 
-using TileMap = std::map<std::string, TileInfo>;
-
-
-TileMap LoadTileInfo(const std::string& filename) {
-    TileMap tileInfoMap;
-
-    std::ifstream inputFile(filename);
-    if (!inputFile.is_open()) {
-        std::cerr << "Erreur lors de l'ouverture du fichier " << filename << std::endl;
-        return tileInfoMap;
-    }
-
-    std::string tileName;
-    int x, y, w, h;
-
-    while (inputFile >> tileName >> x >> y >> w >> h) {
-        // Insérer les informations de la tuile dans la map
-        tileInfoMap[tileName] = {x, y, w, h};
-    }
-
-    inputFile.close();
-    return tileInfoMap;
-}
 
 
 Game::Game()
@@ -36,8 +14,32 @@ Game::Game()
     renderer = Renderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
     currentTime = utils::hireTimeInSeconds();
     timeStep = TIME_STEP;
-    TileMap tileInfoMap = LoadTileInfo("res/tile_offset_map.txt");
-    currentLevel = Level("res/level1.txt", tileInfoMap, renderer.getRenderer());
+    utils::TileMap tilesInfoMap = utils::LoadTileInfo("res/tile_offset_map.txt");
+
+    // load the tileset
+    SDL_Texture *tileset = IMG_LoadTexture(renderer.getRenderer(), "res/gfx/tileset.png");
+    // check if the tileset was loaded
+    if (tileset == nullptr) {
+        std::cerr << "Error loading tileset: " << SDL_GetError() << std::endl;
+        // crash the game
+        exit(1);
+    }
+    // load the player tiles info
+    TileInfo knightIdleTileInfo = tilesInfoMap["knight_m_idle_anim_f0"];
+    TileInfo knightWeaponTileInfo = tilesInfoMap["weapon_golden_sword"];
+
+    // load the player tiles textures
+    SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer.getRenderer());
+    SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer.getRenderer());
+
+    // create the player
+    player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
+
+    // create the level
+    currentLevel = Level(renderer.getRenderer(), player, "res/level_data.txt", tileset, tilesInfoMap);
+
+    // TODO: Create the levels based on all the level data files
+
 }
 
 
