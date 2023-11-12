@@ -23,10 +23,10 @@ Level::Level(std::string levelDataFileName, std::map<std::string, TileInfo> &til
     }
     // get the size of the tileset
     // load the tile from the tileset
-    SDL_Texture *knightIdleTex = loadTileFromTileset(tileset, knightIdleTileInfo, renderer);
-    SDL_Texture *knightWeaponTex = loadTileFromTileset(tileset, knightWeaponTileInfo, renderer);
+    SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer);
+    SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer);
 
-    Player p = Player(Vector2f(5, 5), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h, std::pair<int, int>(1, 1));
+    Player p = Player(Vector2f(5, 5), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     player = p;
 }

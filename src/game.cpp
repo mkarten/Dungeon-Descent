@@ -34,7 +34,7 @@ TileMap LoadTileInfo(const std::string& filename) {
 Game::Game()
 {
     renderer = Renderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
-    currentTime = hireTimeInSeconds();
+    currentTime = utils::hireTimeInSeconds();
     timeStep = TIME_STEP;
     TileMap tileInfoMap = LoadTileInfo("res/tile_offset_map.txt");
     currentLevel = Level("res/level1.txt", tileInfoMap, renderer.getRenderer());

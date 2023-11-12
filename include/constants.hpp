@@ -13,4 +13,4 @@ constexpr int WINDOW_WIDTH = 1280;
 // Temps entre chaque frame de logique de jeu en secondes
 constexpr float TIME_STEP = 0.01;
 
-constexpr int SCALE_FACTOR = 4;
+constexpr int SCALE_FACTOR = 2;

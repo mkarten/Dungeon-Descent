@@ -8,5 +8,12 @@
         </build>
       </configuration>
     </target>
+    <target id="618fca9d-1f91-4b2d-9f0a-7136f4cff16b" name="debug" defaultType="TOOL">
+      <configuration id="24f97e57-09ab-4443-b8ef-44bd2986832d" name="debug">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_g++" />
+        </build>
+      </configuration>
+    </target>
   </component>
 </project>
