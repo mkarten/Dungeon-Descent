@@ -26,5 +26,4 @@ void Renderer::render(Level &level){
     SDL_RenderClear(renderer);
     // send the renderer to the level
     level.render(renderer);
-    SDL_RenderPresent(renderer);
 }

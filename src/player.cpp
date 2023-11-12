@@ -21,16 +21,16 @@ void Player::update(EventManager &eventManager)
 {
     // update the entity
     if (eventManager.Keys[SDL_SCANCODE_W]) {
-        pos.y -= 0.1;
+        pos.y -= 1;
     }
     if (eventManager.Keys[SDL_SCANCODE_S]) {
-        pos.y += 0.1;
+        pos.y += 1;
     }
     if (eventManager.Keys[SDL_SCANCODE_A]) {
-        pos.x -= 0.1;
+        pos.x -= 1;
     }
     if (eventManager.Keys[SDL_SCANCODE_D]) {
-        pos.x += 0.1;
+        pos.x += 1;
     }
     weapon.pos = pos;
     weapon.update(eventManager);

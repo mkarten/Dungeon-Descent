@@ -33,7 +33,7 @@ Game::Game()
     player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    currentLevel = Level(renderer.getRenderer(), player, "res/level_data.txt", tileset, tilesInfoMap);
+    currentLevel = Level(renderer.getRenderer(), player, "res/levels/debug.json", tileset, tilesInfoMap);
 
     // TODO: Create the levels based on all the level data files
 
@@ -41,26 +41,41 @@ Game::Game()
 
 
 
-// Destructeur
+// Destructor
 Game::~Game()
 {
     cleanUp(0);
 }
 
 
-// Boucle principale du jeu
+// Main game loop
 void Game::run()
 {
     while (eventManager.GameIsRunning)
     {
+        // calculate the DeltaTime and sleep if needed
+        float newTime = utils::hireTimeInSeconds();
+        float frameTime = newTime - currentTime;
+        currentTime = newTime;
+
+        // if the frameTime is too small, sleep the thread
+        if (frameTime < timeStep) {
+            SDL_Delay((timeStep - frameTime) * 1000);
+        }
+
         eventManager.update();
         currentLevel.update(eventManager);
         renderer.render(currentLevel);
+
+        int roundFps = static_cast<int>(1.0f / frameTime);
+        utils::renderText(renderer.getRenderer(), "FPS: " + std::to_string(roundFps), 0, WINDOW_HEIGHT-50, {0, 0, 0, 255});
+
+        SDL_RenderPresent(renderer.getRenderer());
     }
 }
 
 
-// Nettoyage des ressources
+// Ressources cleanup
 void Game::cleanUp(int exitCode)
 {
     IMG_Quit();       // Nettoyage des ressources de SDL_image

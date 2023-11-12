@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include "../include/utils.hpp"
 #include "../include/game.hpp"
 
 
@@ -24,6 +26,15 @@ bool initSDL()
         return false;
     }
 
+    // Initialisation de SDL2_ttf
+    if (TTF_Init() != 0)
+    {
+        std::cout << "TTF_Init Error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return false;
+    }
+
+    utils::loadFont();
 
     return true;
 }
@@ -41,7 +52,7 @@ int runGame()
     Game game; // Crée une instance du jeu avec les constantes globales
     game.run();  // Exécute le jeu
 
-
+    utils::logLastSDLError();
     return 0;
 }
 

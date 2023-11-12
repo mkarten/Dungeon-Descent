@@ -16,7 +16,11 @@ public:
     Level() {}
     void update(EventManager &eventManager);
     void render(SDL_Renderer *renderer);
+
+    // getters
+    std::string getLevelName() const { return levelName; }
 private:
     std::vector<Entity> entities;
     Player player;
+    std::string levelName;
 };

@@ -5,6 +5,8 @@
 
 namespace utils{
 
+    TTF_Font* OpenSans;
+
     float hireTimeInSeconds()
     {
         float t = SDL_GetTicks(); // Récupère le temps depuis le lancement du programme en millisecondes
@@ -82,5 +84,33 @@ namespace utils{
     void logLastSDLError(){
         std::cerr << SDL_GetError() << std::endl;
     }
+
+    void loadFont(){
+        OpenSans = TTF_OpenFont("res/fonts/OpenSans.ttf", 32);
+        if (OpenSans == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+    }
+
+    TTF_Font* getFont(){
+        return OpenSans;
+    }
+
+    void renderText(SDL_Renderer* renderer, const std::string& text, int x, int y, SDL_Color color){
+        SDL_Surface* surfaceMessage = TTF_RenderText_Solid(getFont(), text.c_str(), color);
+        SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+        SDL_Rect Message_rect;
+        int mW, mH;
+        SDL_QueryTexture(Message, nullptr, nullptr, &mW, &mH);
+        Message_rect.x = x;
+        Message_rect.y = y;
+        Message_rect.w = mW;
+        Message_rect.h = mH;
+        SDL_RenderCopy(renderer, Message, nullptr, &Message_rect);
+        SDL_FreeSurface(surfaceMessage);
+        SDL_DestroyTexture(Message);
+    }
+
 }
 
