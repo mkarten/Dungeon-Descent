@@ -20,6 +20,8 @@ namespace utils
     void drawBoundingBox(SDL_Renderer* renderer, float x, float y, float w, float h, SDL_Color color);
 
     TileMap LoadTileInfo(const std::string& filename);
+
+    void logLastSDLError();
 }
 
 

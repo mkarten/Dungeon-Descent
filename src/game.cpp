@@ -1,11 +1,8 @@
 #include "../include/game.hpp"
 #include "../include/utils.hpp"
 #include "../include/constants.hpp"
-#include "../include/tile_info.hpp"
 #include <iostream>
 #include <map>
-#include <fstream>
-#include "../include/utils.hpp"
 
 
 
@@ -20,9 +17,9 @@ Game::Game()
     SDL_Texture *tileset = IMG_LoadTexture(renderer.getRenderer(), "res/gfx/tileset.png");
     // check if the tileset was loaded
     if (tileset == nullptr) {
-        std::cerr << "Error loading tileset: " << SDL_GetError() << std::endl;
-        // crash the game
-        exit(1);
+        utils::logLastSDLError();
+        // go to cleanUp
+        cleanUp(1);
     }
     // load the player tiles info
     TileInfo knightIdleTileInfo = tilesInfoMap["knight_m_idle_anim_f0"];
@@ -47,7 +44,7 @@ Game::Game()
 // Destructeur
 Game::~Game()
 {
-    cleanUp();
+    cleanUp(0);
 }
 
 
@@ -64,7 +61,9 @@ void Game::run()
 
 
 // Nettoyage des ressources
-void Game::cleanUp()
+void Game::cleanUp(int exitCode)
 {
+    IMG_Quit();       // Nettoyage des ressources de SDL_image
     SDL_Quit();       // Nettoyage des ressources de SDL
+    exit(exitCode);   // Fermeture du programme
 }

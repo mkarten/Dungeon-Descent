@@ -78,5 +78,9 @@ namespace utils{
         inputFile.close();
         return tileInfoMap;
     }
+
+    void logLastSDLError(){
+        std::cerr << SDL_GetError() << std::endl;
+    }
 }
 
