@@ -13,7 +13,8 @@ class EventManager{
 public:
     EventManager();
     ~EventManager();
-    void update(std::vector<SDL_Event> &events);
+    void update();
+    bool GameIsRunning = true;
     bool Keys[322];
     Mouse mouse;
 

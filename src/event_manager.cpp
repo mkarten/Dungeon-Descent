@@ -22,12 +22,18 @@ EventManager::~EventManager()
 
 }
 
-void EventManager::update(std::vector<SDL_Event> &events) {
+void EventManager::update() {
     // Update the events
-    for(SDL_Event &event: events)
+
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event))
     {
         switch(event.type)
         {
+            case SDL_QUIT:
+                GameIsRunning = false;
+                break;
             case SDL_KEYDOWN:
                 Keys[event.key.keysym.scancode]=true;
                 break;

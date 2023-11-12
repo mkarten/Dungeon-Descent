@@ -52,24 +52,10 @@ Game::~Game()
 // Boucle principale du jeu
 void Game::run()
 {
-    // store events in a vector
-    std::vector<SDL_Event> events;
-    SDL_Event event;
-    bool running = true;
-    while (running)
+    while (eventManager.GameIsRunning)
     {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT){
-                running = false;
-                continue;
-            }else{
-                events.push_back(event);
-            }
-        }
-        eventManager.update(events);
+        eventManager.update();
         currentLevel.update(eventManager);
-        events.clear();
         renderer.render(currentLevel);
     }
 }
