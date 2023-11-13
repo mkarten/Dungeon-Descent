@@ -8,13 +8,30 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "../include/json.hpp"
 
-struct LevelData {
+// LevelData class
+class LevelData : public JSON
+{
+public:
+    LevelData();
+    ~LevelData();
+
+    virtual bool Deserialize(const rapidjson::Value& obj);
+    virtual bool Serialize(rapidjson::Writer<rapidjson::StringBuffer>* writer) const;
+
+    // getters and setters
+    std::string getLevelName() const { return levelName; }
+    void setLevelName(std::string lName) { this->levelName = lName; }
+
+private:
     std::string levelName;
-    void loadFromFile(std::string filename);
-    void exportToFile(std::string filename);
 };
 
+
+
+
+// Level class
 class Level
 {
 public:
@@ -24,7 +41,7 @@ public:
     void render(SDL_Renderer *renderer);
 
     // getters
-    std::string getLevelName() const { return levelData.levelName; }
+    std::string getLevelName() const { return levelData.getLevelName(); }
 private:
     std::vector<Entity> entities;
     Player player;

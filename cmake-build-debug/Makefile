@@ -176,6 +176,30 @@ src/game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/game.cpp.s
 .PHONY : src/game.cpp.s
 
+src/json.obj: src/json.cpp.obj
+.PHONY : src/json.obj
+
+# target to build an object file
+src/json.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj
+.PHONY : src/json.cpp.obj
+
+src/json.i: src/json.cpp.i
+.PHONY : src/json.i
+
+# target to preprocess a source file
+src/json.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/json.cpp.i
+.PHONY : src/json.cpp.i
+
+src/json.s: src/json.cpp.s
+.PHONY : src/json.s
+
+# target to generate assembly for a file
+src/json.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/json.cpp.s
+.PHONY : src/json.cpp.s
+
 src/level.obj: src/level.cpp.obj
 .PHONY : src/level.obj
 
@@ -335,6 +359,9 @@ help:
 	@echo ... src/game.obj
 	@echo ... src/game.i
 	@echo ... src/game.s
+	@echo ... src/json.obj
+	@echo ... src/json.i
+	@echo ... src/json.s
 	@echo ... src/level.obj
 	@echo ... src/level.i
 	@echo ... src/level.s

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/event_manager.cpp" "CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj.d"
   "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/game.cpp" "CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj.d"
+  "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/json.cpp" "CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj.d"
   "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/level.cpp" "CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj.d"
   "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/main.cpp" "CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj.d"
   "C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/player.cpp" "CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj" "gcc" "CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj.d"

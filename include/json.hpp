@@ -2,7 +2,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 
-class JSONBase
+class JSON
 {
 public:
     bool DeserializeFromFile(const std::string& filePath);

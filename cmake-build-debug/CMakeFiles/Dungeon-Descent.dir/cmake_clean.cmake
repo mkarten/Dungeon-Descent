@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj"
   "CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj.d"
+  "CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj"
+  "CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj"
   "CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj"

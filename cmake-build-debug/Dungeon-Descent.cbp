@@ -95,7 +95,7 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/event_manager.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
-		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/json.h">
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/json.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/level.hpp">
@@ -123,6 +123,9 @@
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/game.cpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/json.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/level.cpp">
