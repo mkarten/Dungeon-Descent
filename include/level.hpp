@@ -9,6 +9,12 @@
 #include <string>
 #include <map>
 
+struct LevelData {
+    std::string levelName;
+    void loadFromFile(std::string filename);
+    void exportToFile(std::string filename);
+};
+
 class Level
 {
 public:
@@ -18,9 +24,9 @@ public:
     void render(SDL_Renderer *renderer);
 
     // getters
-    std::string getLevelName() const { return levelName; }
+    std::string getLevelName() const { return levelData.levelName; }
 private:
     std::vector<Entity> entities;
     Player player;
-    std::string levelName;
+    LevelData levelData;
 };

@@ -8,11 +8,6 @@
 #include <iostream>
 #include <fstream>
 
-struct LevelDataEntry {
-    std::string key;
-    std::string value;
-};
-
 Level::Level(SDL_Renderer *renderer, Player &Gplayer , std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap) {
     //TODO: load the level data from the file
 
@@ -24,7 +19,7 @@ Level::Level(SDL_Renderer *renderer, Player &Gplayer , std::string levelDataFile
     }
 
     //read the json in the level data file
-    levelName = "Level 1";
+    levelDataFile >> levelData.levelName;
 
     player = Gplayer;
 }
@@ -39,5 +34,5 @@ void Level::render(SDL_Renderer *renderer){
     player.render(renderer);
     // print the level name for debug purposes
     SDL_Color White = {0, 0, 0};
-    utils::renderText(renderer, levelName, 0, 0, White);
+    utils::renderText(renderer, getLevelName(), 0, 0, White);
 }

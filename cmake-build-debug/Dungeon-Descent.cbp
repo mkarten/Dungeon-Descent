@@ -95,6 +95,9 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/event_manager.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/json.h">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/level.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>

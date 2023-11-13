@@ -148,7 +148,8 @@
 				11,
 				12,
 				14,
-				16
+				16,
+				18
 			]
 		}
 	],
@@ -251,6 +252,11 @@
 			"compileGroupIndex" : 0,
 			"path" : "src/weapon.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/json.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
