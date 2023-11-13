@@ -63,8 +63,13 @@ void Game::run()
             SDL_Delay((timeStep - frameTime) * 1000);
         }
 
+        // update the event manager with the events
         eventManager.update();
+
+        // update the game logic
         currentLevel.update(eventManager);
+
+        // render the game
         renderer.render(currentLevel);
 
         int roundFps = static_cast<int>(1.0f / frameTime);
