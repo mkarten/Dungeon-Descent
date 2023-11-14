@@ -1,0 +1,17 @@
+{
+  "levelName": "Level Editor",
+  "playerSpawnPoint": {
+    "x": 20,
+    "y": 20
+  },
+  "staticEntities": [
+    {
+      "textureName":"floor_1",
+      "x": 0,
+      "y": 0,
+      "width": 640,
+      "height": 640,
+      "collidable": false
+    }
+  ]
+}
