@@ -14,6 +14,7 @@ EventManager::EventManager()
     {
         mouse.Buttons[i] = false;
     }
+    mouse.setLastButtons(mouse.Buttons);
 
 }
 
@@ -23,8 +24,16 @@ EventManager::~EventManager()
 }
 
 void EventManager::update() {
-    // Update the events
+    // save the current mouse buttons state
+    mouse.setLastButtons(mouse.Buttons);
+    // save the current keys state
+    setLastKeys(Keys);
 
+    // reset the mouse scroll
+    mouse.ScrolledUp = false;
+    mouse.ScrolledDown = false;
+
+    // Update the events
     SDL_Event event;
 
     while (SDL_PollEvent(&event))
@@ -49,6 +58,16 @@ void EventManager::update() {
             case SDL_MOUSEMOTION:
                 mouse.x = event.motion.x;
                 mouse.y = event.motion.y;
+                break;
+            case SDL_MOUSEWHEEL:
+                if(event.wheel.y > 0)
+                {
+                    mouse.ScrolledUp = true;
+                }
+                else if(event.wheel.y < 0)
+                {
+                    mouse.ScrolledDown = true;
+                }
                 break;
             default:
                 break;

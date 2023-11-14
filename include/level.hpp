@@ -5,6 +5,7 @@
 #include "../include/player.hpp"
 #include "../include/tile_info.hpp"
 #include "../include/event_manager.hpp"
+#include "../include/staticEntity.hpp"
 #include <vector>
 #include <string>
 #include <map>
@@ -24,8 +25,16 @@ public:
     std::string getLevelName() const { return levelName; }
     void setLevelName(std::string lName) { this->levelName = lName; }
 
+    Vector2f getPlayerSpawnPoint() const { return playerSpawnPoint; }
+    void setPlayerSpawnPoint(Vector2f pSpawnPoint) { this->playerSpawnPoint = pSpawnPoint; }
+
+    std::vector<StaticEntity> getStaticEntities() const { return staticEntities; }
+    void setStaticEntities(std::vector<StaticEntity> sEntities) { this->staticEntities = sEntities; }
+
 private:
     std::string levelName;
+    Vector2f playerSpawnPoint;
+    std::vector<StaticEntity> staticEntities;
 };
 
 
@@ -42,8 +51,14 @@ public:
 
     // getters
     std::string getLevelName() const { return levelData.getLevelName(); }
+    std::vector<Entity> *getEntities() const { return (std::vector<Entity> *)&entities; }
+    std::vector<StaticEntity> *getStaticEntities() const { return (std::vector<StaticEntity> *)&staticEntities; }
+    void setStaticEntities(std::vector<StaticEntity> sEntities) { this->staticEntities = sEntities; }
+    Player *getPlayer() const { return (Player *)&player; }
+    LevelData *getLevelData() const { return (LevelData *)&levelData; }
 private:
     std::vector<Entity> entities;
+    std::vector<StaticEntity> staticEntities;
     Player player;
     LevelData levelData;
 };

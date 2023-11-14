@@ -98,6 +98,34 @@ build CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj: CXX_COMPILER__Du
   OBJECT_DIR = CMakeFiles\Dungeon-Descent.dir
   OBJECT_FILE_DIR = CMakeFiles\Dungeon-Descent.dir\src
 
+build CMakeFiles/Dungeon-Descent.dir/src/weapon.cpp.obj: CXX_COMPILER__Dungeon-Descent_Debug C$:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/weapon.cpp || cmake_object_order_depends_target_Dungeon-Descent
+  DEP_FILE = CMakeFiles\Dungeon-Descent.dir\src\weapon.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  INCLUDES = -IC:/SDL2/include
+  OBJECT_DIR = CMakeFiles\Dungeon-Descent.dir
+  OBJECT_FILE_DIR = CMakeFiles\Dungeon-Descent.dir\src
+
+build CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj: CXX_COMPILER__Dungeon-Descent_Debug C$:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/json.cpp || cmake_object_order_depends_target_Dungeon-Descent
+  DEP_FILE = CMakeFiles\Dungeon-Descent.dir\src\json.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  INCLUDES = -IC:/SDL2/include
+  OBJECT_DIR = CMakeFiles\Dungeon-Descent.dir
+  OBJECT_FILE_DIR = CMakeFiles\Dungeon-Descent.dir\src
+
+build CMakeFiles/Dungeon-Descent.dir/src/staticEntity.cpp.obj: CXX_COMPILER__Dungeon-Descent_Debug C$:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/staticEntity.cpp || cmake_object_order_depends_target_Dungeon-Descent
+  DEP_FILE = CMakeFiles\Dungeon-Descent.dir\src\staticEntity.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  INCLUDES = -IC:/SDL2/include
+  OBJECT_DIR = CMakeFiles\Dungeon-Descent.dir
+  OBJECT_FILE_DIR = CMakeFiles\Dungeon-Descent.dir\src
+
+build CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.obj: CXX_COMPILER__Dungeon-Descent_Debug C$:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/levelEditor.cpp || cmake_object_order_depends_target_Dungeon-Descent
+  DEP_FILE = CMakeFiles\Dungeon-Descent.dir\src\levelEditor.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  INCLUDES = -IC:/SDL2/include
+  OBJECT_DIR = CMakeFiles\Dungeon-Descent.dir
+  OBJECT_FILE_DIR = CMakeFiles\Dungeon-Descent.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Dungeon-Descent
@@ -106,7 +134,7 @@ build CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj: CXX_COMPILER__Du
 #############################################
 # Link the executable Dungeon-Descent.exe
 
-build Dungeon-Descent.exe: CXX_EXECUTABLE_LINKER__Dungeon-Descent_Debug CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/renderer.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/utils.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj
+build Dungeon-Descent.exe: CXX_EXECUTABLE_LINKER__Dungeon-Descent_Debug CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/renderer.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/game.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/level.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/utils.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/event_manager.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/weapon.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/json.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/staticEntity.cpp.obj CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/SDL2/lib/x86

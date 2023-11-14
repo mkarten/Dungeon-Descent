@@ -12,14 +12,13 @@ namespace utils
 {
     // variables for the font
     extern TTF_Font* OpenSans;
+    extern bool fontLoaded;
 
     using TileMap = std::map<std::string, TileInfo>;
 
     float hireTimeInSeconds(); // Returns the time since the program started in seconds
 
     SDL_Texture* loadTileFromTileset(SDL_Texture* tileset, TileInfo tileInfo, SDL_Renderer* renderer);
-
-    SDL_Texture* rotateTexture(SDL_Texture* texture, SDL_Renderer* renderer, double angle);
 
     void drawBoundingBox(SDL_Renderer* renderer, float x, float y, float w, float h, SDL_Color color);
 
@@ -32,6 +31,10 @@ namespace utils
     TTF_Font* getFont();
 
     void renderText(SDL_Renderer* renderer, const std::string& text, int x, int y, SDL_Color color);
+
+    SDL_Texture* textureTiling(SDL_Texture* texture, SDL_Renderer* renderer, int width, int height);
+
+    bool isPointInRect(int x, int y, SDL_Rect rect);
 }
 
 

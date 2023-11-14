@@ -1,6 +1,7 @@
 #include "../include/game.hpp"
 #include "../include/utils.hpp"
 #include "../include/constants.hpp"
+#include "../include/levelEditor.hpp"
 #include <iostream>
 #include <map>
 
@@ -33,7 +34,10 @@ Game::Game()
     player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    currentLevel = Level(renderer.getRenderer(), player, "res/levels/debug.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer.getRenderer(), player, "res/levels/debug.json", tileset, tilesInfoMap);
+    levelEditor = LevelEditor(renderer.getRenderer(), player, "res/levels/editor.json", tileset, tilesInfoMap);
+    levelPtr = 0;
+    currentLevel = levels[levelPtr];
 
     // TODO: Create the levels based on all the level data files
 
@@ -66,11 +70,22 @@ void Game::run()
         // update the event manager with the events
         eventManager.update();
 
-        // update the game logic
-        currentLevel.update(eventManager);
+        // if the user pressed the escape key, change the level
+        if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
+            inEditorMode = !inEditorMode;
+        }
+        if (inEditorMode){
+            levelEditor.update(eventManager);
+            levelEditor.render(renderer.getRenderer());
+        } else {
+            // update the game logic
+            currentLevel.update(eventManager);
 
-        // render the game
-        renderer.render(currentLevel);
+            // render the game
+            renderer.render(currentLevel);
+        }
+
+
 
         int roundFps = static_cast<int>(1.0f / frameTime);
         utils::renderText(renderer.getRenderer(), "FPS: " + std::to_string(roundFps), 0, WINDOW_HEIGHT-50, {0, 0, 0, 255});

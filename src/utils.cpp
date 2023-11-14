@@ -6,6 +6,7 @@
 namespace utils{
 
     TTF_Font* OpenSans;
+    bool fontLoaded = false;
 
     float hireTimeInSeconds()
     {
@@ -28,24 +29,6 @@ namespace utils{
         return knightIdleTex;
     }
 
-    SDL_Texture* rotateTexture(SDL_Texture* texture, SDL_Renderer* renderer, double angle)
-    {
-        //get the width and height from the texture
-        int w, h;
-        SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-        //since SDL_RenderCopyEx uses the center of the texture use the max
-        int max = (w > h) ? w : h;
-        SDL_Texture *rotatedTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, max, max);
-        SDL_SetRenderTarget(renderer, rotatedTexture);
-        SDL_SetTextureBlendMode(rotatedTexture, SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        SDL_RenderClear(renderer);
-        SDL_Rect srcRect = {0, 0, w, h};
-        SDL_Rect destRect = {0, 0, max, max};
-        SDL_RenderCopyEx(renderer, texture, &srcRect, &destRect, angle, nullptr, SDL_FLIP_NONE);
-        SDL_SetRenderTarget(renderer, nullptr);
-        return rotatedTexture;
-    }
 
     void drawBoundingBox(SDL_Renderer* renderer, float x, float y, float w, float h, SDL_Color color)
     {
@@ -91,25 +74,59 @@ namespace utils{
             logLastSDLError();
             exit(1);
         }
+        fontLoaded = true;
     }
 
     TTF_Font* getFont(){
+        if (!fontLoaded) {
+            loadFont();
+        }
         return OpenSans;
     }
 
     void renderText(SDL_Renderer* renderer, const std::string& text, int x, int y, SDL_Color color){
         SDL_Surface* surfaceMessage = TTF_RenderText_Solid(getFont(), text.c_str(), color);
         SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-        SDL_Rect Message_rect;
-        int mW, mH;
-        SDL_QueryTexture(Message, nullptr, nullptr, &mW, &mH);
-        Message_rect.x = x;
-        Message_rect.y = y;
-        Message_rect.w = mW;
-        Message_rect.h = mH;
+        SDL_Rect Message_rect= {x, y, 0, 0};
+        SDL_QueryTexture(Message, nullptr, nullptr, &Message_rect.w, &Message_rect.h);
         SDL_RenderCopy(renderer, Message, nullptr, &Message_rect);
         SDL_FreeSurface(surfaceMessage);
         SDL_DestroyTexture(Message);
+    }
+
+    SDL_Texture* textureTiling(SDL_Texture* texture, SDL_Renderer* renderer, int width, int height) {
+        // Get the original texture dimensions
+        int originalWidth, originalHeight;
+        SDL_QueryTexture(texture, NULL, NULL, &originalWidth, &originalHeight);
+
+        // Calculate the number of tiles needed in each direction
+        int numTilesX = (width + originalWidth - 1) / originalWidth;
+        int numTilesY = (height + originalHeight - 1) / originalHeight;
+
+        // Create a target texture for tiling
+        SDL_Texture* tiledTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+        SDL_SetRenderTarget(renderer, tiledTexture);
+
+        // Clear the target texture
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);  // Assuming black background
+        SDL_RenderClear(renderer);
+
+        // Tile the original texture on the target texture
+        for (int i = 0; i < numTilesX; ++i) {
+            for (int j = 0; j < numTilesY; ++j) {
+                SDL_Rect destRect = {i * originalWidth, j * originalHeight, originalWidth, originalHeight};
+                SDL_RenderCopy(renderer, texture, NULL, &destRect);
+            }
+        }
+
+        // Reset the render target to the default
+        SDL_SetRenderTarget(renderer, NULL);
+
+        return tiledTexture;
+    }
+
+    bool isPointInRect(int x, int y, SDL_Rect rect){
+        return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
     }
 
 }
