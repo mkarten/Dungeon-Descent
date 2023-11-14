@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <fstream>
+#include <windows.h>
 
 namespace utils{
 
@@ -127,6 +128,34 @@ namespace utils{
 
     bool isPointInRect(int x, int y, SDL_Rect rect){
         return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
+    }
+
+    std::string chooseFile(const std::string& title, const std::string& initialPath, const std::string& filter){
+        OPENFILENAME ofn;
+        char szFileName[MAX_PATH] = "save.json";
+
+        ZeroMemory(&ofn, sizeof(ofn));
+
+        ofn.lStructSize = sizeof(ofn); // SEE NOTE BELOW
+        ofn.hwndOwner = nullptr;
+        ofn.lpstrFilter = filter.c_str();
+        ofn.lpstrFile = szFileName;
+        ofn.nMaxFile = MAX_PATH;
+        ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+        ofn.lpstrDefExt = "txt";
+        ofn.lpstrTitle = title.c_str();
+        ofn.lpstrInitialDir = initialPath.c_str();
+
+        if(GetSaveFileNameA(&ofn)){
+            return ofn.lpstrFile;
+        }
+    }
+
+    std::string getCurrentWorkingDirectory(){
+        char* cwd = SDL_GetBasePath();
+        std::string path(cwd);
+        SDL_free(cwd);
+        return path;
     }
 
 }

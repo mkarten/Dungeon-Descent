@@ -15,12 +15,20 @@ public:
         this->renderer = renderer;
         placingCursor.w = 16;
         placingCursor.h = 16;
+        // range over the tilesInfoMap and load all the textures
+        tilesetTexsIndex = 0;
+        for (auto &tileInfo : tilesInfoMap)
+        {
+            tilesetTexs.push_back(utils::loadTileFromTileset(tilesetTex, tileInfo.second, renderer));
+        }
     }
     LevelEditor() {}
     void update(EventManager &eventManager);
     void render(SDL_Renderer *renderer);
 private:
     SDL_Texture *tilesetTex;
+    std::vector<SDL_Texture *> tilesetTexs;
+    int tilesetTexsIndex = 0;
     utils::TileMap tilesInfoMap;
     SDL_Rect placingCursor;
     SDL_Renderer *renderer;

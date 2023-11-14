@@ -35,6 +35,10 @@ namespace utils
     SDL_Texture* textureTiling(SDL_Texture* texture, SDL_Renderer* renderer, int width, int height);
 
     bool isPointInRect(int x, int y, SDL_Rect rect);
+
+    std::string chooseFile(const std::string& title, const std::string& initialPath, const std::string& filter);
+
+    std::string getCurrentWorkingDirectory();
 }
 
 

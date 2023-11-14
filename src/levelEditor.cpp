@@ -30,7 +30,7 @@ void LevelEditor::update(EventManager &eventManager) {
         newStaticEntity.pos.x = placingCursor.x;
         newStaticEntity.pos.y = placingCursor.y;
         // set the texture of the new static entity to the texture of the tile under the cursor
-        newStaticEntity.tex = utils::loadTileFromTileset(tilesetTex,tilesInfoMap["floor_1"],renderer);
+        newStaticEntity.tex = tilesetTexs[tilesetTexsIndex];
         // set the name of the new static entity to the name of the tile under the cursor
         newStaticEntity.texName = "floor_1";
         int w, h;
@@ -61,6 +61,19 @@ void LevelEditor::update(EventManager &eventManager) {
     if (eventManager.Keys[SDL_SCANCODE_LEFT] && !eventManager.LastKeys[SDL_SCANCODE_LEFT]){
         if (placingCursor.w>16) placingCursor.w -= 16;
     }
+    if (eventManager.mouse.ScrolledUp){
+        tilesetTexsIndex--;
+        if (tilesetTexsIndex<0) tilesetTexsIndex = tilesetTexs.size()-1;
+    }
+    if (eventManager.mouse.ScrolledDown){
+        tilesetTexsIndex++;
+        if (tilesetTexsIndex>=tilesetTexs.size()) tilesetTexsIndex = 0;
+    }
+    if (eventManager.Keys[SDL_SCANCODE_KP_ENTER] && !eventManager.LastKeys[SDL_SCANCODE_KP_ENTER]){
+        std::string cwd = utils::getCurrentWorkingDirectory();
+        std::string path = utils::chooseFile("Save level", cwd, "Level files (*.json)\0*.lvl\0All files (*.*)\0*.*\0");
+        std::cout << path << std::endl;
+    }
 
     // update the player
     getPlayer()->update(eventManager);
@@ -82,4 +95,9 @@ void LevelEditor::render(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect scaledPlacingCursor = {placingCursor.x*SCALE_FACTOR, placingCursor.y*SCALE_FACTOR, placingCursor.w*SCALE_FACTOR, placingCursor.h*SCALE_FACTOR};
     SDL_RenderDrawRect(renderer, &scaledPlacingCursor);
+    // draw the current selected tile at the bottom right corner
+    int w, h;
+    SDL_QueryTexture(tilesetTexs[tilesetTexsIndex], NULL, NULL, &w, &h);
+    SDL_Rect scaledTilesetTex = {WINDOW_WIDTH-w*SCALE_FACTOR, WINDOW_HEIGHT-h*SCALE_FACTOR, w*SCALE_FACTOR, h*SCALE_FACTOR};
+    SDL_RenderCopy(renderer, tilesetTexs[tilesetTexsIndex], NULL, &scaledTilesetTex);
 }
