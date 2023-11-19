@@ -101,10 +101,16 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/level.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/levelEditor.hpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/player.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/renderer.hpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/staticEntity.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/tile_info.hpp">
@@ -119,6 +125,9 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/weapon.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/entity.cpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/event_manager.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
@@ -131,6 +140,9 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/level.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/levelEditor.cpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/main.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
@@ -138,6 +150,9 @@
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/renderer.cpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/staticEntity.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/utils.cpp">

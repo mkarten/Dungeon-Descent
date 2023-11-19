@@ -13,7 +13,7 @@ public:
     {
     }
     Entity() {}
-
+    bool isCollidingWith(const Entity &other) const;
     Vector2f pos;
     SDL_Texture *tex;
     int width, height;

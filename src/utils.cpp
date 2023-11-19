@@ -108,8 +108,11 @@ namespace utils{
         SDL_Texture* tiledTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
         SDL_SetRenderTarget(renderer, tiledTexture);
 
-        // Clear the target texture
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);  // Assuming black background
+        // Set the blend mode to alpha blending
+        SDL_SetTextureBlendMode(tiledTexture, SDL_BLENDMODE_BLEND);
+
+        // Clear the target texture with transparent black
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
 
         // Tile the original texture on the target texture

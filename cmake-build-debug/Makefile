@@ -128,6 +128,30 @@ Dungeon-Descent/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/build
 .PHONY : Dungeon-Descent/fast
 
+src/entity.obj: src/entity.cpp.obj
+.PHONY : src/entity.obj
+
+# target to build an object file
+src/entity.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/entity.cpp.obj
+.PHONY : src/entity.cpp.obj
+
+src/entity.i: src/entity.cpp.i
+.PHONY : src/entity.i
+
+# target to preprocess a source file
+src/entity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/entity.cpp.i
+.PHONY : src/entity.cpp.i
+
+src/entity.s: src/entity.cpp.s
+.PHONY : src/entity.s
+
+# target to generate assembly for a file
+src/entity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/entity.cpp.s
+.PHONY : src/entity.cpp.s
+
 src/event_manager.obj: src/event_manager.cpp.obj
 .PHONY : src/event_manager.obj
 
@@ -224,6 +248,30 @@ src/level.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/level.cpp.s
 .PHONY : src/level.cpp.s
 
+src/levelEditor.obj: src/levelEditor.cpp.obj
+.PHONY : src/levelEditor.obj
+
+# target to build an object file
+src/levelEditor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.obj
+.PHONY : src/levelEditor.cpp.obj
+
+src/levelEditor.i: src/levelEditor.cpp.i
+.PHONY : src/levelEditor.i
+
+# target to preprocess a source file
+src/levelEditor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.i
+.PHONY : src/levelEditor.cpp.i
+
+src/levelEditor.s: src/levelEditor.cpp.s
+.PHONY : src/levelEditor.s
+
+# target to generate assembly for a file
+src/levelEditor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.s
+.PHONY : src/levelEditor.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -296,6 +344,30 @@ src/renderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/renderer.cpp.s
 .PHONY : src/renderer.cpp.s
 
+src/staticEntity.obj: src/staticEntity.cpp.obj
+.PHONY : src/staticEntity.obj
+
+# target to build an object file
+src/staticEntity.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/staticEntity.cpp.obj
+.PHONY : src/staticEntity.cpp.obj
+
+src/staticEntity.i: src/staticEntity.cpp.i
+.PHONY : src/staticEntity.i
+
+# target to preprocess a source file
+src/staticEntity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/staticEntity.cpp.i
+.PHONY : src/staticEntity.cpp.i
+
+src/staticEntity.s: src/staticEntity.cpp.s
+.PHONY : src/staticEntity.s
+
+# target to generate assembly for a file
+src/staticEntity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/staticEntity.cpp.s
+.PHONY : src/staticEntity.cpp.s
+
 src/utils.obj: src/utils.cpp.obj
 .PHONY : src/utils.obj
 
@@ -353,6 +425,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Dungeon-Descent
+	@echo ... src/entity.obj
+	@echo ... src/entity.i
+	@echo ... src/entity.s
 	@echo ... src/event_manager.obj
 	@echo ... src/event_manager.i
 	@echo ... src/event_manager.s
@@ -365,6 +440,9 @@ help:
 	@echo ... src/level.obj
 	@echo ... src/level.i
 	@echo ... src/level.s
+	@echo ... src/levelEditor.obj
+	@echo ... src/levelEditor.i
+	@echo ... src/levelEditor.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
@@ -374,6 +452,9 @@ help:
 	@echo ... src/renderer.obj
 	@echo ... src/renderer.i
 	@echo ... src/renderer.s
+	@echo ... src/staticEntity.obj
+	@echo ... src/staticEntity.i
+	@echo ... src/staticEntity.s
 	@echo ... src/utils.obj
 	@echo ... src/utils.i
 	@echo ... src/utils.s

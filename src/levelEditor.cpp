@@ -73,6 +73,7 @@ void LevelEditor::update(EventManager &eventManager) {
         std::string cwd = utils::getCurrentWorkingDirectory();
         std::string path = utils::chooseFile("Save level", cwd, "Level files (*.json)\0*.lvl\0All files (*.*)\0*.*\0");
         std::cout << path << std::endl;
+        getLevelData()->SerializeToFile(path);
     }
 
     // update the player

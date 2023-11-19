@@ -21,9 +21,9 @@
     },
     {
       "textureName":"wall_mid",
-      "x": 0,
-      "y": 16,
-      "collidable": false
+      "x": 50,
+      "y": 50,
+      "collidable": true
     },
     {
       "textureName":"wall_right",

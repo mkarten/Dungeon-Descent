@@ -48,6 +48,46 @@ void Level::update(EventManager &eventManager){
 
     // update the player
     player.update(eventManager);
+
+    // check for collisions between the player and the static entities
+    for (int i = 0; i < staticEntities.size(); i++) {
+        if (player.isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
+
+            // check if the player is colliding with the top of the static entity
+            if (player.pos.y + player.height > staticEntities[i].pos.y &&
+                player.pos.y + player.height < staticEntities[i].pos.y + staticEntities[i].height &&
+                player.pos.x + player.width > staticEntities[i].pos.x &&
+                player.pos.x < staticEntities[i].pos.x + staticEntities[i].width) {
+                // move the player up
+                player.pos.y = staticEntities[i].pos.y - player.height;
+            }
+            // check if the player is colliding with the bottom of the static entity
+            if (player.pos.y < staticEntities[i].pos.y + staticEntities[i].height &&
+                player.pos.y > staticEntities[i].pos.y &&
+                player.pos.x + player.width > staticEntities[i].pos.x &&
+                player.pos.x < staticEntities[i].pos.x + staticEntities[i].width) {
+                // move the player down
+                player.pos.y = staticEntities[i].pos.y + staticEntities[i].height;
+            }
+            // check if the player is colliding with the left of the static entity
+            if (player.pos.x + player.width > staticEntities[i].pos.x &&
+                player.pos.x + player.width < staticEntities[i].pos.x + staticEntities[i].width &&
+                player.pos.y + player.height > staticEntities[i].pos.y &&
+                player.pos.y < staticEntities[i].pos.y + staticEntities[i].height) {
+                // move the player left
+                player.pos.x = staticEntities[i].pos.x - player.width;
+            }
+            // check if the player is colliding with the right of the static entity
+            if (player.pos.x < staticEntities[i].pos.x + staticEntities[i].width &&
+                player.pos.x > staticEntities[i].pos.x &&
+                player.pos.y + player.height > staticEntities[i].pos.y &&
+                player.pos.y < staticEntities[i].pos.y + staticEntities[i].height) {
+                // move the player right
+                player.pos.x = staticEntities[i].pos.x + staticEntities[i].width;
+            }
+        }
+    }
+
 }
 
 void Level::render(SDL_Renderer *renderer){
@@ -170,6 +210,28 @@ bool LevelData::Serialize(rapidjson::Writer<rapidjson::StringBuffer> *writer) co
             writer->String("y");
             writer->Double(playerSpawnPoint.y);
         writer->EndObject();
+        writer->String("staticEntities");
+            writer->StartArray();
+                for (int i = 0; i < staticEntities.size(); i++) {
+                    writer->StartObject();
+                        writer->String("textureName");
+                        writer->String(staticEntities[i].texName.c_str());
+                        writer->String("x");
+                        writer->Double(staticEntities[i].pos.x);
+                        writer->String("y");
+                        writer->Double(staticEntities[i].pos.y);
+                        writer->String("collidable");
+                        writer->Bool(staticEntities[i].collidable);
+                        if (staticEntities[i].width > 0 || staticEntities[i].height > 0) {
+                            writer->String("width");
+                            writer->Int(staticEntities[i].width);
+                            writer->String("height");
+                            writer->Int(staticEntities[i].height);
+                        }
+                    writer->EndObject();
+                }
+        writer->EndArray();
+
 
     writer->EndObject();
     return true;
