@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include "../include/json.hpp"
+#include "../include/enemy.hpp"
 
 // LevelData class
 class LevelData : public JSON
@@ -44,7 +45,7 @@ private:
 class Level
 {
 public:
-    Level(SDL_Renderer *renderer,Player &player ,std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap);
+    Level(SDL_Renderer *renderer,Player *player ,std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap);
     Level() {}
     void update(EventManager &eventManager);
     void render(SDL_Renderer *renderer);
@@ -54,11 +55,14 @@ public:
     std::vector<Entity> *getEntities() const { return (std::vector<Entity> *)&entities; }
     std::vector<StaticEntity> *getStaticEntities() const { return (std::vector<StaticEntity> *)&staticEntities; }
     void setStaticEntities(std::vector<StaticEntity> sEntities) { this->staticEntities = sEntities; }
-    Player *getPlayer() const { return (Player *)&player; }
+    Player *getPlayer() const { return player; }
     LevelData *getLevelData() const { return (LevelData *)&levelData; }
+    std::vector<Enemy> *getEnemies() const { return (std::vector<Enemy> *)&enemies; }
+    void setEnemies(std::vector<Enemy> enemiess) { this->enemies = enemiess; }
 private:
     std::vector<Entity> entities;
+    std::vector<Enemy> enemies;
     std::vector<StaticEntity> staticEntities;
-    Player player;
+    Player *player;
     LevelData levelData;
 };

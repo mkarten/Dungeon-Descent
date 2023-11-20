@@ -34,8 +34,8 @@ Game::Game()
     player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    levels.emplace_back(renderer.getRenderer(), player, "res/levels/debug.json", tileset, tilesInfoMap);
-    levelEditor = LevelEditor(renderer.getRenderer(), player, "res/levels/editor.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer.getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
+    levelEditor = LevelEditor(renderer.getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
     levelPtr = 0;
     currentLevel = levels[levelPtr];
 

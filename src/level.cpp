@@ -1,15 +1,9 @@
 #include "../include/level.hpp"
-#include "../include/utils.hpp"
-#include "../include/event_manager.hpp"
 #include "../include/constants.hpp"
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <iostream>
-#include <fstream>
 
-Level::Level(SDL_Renderer *renderer, Player &Gplayer , std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap) {
-    //TODO: load the level data from the file
+Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap) {
 
     // read the json in the level data file
     levelData.DeserializeFromFile(levelDataFileName);
@@ -17,10 +11,25 @@ Level::Level(SDL_Renderer *renderer, Player &Gplayer , std::string levelDataFile
     // copy the static entities from the level data to the level
     staticEntities = levelData.getStaticEntities();
 
+    // set the player to the player passed in from the main game
+    player = Gplayer;
+
+    // position the player at the spawn point
+    player->pos = levelData.getPlayerSpawnPoint();
+
+    // add a temporary enemy to the level
+    SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
+    int enemyWidth, enemyHeight;
+    SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
+    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 10, &player->pos);
+    enemies.push_back(enemy);
+
     // set the texture of the static entities to the tileset texture
     for (int i = 0; i < staticEntities.size(); i++) {
+
         // get the texture from the tileset
         staticEntities[i].tex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap[staticEntities[i].texName], renderer);
+
         // check if the texture need to be tiled
         if (staticEntities[i].width > 0 || staticEntities[i].height>0){
             staticEntities[i].tex = utils::textureTiling(staticEntities[i].tex, renderer, staticEntities[i].width, staticEntities[i].height);
@@ -29,65 +38,29 @@ Level::Level(SDL_Renderer *renderer, Player &Gplayer , std::string levelDataFile
         }
 
     }
-
-    // set the player to the player passed in from the main game
-    player = Gplayer;
-
-    // position the player at the spawn point
-    player.pos = levelData.getPlayerSpawnPoint();
 }
 
 
 void Level::update(EventManager &eventManager){
-    // detect a right click
-    if (eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
-        // set the player position to the mouse position
-        player.pos.x = eventManager.mouse.x/SCALE_FACTOR;
-        player.pos.y = eventManager.mouse.y/SCALE_FACTOR;
+
+    // save the player position to revert to if the player is colliding with a static entity
+    Vector2f lastPlayerPos = player->pos;
+
+    // update the enemies
+    for (int i = 0; i < enemies.size(); i++) {
+        enemies[i].update(eventManager);
     }
 
     // update the player
-    player.update(eventManager);
+    player->update(eventManager);
 
     // check for collisions between the player and the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
-        if (player.isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
-
-            // check if the player is colliding with the top of the static entity
-            if (player.pos.y + player.height > staticEntities[i].pos.y &&
-                player.pos.y + player.height < staticEntities[i].pos.y + staticEntities[i].height &&
-                player.pos.x + player.width > staticEntities[i].pos.x &&
-                player.pos.x < staticEntities[i].pos.x + staticEntities[i].width) {
-                // move the player up
-                player.pos.y = staticEntities[i].pos.y - player.height;
-            }
-            // check if the player is colliding with the bottom of the static entity
-            if (player.pos.y < staticEntities[i].pos.y + staticEntities[i].height &&
-                player.pos.y > staticEntities[i].pos.y &&
-                player.pos.x + player.width > staticEntities[i].pos.x &&
-                player.pos.x < staticEntities[i].pos.x + staticEntities[i].width) {
-                // move the player down
-                player.pos.y = staticEntities[i].pos.y + staticEntities[i].height;
-            }
-            // check if the player is colliding with the left of the static entity
-            if (player.pos.x + player.width > staticEntities[i].pos.x &&
-                player.pos.x + player.width < staticEntities[i].pos.x + staticEntities[i].width &&
-                player.pos.y + player.height > staticEntities[i].pos.y &&
-                player.pos.y < staticEntities[i].pos.y + staticEntities[i].height) {
-                // move the player left
-                player.pos.x = staticEntities[i].pos.x - player.width;
-            }
-            // check if the player is colliding with the right of the static entity
-            if (player.pos.x < staticEntities[i].pos.x + staticEntities[i].width &&
-                player.pos.x > staticEntities[i].pos.x &&
-                player.pos.y + player.height > staticEntities[i].pos.y &&
-                player.pos.y < staticEntities[i].pos.y + staticEntities[i].height) {
-                // move the player right
-                player.pos.x = staticEntities[i].pos.x + staticEntities[i].width;
-            }
+        if (player->isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
+            // revert the player position
+            player->pos = lastPlayerPos;
         }
     }
-
 }
 
 void Level::render(SDL_Renderer *renderer){
@@ -95,8 +68,12 @@ void Level::render(SDL_Renderer *renderer){
     for (int i = 0; i < staticEntities.size(); i++) {
         staticEntities[i].render(renderer);
     }
+    // render the enemies
+    for (int i = 0; i < enemies.size(); i++) {
+        enemies[i].render(renderer);
+    }
     // render the player
-    player.render(renderer);
+    player->render(renderer);
     // print the level name for debug purposes
     utils::renderText(renderer, getLevelName(), 0, WINDOW_HEIGHT-100, SDL_Color {0, 0, 0});
 }

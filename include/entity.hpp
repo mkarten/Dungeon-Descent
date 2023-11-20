@@ -4,6 +4,7 @@
 #include "../include/vector.hpp"
 #include <utility>
 #include <vector>
+#include "../include/utils.hpp"
 
 class Entity
 {

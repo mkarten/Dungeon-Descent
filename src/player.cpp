@@ -15,6 +15,9 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     tex = p_tex;
     width = w;
     height = h;
+    health = PLAYER_MAX_HP;
+    maxHealth = PLAYER_MAX_HP;
+    fullHeart =
 }
 
 void Player::update(EventManager &eventManager)

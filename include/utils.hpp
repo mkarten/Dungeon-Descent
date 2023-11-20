@@ -7,12 +7,18 @@
 #include <map>
 #include <string>
 #include <SDL2/SDL_ttf.h>
+#include "vector.hpp"
 
 namespace utils
 {
+
     // variables for the font
     extern TTF_Font* OpenSans;
     extern bool fontLoaded;
+    extern SDL_Texture *fullHeart;
+    extern SDL_Texture *halfHeart;
+    extern SDL_Texture *emptyHeart;
+    extern bool heartTexturesLoaded;
 
     using TileMap = std::map<std::string, TileInfo>;
 
@@ -39,6 +45,20 @@ namespace utils
     std::string chooseFile(const std::string& title, const std::string& initialPath, const std::string& filter);
 
     std::string getCurrentWorkingDirectory();
+
+    int distance(Vector2f v1, Vector2f v2);
+
+    Vector2f normalize(Vector2f v);
+
+    void loadHeartTextures(SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap,SDL_Renderer *renderer);
+
+    SDL_Texture* getHeartFullTexture();
+
+    SDL_Texture* getHeartHalfTexture();
+
+    SDL_Texture* getHeartEmptyTexture();
+
+
 }
 
 

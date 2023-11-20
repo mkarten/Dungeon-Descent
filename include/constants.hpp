@@ -14,3 +14,5 @@ constexpr int WINDOW_WIDTH = 1280;
 constexpr float TIME_STEP = 0.01;
 
 constexpr int SCALE_FACTOR = 2;
+
+constexpr int PLAYER_MAX_HP = 10;

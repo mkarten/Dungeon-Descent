@@ -3,11 +3,16 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
+#include <valarray>
 
 namespace utils{
 
     TTF_Font* OpenSans;
     bool fontLoaded = false;
+    SDL_Texture *fullHeart;
+    SDL_Texture *halfHeart;
+    SDL_Texture *emptyHeart;
+    bool heartTexturesLoaded = false;
 
     float hireTimeInSeconds()
     {
@@ -159,6 +164,46 @@ namespace utils{
         std::string path(cwd);
         SDL_free(cwd);
         return path;
+    }
+
+    int distance(Vector2f v1, Vector2f v2){
+        return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2));
+    }
+
+    Vector2f normalize(Vector2f v){
+        float length = sqrt(pow(v.x, 2) + pow(v.y, 2));
+        return {v.x / length, v.y / length};
+    }
+
+    void loadHeartTextures(SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap,SDL_Renderer *renderer){
+        fullHeart = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["ui_heart_full"], renderer);
+        halfHeart = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["ui_heart_half"], renderer);
+        emptyHeart = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["ui_heart_empty"], renderer);
+        heartTexturesLoaded = true;
+    }
+
+    SDL_Texture* getHeartFullTexture(){
+        if (!heartTexturesLoaded) {
+            std::cerr << "Heart textures not loaded" << std::endl;
+            exit(1);
+        }
+        return fullHeart;
+    }
+
+    SDL_Texture* getHeartHalfTexture(){
+        if (!heartTexturesLoaded) {
+            std::cerr << "Heart textures not loaded" << std::endl;
+            exit(1);
+        }
+        return halfHeart;
+    }
+
+    SDL_Texture* getHeartEmptyTexture(){
+        if (!heartTexturesLoaded) {
+            std::cerr << "Heart textures not loaded" << std::endl;
+            exit(1);
+        }
+        return emptyHeart;
     }
 
 }

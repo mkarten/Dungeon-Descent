@@ -7,7 +7,7 @@
 class LevelEditor : public Level
 {
 public:
-    LevelEditor(SDL_Renderer *renderer,Player &player ,std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap)
+    LevelEditor(SDL_Renderer *renderer,Player *player ,std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap)
             : Level(renderer, player, levelDataFileName, tilesetTex, tilesInfoMap)
     {
         this->tilesetTex = tilesetTex;
