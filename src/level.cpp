@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
     int enemyWidth, enemyHeight;
     SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
-    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 10);
+    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 100);
     enemies.push_back(enemy);
 
     // set the texture of the static entities to the tileset texture
@@ -36,7 +36,6 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
         } else{
             SDL_QueryTexture(staticEntities[i].tex, NULL, NULL, &staticEntities[i].width, &staticEntities[i].height);
         }
-
     }
 }
 

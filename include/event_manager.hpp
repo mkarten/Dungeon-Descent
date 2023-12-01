@@ -3,6 +3,12 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+struct Message{
+    int receiverID;
+    int senderID;
+    std::string message;
+};
+
 struct Mouse{
     int x;
     int y;
@@ -27,6 +33,7 @@ public:
     bool GameIsRunning = true;
     bool Keys[322];
     bool LastKeys[322];
+    std::vector<Message> Messages;
     void setLastKeys(const bool b[322])
     {
         for(int i = 0; i < 322; i++)
