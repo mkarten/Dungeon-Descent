@@ -16,3 +16,5 @@ constexpr float TIME_STEP = 0.01;
 constexpr int SCALE_FACTOR = 2;
 
 constexpr int PLAYER_MAX_HP = 10;
+
+constexpr int UI_SCALE_FACTOR = 4;

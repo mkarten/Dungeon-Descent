@@ -6,6 +6,14 @@
 #include <vector>
 #include "../include/utils.hpp"
 
+struct CollisionInfo
+{
+    bool isCollidingTop;
+    bool isCollidingBottom;
+    bool isCollidingLeft;
+    bool isCollidingRight;
+};
+
 class Entity
 {
 public:
@@ -15,7 +23,10 @@ public:
     }
     Entity() {}
     bool isCollidingWith(const Entity &other) const;
+    CollisionInfo getCollisionInfo(const Entity &other) const;
     Vector2f pos;
+    Vector2f lastPos;
     SDL_Texture *tex;
+    std::string tag;
     int width, height;
 };

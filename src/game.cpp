@@ -30,6 +30,8 @@ Game::Game()
     SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer.getRenderer());
     SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer.getRenderer());
 
+    utils::loadHeartTextures(tileset, tilesInfoMap, renderer.getRenderer());
+
     // create the player
     player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 

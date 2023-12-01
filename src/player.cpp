@@ -17,11 +17,14 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     height = h;
     health = PLAYER_MAX_HP;
     maxHealth = PLAYER_MAX_HP;
-    fullHeart =
+    fullHeart = utils::getHeartFullTexture();
+    halfHeart = utils::getHeartHalfTexture();
+    emptyHeart = utils::getHeartEmptyTexture();
 }
 
 void Player::update(EventManager &eventManager)
 {
+    lastPos = pos;
     // update the entity
     if (eventManager.Keys[SDL_SCANCODE_W]) {
         pos.y -= 1;
@@ -49,6 +52,32 @@ void Player::render(SDL_Renderer *renderer)
 
     //render the weapon
     weapon.render(renderer);
+
+    // render the health bar
+    int heartWidth;
+    int heartHeight;
+    int heartSpacing = 2;
+    SDL_QueryTexture(fullHeart, NULL, NULL, &heartWidth, &heartHeight);
+    heartWidth *= UI_SCALE_FACTOR;
+    heartHeight *= UI_SCALE_FACTOR;
+    int heartX = 10;
+    int heartY = 10;
+    int tempHealth = this->health;
+    // each heart is 2 health points
+    for (int i = 0; i < maxHealth / 2; i++) {
+        if (tempHealth >= 2) {
+            SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
+            SDL_RenderCopy(renderer, fullHeart, NULL, &dst);
+        } else if (tempHealth == 1) {
+            SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
+            SDL_RenderCopy(renderer, halfHeart, NULL, &dst);
+        } else {
+            SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
+            SDL_RenderCopy(renderer, emptyHeart, NULL, &dst);
+        }
+        tempHealth -= 2;
+        heartX += heartWidth + (heartSpacing*UI_SCALE_FACTOR);
+    }
 
     // line around the player
     utils::drawBoundingBox(renderer,

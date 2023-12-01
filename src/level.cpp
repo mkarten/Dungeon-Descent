@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
     int enemyWidth, enemyHeight;
     SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
-    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 10, &player->pos);
+    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 10);
     enemies.push_back(enemy);
 
     // set the texture of the static entities to the tileset texture
@@ -42,11 +42,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
 
 
 void Level::update(EventManager &eventManager){
-
-    // save the player position to revert to if the player is colliding with a static entity
-    Vector2f lastPlayerPos = player->pos;
-
-    // update the enemies
+        // update the enemies
     for (int i = 0; i < enemies.size(); i++) {
         enemies[i].update(eventManager);
     }
@@ -57,8 +53,44 @@ void Level::update(EventManager &eventManager){
     // check for collisions between the player and the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
         if (player->isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
-            // revert the player position
-            player->pos = lastPlayerPos;
+            // get the collision info
+            CollisionInfo collisionInfo = player->getCollisionInfo(staticEntities[i]);
+            // revert the player position based on the collision info
+            if (collisionInfo.isCollidingLeft || collisionInfo.isCollidingRight) {
+                player->pos.x = player->lastPos.x;
+            }
+            if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
+                player->pos.y = player->lastPos.y;
+            }
+        }
+        // check for collisions between the enemies and the static entities
+        for (int j = 0; j < enemies.size(); j++) {
+            if (enemies[j].isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
+                // get the collision info
+                CollisionInfo collisionInfo = enemies[j].getCollisionInfo(staticEntities[i]);
+                // revert the enemy position based on the collision info
+                if (collisionInfo.isCollidingLeft || collisionInfo.isCollidingRight) {
+                    enemies[j].pos.x = enemies[j].lastPos.x;
+                }
+                if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
+                    enemies[j].pos.y = enemies[j].lastPos.y;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < enemies.size(); i++) {
+        if (player->isCollidingWith(enemies[i])) {
+            // push the player away from the enemy
+//            Vector2f direction = utils::normalize(player->pos - enemies[i].pos);
+//            player->pos += direction * (15.0f*SCALE_FACTOR);
+            // hurt the player
+            player->health -= enemies[i].getDamage();
+            // deal damage to the enemy
+            enemies[i].dealDamage(5);
+            // if the enemy is dead, remove it from the level
+            if (enemies[i].getHealth() <= 0) {
+                enemies.erase(enemies.begin() + i);
+            }
         }
     }
 }
