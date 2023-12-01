@@ -72,10 +72,17 @@ void Game::run()
         // update the event manager with the events
         eventManager.update();
 
-        // if the user pressed the escape key, change the level
-        if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
-            inEditorMode = !inEditorMode;
+        // handle the messages from the event manager
+        for (auto &message : eventManager.getMessages(Messages::IDs::GAME)) {
+            if (message.message == Messages::PLAYER_DIED) {
+
+            }
+            if (message.message == Messages::ENTER_EDITOR_MODE) {
+                inEditorMode = !inEditorMode;
+                eventManager.clearMessage(message.MessageID);
+            }
         }
+
         if (inEditorMode){
             levelEditor.update(eventManager);
             levelEditor.render(renderer.getRenderer());

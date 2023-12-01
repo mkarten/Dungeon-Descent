@@ -128,6 +128,30 @@ Dungeon-Descent/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/build
 .PHONY : Dungeon-Descent/fast
 
+src/enemy.obj: src/enemy.cpp.obj
+.PHONY : src/enemy.obj
+
+# target to build an object file
+src/enemy.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/enemy.cpp.obj
+.PHONY : src/enemy.cpp.obj
+
+src/enemy.i: src/enemy.cpp.i
+.PHONY : src/enemy.i
+
+# target to preprocess a source file
+src/enemy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/enemy.cpp.i
+.PHONY : src/enemy.cpp.i
+
+src/enemy.s: src/enemy.cpp.s
+.PHONY : src/enemy.s
+
+# target to generate assembly for a file
+src/enemy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/enemy.cpp.s
+.PHONY : src/enemy.cpp.s
+
 src/entity.obj: src/entity.cpp.obj
 .PHONY : src/entity.obj
 
@@ -425,6 +449,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Dungeon-Descent
+	@echo ... src/enemy.obj
+	@echo ... src/enemy.i
+	@echo ... src/enemy.s
 	@echo ... src/entity.obj
 	@echo ... src/entity.i
 	@echo ... src/entity.s

@@ -73,4 +73,9 @@ void EventManager::update() {
                 break;
         }
     }
+    // print the message queue
+     for(int i = 0; i < Messages.size(); i++) {
+         std::cout << Messages[i].MessageID << " " << Messages[i].receiverID << " " << Messages[i].senderID << " "
+                   << Messages[i].message << std::endl;
+     }
 }

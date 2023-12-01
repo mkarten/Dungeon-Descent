@@ -89,6 +89,9 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/constants.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/enemy.hpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/entity.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
@@ -123,6 +126,9 @@
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/weapon.hpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/enemy.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/entity.cpp">

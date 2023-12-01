@@ -38,6 +38,9 @@ void Player::update(EventManager &eventManager)
     if (eventManager.Keys[SDL_SCANCODE_D]) {
         pos.x += 1;
     }
+    if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
+        eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
+    }
     weapon.pos = pos;
     weapon.update(eventManager);
 
