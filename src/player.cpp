@@ -26,16 +26,16 @@ void Player::update(EventManager &eventManager)
 {
     lastPos = pos;
     // update the entity
-    if (eventManager.Keys[SDL_SCANCODE_W]) {
+    if (eventManager.Keys[SDL_SCANCODE_W] || eventManager.Keys[SDL_SCANCODE_UP]) {
         pos.y -= 1;
     }
-    if (eventManager.Keys[SDL_SCANCODE_S]) {
+    if (eventManager.Keys[SDL_SCANCODE_S] || eventManager.Keys[SDL_SCANCODE_DOWN]) {
         pos.y += 1;
     }
-    if (eventManager.Keys[SDL_SCANCODE_A]) {
+    if (eventManager.Keys[SDL_SCANCODE_A] || eventManager.Keys[SDL_SCANCODE_LEFT]) {
         pos.x -= 1;
     }
-    if (eventManager.Keys[SDL_SCANCODE_D]) {
+    if (eventManager.Keys[SDL_SCANCODE_D] || eventManager.Keys[SDL_SCANCODE_RIGHT]) {
         pos.x += 1;
     }
     if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {

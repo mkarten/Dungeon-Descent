@@ -22,7 +22,15 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     int enemyWidth, enemyHeight;
     SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
     Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
+    Enemy enemy2 = Enemy(Vector2f(300, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
+    Enemy enemy3 = Enemy(Vector2f(200, 300), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
+    Enemy enemy4 = Enemy(Vector2f(300, 300), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
+    Enemy enemy5 = Enemy(Vector2f(250, 250), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
     enemies.push_back(enemy);
+    enemies.push_back(enemy2);
+    enemies.push_back(enemy3);
+    enemies.push_back(enemy4);
+    enemies.push_back(enemy5);
 
     // set the texture of the static entities to the tileset texture
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -85,6 +93,20 @@ void Level::update(EventManager &eventManager){
                 }
                 if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
                     enemies[j].pos.y = enemies[j].lastPos.y;
+                }
+            }
+            //check for collisions between the enemy and other enemies
+            for (int i = 0; i < enemies.size(); i++) {
+                if (enemies[j].isCollidingWith(enemies[i]) && i != j) {
+                    // get the collision info
+                    CollisionInfo collisionInfo = enemies[j].getCollisionInfo(enemies[i]);
+                    // revert the enemy position based on the collision info
+                    if (collisionInfo.isCollidingLeft || collisionInfo.isCollidingRight) {
+                        enemies[j].pos.x = enemies[j].lastPos.x;
+                    }
+                    if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
+                        enemies[j].pos.y = enemies[j].lastPos.y;
+                    }
                 }
             }
             // check for collisions between the player weapon and the enemies
