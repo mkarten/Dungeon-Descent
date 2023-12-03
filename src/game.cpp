@@ -57,7 +57,8 @@ Game::~Game()
 // Main game loop
 void Game::run()
 {
-    while (eventManager.GameIsRunning)
+    bool GameIsRunning = true;
+    while (GameIsRunning)
     {
         // calculate the DeltaTime and sleep if needed
         float newTime = utils::hireTimeInSeconds();
@@ -76,6 +77,10 @@ void Game::run()
         for (auto &message : eventManager.getMessages(Messages::IDs::GAME)) {
             if (message.message == Messages::PLAYER_DIED) {
 
+            }
+            if (message.message == Messages::QUIT_GAME) {
+                GameIsRunning = false;
+                continue;
             }
             if (message.message == Messages::ENTER_EDITOR_MODE) {
                 inEditorMode = !inEditorMode;

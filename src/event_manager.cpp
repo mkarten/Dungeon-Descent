@@ -41,7 +41,7 @@ void EventManager::update() {
         switch(event.type)
         {
             case SDL_QUIT:
-                GameIsRunning = false;
+                sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::QUIT_GAME);
                 break;
             case SDL_KEYDOWN:
                 Keys[event.key.keysym.scancode]=true;
