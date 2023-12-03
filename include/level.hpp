@@ -59,7 +59,6 @@ public:
     LevelData *getLevelData() const { return (LevelData *)&levelData; }
     std::vector<Enemy> *getEnemies() const { return (std::vector<Enemy> *)&enemies; }
     void setEnemies(std::vector<Enemy> enemiess) { this->enemies = enemiess; }
-private:
     std::vector<Entity> entities;
     std::vector<Enemy> enemies;
     std::vector<StaticEntity> staticEntities;

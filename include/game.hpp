@@ -6,6 +6,7 @@
 #include "../include/level.hpp"
 #include "../include/event_manager.hpp"
 #include "../include/levelEditor.hpp"
+#include "../include/mainMenu.hpp"
 
 class Game
 {
@@ -23,6 +24,8 @@ private:
     Level currentLevel;
     LevelEditor levelEditor;
     bool inEditorMode = false;
+    MainMenu mainMenu;
+    bool inMainMenu = true;
     Renderer renderer;
     EventManager eventManager;
 };

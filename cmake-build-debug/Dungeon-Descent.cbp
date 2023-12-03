@@ -107,6 +107,9 @@
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/levelEditor.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/mainMenu.hpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/include/player.hpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
@@ -150,6 +153,9 @@
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/main.cpp">
+			<Option target="Dungeon-Descent"/>
+		</Unit>
+		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/mainMenu.cpp">
 			<Option target="Dungeon-Descent"/>
 		</Unit>
 		<Unit filename="C:/Users/Mkarten/CLionProjects/Dungeon-Descent/src/player.cpp">

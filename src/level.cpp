@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
     int enemyWidth, enemyHeight;
     SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
-    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 100);
+    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
     enemies.push_back(enemy);
 
     // set the texture of the static entities to the tileset texture
@@ -62,6 +62,18 @@ void Level::update(EventManager &eventManager){
                 player->pos.y = player->lastPos.y;
             }
         }
+        //check for collisions between the player weapon and the static entities
+        if (player->weapon.isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
+            // get the collision info
+            CollisionInfo collisionInfo = player->weapon.getCollisionInfo(staticEntities[i]);
+            // revert the player position based on the collision info
+            if (collisionInfo.isCollidingLeft || collisionInfo.isCollidingRight) {
+                player->weapon.pos.x = player->weapon.lastPos.x;
+            }
+            if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
+                player->weapon.pos.y = player->weapon.lastPos.y;
+            }
+        }
         // check for collisions between the enemies and the static entities
         for (int j = 0; j < enemies.size(); j++) {
             if (enemies[j].isCollidingWith(staticEntities[i]) && staticEntities[i].collidable) {
@@ -75,6 +87,30 @@ void Level::update(EventManager &eventManager){
                     enemies[j].pos.y = enemies[j].lastPos.y;
                 }
             }
+            // check for collisions between the player weapon and the enemies
+            if (player->weapon.isCollidingWith(enemies[j])) {
+                // to avoid unnecessary calculations, only check for collisions if the weapon is not on cooldown or if the enemy was not already hit by the weapon
+                if (player->weapon.isOnCooldown && !enemies[j].getWasHit()) {
+                    // get the collision info
+                    CollisionInfo collisionInfo = player->weapon.getCollisionInfo(enemies[j]);
+                    // revert the enemy position based on the collision info
+                    if (collisionInfo.isCollidingLeft || collisionInfo.isCollidingRight) {
+                        enemies[j].pos.x = enemies[j].lastPos.x;
+                    }
+                    if (collisionInfo.isCollidingTop || collisionInfo.isCollidingBottom) {
+                        enemies[j].pos.y = enemies[j].lastPos.y;
+                    }
+                    // deal damage to the enemy
+                    enemies[j].dealDamage(player->weapon.dammage);
+                    // if the enemy is dead, remove it from the level
+                    if (enemies[j].getHealth() <= 0) {
+                        enemies.erase(enemies.begin() + j);
+                    }
+                    // set the enemy to wasHit so that it doesn't get hit multiple times by the same weapon swing
+                    enemies[j].setWasHit(true);
+                }
+            }
+
         }
     }
     for (int i = 0; i < enemies.size(); i++) {
@@ -90,6 +126,16 @@ void Level::update(EventManager &eventManager){
             if (enemies[i].getHealth() <= 0) {
                 enemies.erase(enemies.begin() + i);
             }
+        }
+    }
+    // process messages
+    for (auto &message : eventManager.getMessages(Messages::IDs::LEVEL)) {
+        if (message.message == Messages::COOLDOWN_RESET) {
+            // range over the enemies and set their wasHit to false
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies[i].setWasHit(false);
+            }
+            eventManager.clearMessage(message.MessageID);
         }
     }
 }

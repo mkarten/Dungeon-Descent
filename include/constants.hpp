@@ -6,7 +6,7 @@ constexpr char *WINDOW_TITLE = "Minute Mayhem: Dungeon Ascent";
 
 
 // Dimensions de la fenêtre
-constexpr int WINDOW_HEIGHT = 720;
+constexpr int WINDOW_HEIGHT = 704;
 constexpr int WINDOW_WIDTH = 1280;
 
 

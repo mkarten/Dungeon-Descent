@@ -1,0 +1,53 @@
+{
+  "levelName": "Test Level",
+  "playerSpawnPoint": {
+    "x": 20,
+    "y": 20
+  },
+  "staticEntities": [
+    {
+      "textureName":"floor_1",
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 1280,
+      "collidable": false
+    },
+    {
+      "textureName":"wall_left",
+      "x": 0,
+      "y": 0,
+      "collidable": false
+    },
+    {
+      "textureName":"wall_mid",
+      "x": 100,
+      "y": 100,
+      "collidable": true
+    },
+    {
+      "textureName":"wall_right",
+      "x": 0,
+      "y": 32,
+      "collidable": false
+    },
+    {
+      "textureName":"wall_top_left",
+      "x": 16,
+      "y": 0,
+      "collidable": false
+    },
+    {
+      "textureName":"wall_top_mid",
+      "x": 16,
+      "y": 16,
+      "collidable": false
+    },
+    {
+      "textureName":"wall_top_right",
+      "x": 16,
+      "y": 32,
+      "collidable": false
+    }
+  ]
+}

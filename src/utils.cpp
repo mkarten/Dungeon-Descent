@@ -91,11 +91,15 @@ namespace utils{
     }
 
     void renderText(SDL_Renderer* renderer, const std::string& text, int x, int y, SDL_Color color){
+        // render the text with x and y being the center of the text
         SDL_Surface* surfaceMessage = TTF_RenderText_Solid(getFont(), text.c_str(), color);
         SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-        SDL_Rect Message_rect= {x, y, 0, 0};
-        SDL_QueryTexture(Message, nullptr, nullptr, &Message_rect.w, &Message_rect.h);
-        SDL_RenderCopy(renderer, Message, nullptr, &Message_rect);
+        SDL_Rect Message_rect; //create a rect
+        Message_rect.x = x - surfaceMessage->w/2;  //controls the rect's x coordinate
+        Message_rect.y = y - surfaceMessage->h/2; // controls the rect's y coordinte
+        Message_rect.w = surfaceMessage->w; // controls the width of the rect
+        Message_rect.h = surfaceMessage->h; // controls the height of the rect
+        SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
         SDL_FreeSurface(surfaceMessage);
         SDL_DestroyTexture(Message);
     }
@@ -204,6 +208,14 @@ namespace utils{
             exit(1);
         }
         return emptyHeart;
+    }
+
+    float lerpf(float a, float b, float t){
+        return a + t * (b - a);
+    }
+
+    Vector2f lerpVector2f(Vector2f a, Vector2f b, float t){
+        return {lerpf(a.x, b.x, t), lerpf(a.y, b.y, t)};
     }
 
 }

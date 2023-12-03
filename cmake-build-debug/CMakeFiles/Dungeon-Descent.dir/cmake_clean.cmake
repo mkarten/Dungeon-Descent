@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Dungeon-Descent.dir/src/levelEditor.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj"
   "CMakeFiles/Dungeon-Descent.dir/src/main.cpp.obj.d"
+  "CMakeFiles/Dungeon-Descent.dir/src/mainMenu.cpp.obj"
+  "CMakeFiles/Dungeon-Descent.dir/src/mainMenu.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj"
   "CMakeFiles/Dungeon-Descent.dir/src/player.cpp.obj.d"
   "CMakeFiles/Dungeon-Descent.dir/src/renderer.cpp.obj"

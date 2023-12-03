@@ -14,11 +14,14 @@ namespace Messages{
     const std::string PLAYER_DIED = "PLAYER_DIED";
     const std::string QUIT_GAME = "QUIT_GAME";
     const std::string ENTER_EDITOR_MODE = "ENTER_EDITOR_MODE";
+    const std::string START_GAME = "START_GAME";
+    const std::string COOLDOWN_RESET = "COOLDOWN_RESET";
 
     enum IDs{
         GAME,
         EVENT_MANAGER,
         PLAYER,
+        PLAYER_WEAPON,
         LEVEL,
     };
 }
@@ -47,6 +50,9 @@ public:
     bool Keys[322];
     bool LastKeys[322];
     int NewMessagesID = 0;
+    float deltaTime;
+    float currentTime;
+    float lastTime;
     std::vector<Message> Messages;
     void sendMessage(int receiverID, int senderID, std::string message){
         Message m;

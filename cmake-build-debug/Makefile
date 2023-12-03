@@ -320,6 +320,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/mainMenu.obj: src/mainMenu.cpp.obj
+.PHONY : src/mainMenu.obj
+
+# target to build an object file
+src/mainMenu.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/mainMenu.cpp.obj
+.PHONY : src/mainMenu.cpp.obj
+
+src/mainMenu.i: src/mainMenu.cpp.i
+.PHONY : src/mainMenu.i
+
+# target to preprocess a source file
+src/mainMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/mainMenu.cpp.i
+.PHONY : src/mainMenu.cpp.i
+
+src/mainMenu.s: src/mainMenu.cpp.s
+.PHONY : src/mainMenu.s
+
+# target to generate assembly for a file
+src/mainMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/mainMenu.cpp.s
+.PHONY : src/mainMenu.cpp.s
+
 src/player.obj: src/player.cpp.obj
 .PHONY : src/player.obj
 
@@ -473,6 +497,9 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/mainMenu.obj
+	@echo ... src/mainMenu.i
+	@echo ... src/mainMenu.s
 	@echo ... src/player.obj
 	@echo ... src/player.i
 	@echo ... src/player.s

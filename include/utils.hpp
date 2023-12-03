@@ -58,6 +58,10 @@ namespace utils
 
     SDL_Texture* getHeartEmptyTexture();
 
+    float lerpf(float a, float b, float t);
+
+    Vector2f lerpVector2f(Vector2f a, Vector2f b, float t);
+
 
 }
 

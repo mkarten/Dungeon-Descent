@@ -10,7 +10,7 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
 {
     int w_w, w_h;
     SDL_QueryTexture(w_tex, NULL, NULL, &w_w, &w_h);
-    weapon = Weapon(Vector2f(0, 0), w_tex, w_w, w_h);
+    weapon = Weapon(Vector2f(0, 0), w_tex, w_w, w_h, 1, 0.5, 100);
     pos = p_pos;
     tex = p_tex;
     width = w;
@@ -41,7 +41,10 @@ void Player::update(EventManager &eventManager)
     if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
         eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
     }
-    weapon.pos = pos;
+    if (!weapon.isOnCooldown){
+        // put center of the weapon at center of the player
+        weapon.newpos = Vector2f(pos.x + width/2-weapon.width/2, pos.y + height/2-weapon.height/2);
+    }
     weapon.update(eventManager);
 
 

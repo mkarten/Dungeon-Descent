@@ -15,9 +15,12 @@ class Enemy : public Entity
         void setHealth(int newHealth) {health = newHealth;}
         void dealDamage(int damage) {health -= damage;}
         Vector2f getLastPos() {return lastPos;}
+        bool getWasHit() {return wasHit;}
+        void setWasHit(bool newWasHit) {wasHit = newWasHit;}
     private:
         int health;
         int maxHealth;
+        bool wasHit;
         Vector2f *PlayerPos;
         int triggerDistance;
         bool triggered;

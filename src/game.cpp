@@ -38,6 +38,8 @@ Game::Game()
     // create the level
     levels.emplace_back(renderer.getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
     levelEditor = LevelEditor(renderer.getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
+    mainMenu = MainMenu(renderer.getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
+
     levelPtr = 0;
     currentLevel = levels[levelPtr];
 
@@ -78,8 +80,13 @@ void Game::run()
             if (message.message == Messages::PLAYER_DIED) {
 
             }
+            if (message.message == Messages::START_GAME) {
+                inMainMenu = false;
+                eventManager.clearMessage(message.MessageID);
+            }
             if (message.message == Messages::QUIT_GAME) {
                 GameIsRunning = false;
+                eventManager.clearMessage(message.MessageID);
                 continue;
             }
             if (message.message == Messages::ENTER_EDITOR_MODE) {
@@ -87,8 +94,10 @@ void Game::run()
                 eventManager.clearMessage(message.MessageID);
             }
         }
-
-        if (inEditorMode){
+        if (inMainMenu){
+            mainMenu.update(eventManager);
+            mainMenu.render(renderer.getRenderer());
+        } else if (inEditorMode){
             levelEditor.update(eventManager);
             levelEditor.render(renderer.getRenderer());
         } else {

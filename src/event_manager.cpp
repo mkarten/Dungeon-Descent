@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../include/event_manager.hpp"
+#include "../include/utils.hpp"
 
 
 EventManager::EventManager()
@@ -24,6 +25,11 @@ EventManager::~EventManager()
 }
 
 void EventManager::update() {
+    // update the delta time
+    currentTime = utils::hireTimeInSeconds();
+    deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
     // save the current mouse buttons state
     mouse.setLastButtons(mouse.Buttons);
     // save the current keys state
