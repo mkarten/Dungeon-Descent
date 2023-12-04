@@ -48,6 +48,8 @@ void LevelEditor::update(EventManager &eventManager) {
         std::vector<StaticEntity> staticEntities = *getStaticEntities();
         staticEntities.push_back(newStaticEntity);
         setStaticEntities(staticEntities);
+        // print the legnth of the static entities
+        std::cout << staticEntities.size() << std::endl;
     }
     if (eventManager.Keys[SDL_SCANCODE_DOWN] && !eventManager.LastKeys[SDL_SCANCODE_DOWN]){
         placingCursor.h += 16;
@@ -73,6 +75,7 @@ void LevelEditor::update(EventManager &eventManager) {
         std::string cwd = utils::getCurrentWorkingDirectory();
         std::string path = utils::chooseFile("Save level", cwd, "Level files (*.json)\0*.lvl\0All files (*.*)\0*.*\0");
         std::cout << path << std::endl;
+        levelData.setStaticEntities(*getStaticEntities());
         getLevelData()->SerializeToFile(path);
     }
 

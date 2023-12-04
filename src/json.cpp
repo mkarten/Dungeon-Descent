@@ -1,6 +1,7 @@
 #include "../include/json.hpp"
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 std::string JSON::Serialize() const
 {
@@ -36,6 +37,7 @@ bool JSON::SerializeToFile(const std::string& filePath)
 {
     std::ofstream f(filePath);
     std::string s = Serialize();
+    std::cout << s << std::endl;
     f << s;
     f.flush();
     f.close();
