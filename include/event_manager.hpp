@@ -16,6 +16,7 @@ namespace Messages{
     const std::string ENTER_EDITOR_MODE = "ENTER_EDITOR_MODE";
     const std::string START_GAME = "START_GAME";
     const std::string COOLDOWN_RESET = "COOLDOWN_RESET";
+    const std::string GAME_RESTART = "GAME_RESTART";
 
     enum IDs{
         GAME,

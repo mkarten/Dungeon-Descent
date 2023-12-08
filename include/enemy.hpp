@@ -17,6 +17,8 @@ class Enemy : public Entity
         Vector2f getLastPos() {return lastPos;}
         bool getWasHit() {return wasHit;}
         void setWasHit(bool newWasHit) {wasHit = newWasHit;}
+        bool getTriggered() {return triggered;}
+        void setTriggered(bool newTriggered) {triggered = newTriggered;}
     private:
         int health;
         int maxHealth;
@@ -24,5 +26,8 @@ class Enemy : public Entity
         Vector2f *PlayerPos;
         int triggerDistance;
         bool triggered;
+        float randomDirectionTimer;
+        Vector2f randomDirection;
+        float randomDirectionSpeed;
         int damage;
 };

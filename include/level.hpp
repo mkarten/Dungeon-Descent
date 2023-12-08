@@ -62,6 +62,8 @@ public:
     std::vector<Entity> entities;
     std::vector<Enemy> enemies;
     std::vector<StaticEntity> staticEntities;
+    float timer;
     Player *player;
+    bool playerDead;
     LevelData levelData;
 };

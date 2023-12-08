@@ -2,11 +2,14 @@
 #include "../include/constants.hpp"
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <iomanip>
 
 Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap) {
 
     // read the json in the level data file
     levelData.DeserializeFromFile(levelDataFileName);
+
+    timer = 0;
 
     // copy the static entities from the level data to the level
     staticEntities = levelData.getStaticEntities();
@@ -21,11 +24,11 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
     int enemyWidth, enemyHeight;
     SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
-    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
-    Enemy enemy2 = Enemy(Vector2f(300, 200), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
-    Enemy enemy3 = Enemy(Vector2f(200, 300), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
-    Enemy enemy4 = Enemy(Vector2f(300, 300), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
-    Enemy enemy5 = Enemy(Vector2f(250, 250), enemyTex, enemyWidth, enemyHeight, 200, 1, &player->pos, 5);
+    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
+    Enemy enemy2 = Enemy(Vector2f(300, 200), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
+    Enemy enemy3 = Enemy(Vector2f(200, 300), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
+    Enemy enemy4 = Enemy(Vector2f(300, 300), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
+    Enemy enemy5 = Enemy(Vector2f(250, 250), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
     enemies.push_back(enemy);
     enemies.push_back(enemy2);
     enemies.push_back(enemy3);
@@ -56,6 +59,28 @@ void Level::update(EventManager &eventManager){
 
     // update the player
     player->update(eventManager);
+
+    // check if the timer has exeded the level time limit
+    if (timer>=TIME_LIMIT && !playerDead){
+        // kill the player
+        player->health = 0;
+        playerDead = true;
+        // remove trigger from all the entities
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies[i].setTriggered(false);
+        }
+    }else{
+        // update the timer with the delta time
+        timer += eventManager.deltaTime;
+    }
+
+    if (playerDead){
+        if (eventManager.Keys[SDL_SCANCODE_RETURN] && !eventManager.LastKeys[SDL_SCANCODE_RETURN]){
+            // send the restart game event
+            eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::LEVEL, Messages::GAME_RESTART);
+        }
+    }
+
 
     // check for collisions between the player and the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -132,7 +157,6 @@ void Level::update(EventManager &eventManager){
                     enemies[j].setWasHit(true);
                 }
             }
-
         }
     }
     for (int i = 0; i < enemies.size(); i++) {
@@ -175,6 +199,24 @@ void Level::render(SDL_Renderer *renderer){
     player->render(renderer);
     // print the level name for debug purposes
     utils::renderText(renderer, getLevelName(), 0, WINDOW_HEIGHT-100, SDL_Color {0, 0, 0});
+    // print the timer with one digit precision
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << timer;
+    std::string timerText = stream.str();
+    utils::renderText(renderer, timerText, WINDOW_WIDTH-100, 100, SDL_Color {0, 0, 0});
+    // if the player is dead render the game over overlay
+    if (player->health <= 0) {
+        // change the blend mode to render the overlay
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        // draw the overlay
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
+        SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+        SDL_RenderFillRect(renderer, &rect);
+        // render the game over text
+        utils::renderText(renderer, "Game Over", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2-50, SDL_Color {255, 0, 0});
+        // render the restart text
+        utils::renderText(renderer, "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
+    }
 }
 
 LevelData::LevelData() {

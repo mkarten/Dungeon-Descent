@@ -18,3 +18,5 @@ constexpr int SCALE_FACTOR = 2;
 constexpr int PLAYER_MAX_HP = 10;
 
 constexpr int UI_SCALE_FACTOR = 4;
+
+constexpr int TIME_LIMIT = 60;

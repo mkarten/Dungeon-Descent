@@ -14,6 +14,7 @@ public:
     Weapon weapon;
     int health;
     int maxHealth;
+    bool dead;
     SDL_Texture *fullHeart;
     SDL_Texture *halfHeart;
     SDL_Texture *emptyHeart;

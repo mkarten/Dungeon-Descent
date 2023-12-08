@@ -15,6 +15,7 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     tex = p_tex;
     width = w;
     height = h;
+    dead = false;
     health = PLAYER_MAX_HP;
     maxHealth = PLAYER_MAX_HP;
     fullHeart = utils::getHeartFullTexture();
@@ -24,28 +25,36 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
 
 void Player::update(EventManager &eventManager)
 {
-    lastPos = pos;
-    // update the entity
-    if (eventManager.Keys[SDL_SCANCODE_W] || eventManager.Keys[SDL_SCANCODE_UP]) {
-        pos.y -= 1;
+    if (!dead){
+        if (health <= 0){
+            dead = true;
+            eventManager.sendMessage(Messages::IDs::GAME,Messages::IDs::PLAYER,Messages::PLAYER_DIED);
+        }
+        lastPos = pos;
+        // update the entity
+        if (eventManager.Keys[SDL_SCANCODE_W] || eventManager.Keys[SDL_SCANCODE_UP]) {
+            pos.y -= 1;
+        }
+        if (eventManager.Keys[SDL_SCANCODE_S] || eventManager.Keys[SDL_SCANCODE_DOWN]) {
+            pos.y += 1;
+        }
+        if (eventManager.Keys[SDL_SCANCODE_A] || eventManager.Keys[SDL_SCANCODE_LEFT]) {
+            pos.x -= 1;
+        }
+        if (eventManager.Keys[SDL_SCANCODE_D] || eventManager.Keys[SDL_SCANCODE_RIGHT]) {
+            pos.x += 1;
+        }
+        if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
+            eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
+        }
+        if (!weapon.isOnCooldown){
+            // put center of the weapon at center of the player
+            weapon.newpos = Vector2f(pos.x + width/2-weapon.width/2, pos.y + height/2-weapon.height/2);
+        }
+        weapon.update(eventManager);
     }
-    if (eventManager.Keys[SDL_SCANCODE_S] || eventManager.Keys[SDL_SCANCODE_DOWN]) {
-        pos.y += 1;
-    }
-    if (eventManager.Keys[SDL_SCANCODE_A] || eventManager.Keys[SDL_SCANCODE_LEFT]) {
-        pos.x -= 1;
-    }
-    if (eventManager.Keys[SDL_SCANCODE_D] || eventManager.Keys[SDL_SCANCODE_RIGHT]) {
-        pos.x += 1;
-    }
-    if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
-        eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
-    }
-    if (!weapon.isOnCooldown){
-        // put center of the weapon at center of the player
-        weapon.newpos = Vector2f(pos.x + width/2-weapon.width/2, pos.y + height/2-weapon.height/2);
-    }
-    weapon.update(eventManager);
+
+
 
 
 }

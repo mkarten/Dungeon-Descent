@@ -19,6 +19,7 @@ private:
     void cleanUp(int exitCode); // Ajout de la méthode cleanUp
     float currentTime, accumulator{0.0f}, timeStep; // Membres pour le calcul des frames de logique de jeu
     Player player;
+    bool playerDead;
     int levelPtr;
     std::vector<Level> levels;
     Level currentLevel;
