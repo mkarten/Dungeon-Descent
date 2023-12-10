@@ -192,22 +192,24 @@ void Level::update(EventManager &eventManager){
 void Level::render(Renderer *renderer){
     //center the camera on the player
     // the camera position is the top left corner of the camera
-    renderer->camera.x = player->pos.x + player->width/2- renderer->camera.w/2/SCALE_FACTOR ;
-    renderer->camera.y = player->pos.y + player->height/2- renderer->camera.h/2/SCALE_FACTOR;
+    renderer->camera.newPos.x = player->pos.x + player->width/2- renderer->camera.w/2/SCALE_FACTOR ;
+    renderer->camera.newPos.y = player->pos.y + player->height/2- renderer->camera.h/2/SCALE_FACTOR;
     // clamp the camera to the level
-    if (renderer->camera.x < 0) {
-        renderer->camera.x = 0;
+    if (renderer->camera.newPos.x < 0) {
+        renderer->camera.newPos.x = 0;
     }
-    if (renderer->camera.y < 0) {
-        renderer->camera.y = 0;
+    if (renderer->camera.newPos.y < 0) {
+        renderer->camera.newPos.y = 0;
     }
-    if (renderer->camera.x > levelData.getLevelWidth() - renderer->camera.w) {
-        renderer->camera.x = levelData.getLevelWidth() - renderer->camera.w;
+    if (renderer->camera.newPos.x > levelData.getLevelWidth() - renderer->camera.w) {
+        renderer->camera.newPos.x = levelData.getLevelWidth() - renderer->camera.w;
     }
-    if (renderer->camera.y > levelData.getLevelHeight() - renderer->camera.h) {
-        renderer->camera.y = levelData.getLevelHeight() - renderer->camera.h;
+    if (renderer->camera.newPos.y > levelData.getLevelHeight() - renderer->camera.h) {
+        renderer->camera.newPos.y = levelData.getLevelHeight() - renderer->camera.h;
     }
-
+    // lerping the camera position
+    renderer->camera.pos = utils::lerpVector2f(renderer->camera.pos, renderer->camera.newPos, 0.07f);
+    std::cout << renderer->camera.pos.x << " " << renderer->camera.pos.y << std::endl;
 
     // render the static entities
     for (int i = 0; i < staticEntities.size(); i++) {

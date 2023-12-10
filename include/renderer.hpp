@@ -6,8 +6,8 @@
 #include "constants.hpp"
 
 struct Camera{
-    int x = 0;
-    int y = 0;
+    Vector2f pos;
+    Vector2f newPos;
     int w = 0;
     int h = 0;
 };
@@ -23,10 +23,10 @@ public:
         return renderer;
     }
     Vector2f worldspaceToScreenspace(Vector2f worldspacePos){
-        return {worldspacePos.x - camera.x, worldspacePos.y - camera.y};
+        return {worldspacePos.x - camera.pos.x, worldspacePos.y - camera.pos.y};
     }
     Vector2f screenspaceToWorldspace(Vector2f screenspacePos){
-        return {screenspacePos.x + camera.x*SCALE_FACTOR, screenspacePos.y + camera.y*SCALE_FACTOR};
+        return {screenspacePos.x + camera.pos.x*SCALE_FACTOR, screenspacePos.y + camera.pos.y*SCALE_FACTOR};
     }
     Camera camera;
 private:

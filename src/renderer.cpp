@@ -21,6 +21,7 @@ Renderer::Renderer(const char* title, int width, int height){
     }
     camera.w = width;
     camera.h = height;
-    camera.x = 0;
-    camera.y = 0;
+    camera.pos.x = 0;
+    camera.pos.y = 0;
+    camera.newPos = camera.pos;
 }
