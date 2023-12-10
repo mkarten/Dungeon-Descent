@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "vector.hpp"
+#include "constants.hpp"
 
 struct Camera{
     int x = 0;
@@ -25,7 +26,7 @@ public:
         return {worldspacePos.x - camera.x, worldspacePos.y - camera.y};
     }
     Vector2f screenspaceToWorldspace(Vector2f screenspacePos){
-        return {screenspacePos.x + camera.x, screenspacePos.y + camera.y};
+        return {screenspacePos.x + camera.x*SCALE_FACTOR, screenspacePos.y + camera.y*SCALE_FACTOR};
     }
     Camera camera;
 private:

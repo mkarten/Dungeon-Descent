@@ -23,6 +23,7 @@ class Enemy : public Entity
         Vector2f *getPlayerPos() {return PlayerPos;}
         void setPlayerPos(Vector2f *newPlayerPos) {PlayerPos = newPlayerPos;}
         std::string texName;
+        bool flipSprite;
     private:
         int health;
         int maxHealth;

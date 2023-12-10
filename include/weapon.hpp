@@ -13,6 +13,8 @@ public:
     double angle;
     double newAngle;
     Vector2f newpos;
+    Vector2f targetPos;
+    Vector2f mousePos;
     int dammage;
     float cooldown;
     float cooldownTimer;

@@ -187,8 +187,8 @@ void Level::update(EventManager &eventManager){
 void Level::render(Renderer *renderer){
     //center the camera on the player
     // the camera position is the top left corner of the camera
-    renderer->camera.x = player->pos.x - 100;
-    renderer->camera.y = player->pos.y - 100;
+    renderer->camera.x = player->pos.x + player->width/2- renderer->camera.w/2/SCALE_FACTOR ;
+    renderer->camera.y = player->pos.y + player->height/2- renderer->camera.h/2/SCALE_FACTOR;
     // clamp the camera to the level
     if (renderer->camera.x < 0) {
         renderer->camera.x = 0;
@@ -234,6 +234,10 @@ void Level::render(Renderer *renderer){
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
     }
+    // draw a crosshair at the center of the screen
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 255);
+    SDL_RenderDrawLine(renderer->getRenderer(), WINDOW_WIDTH/2-10, WINDOW_HEIGHT/2, WINDOW_WIDTH/2+10, WINDOW_HEIGHT/2);
+    SDL_RenderDrawLine(renderer->getRenderer(), WINDOW_WIDTH/2, WINDOW_HEIGHT/2-10, WINDOW_WIDTH/2, WINDOW_HEIGHT/2+10);
 }
 
 LevelData::LevelData() {

@@ -14,6 +14,7 @@ public:
     int health;
     int maxHealth;
     bool dead;
+    bool flipSprite;
     SDL_Texture *fullHeart;
     SDL_Texture *halfHeart;
     SDL_Texture *emptyHeart;

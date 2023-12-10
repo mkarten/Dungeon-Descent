@@ -37,6 +37,12 @@ void Enemy::update(EventManager &eventManager)
         // wander in the random direction
         pos += randomDirection * randomDirectionSpeed;
     }
+    // if the enemy is going left, flip the sprite
+    if (pos.x < lastPos.x) {
+        flipSprite = true;
+    }else{
+        flipSprite = false;
+    }
 }
 
 void Enemy::render(Renderer *renderer)
@@ -44,7 +50,7 @@ void Enemy::render(Renderer *renderer)
     // calculate the screenspace position of the enemy
     Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
     SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopy(renderer->getRenderer(),tex, NULL, &dst);
+    SDL_RenderCopyEx(renderer->getRenderer(),tex, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     utils::drawBoundingBox(renderer->getRenderer(),
                            screenPos.x*SCALE_FACTOR,
                            screenPos.y*SCALE_FACTOR,

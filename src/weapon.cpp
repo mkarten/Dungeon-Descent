@@ -12,6 +12,11 @@ Weapon::Weapon(Vector2f p_pos, SDL_Texture *p_tex, int width, int height, int da
     this->cooldown = cooldown;
     this->cooldownTimer = 0;
     this->range = range;
+    this->isOnCooldown = false;
+    this->newAngle = 0;
+    this->newpos = pos;
+    this->lastPos = pos;
+    this->targetPos = Vector2f{0, 0};
 }
 
 void Weapon::render(Renderer *renderer){
@@ -21,12 +26,16 @@ void Weapon::render(Renderer *renderer){
     // render the weapon with x and y as the center of the weapon
     SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
     SDL_RenderCopyEx(renderer->getRenderer(),tex, NULL, &dst, angle, NULL, SDL_FLIP_NONE);
+
+    // calculate the worldspace position of the mouse to set as the target position
+    targetPos = renderer->screenspaceToWorldspace(mousePos);
 }
 
 void Weapon::update(EventManager &eventManager){
+    mousePos = Vector2f{static_cast<float>(eventManager.mouse.x), static_cast<float>(eventManager.mouse.y)};
     //point the center of the weapon at the mouse when it is not on cooldown
     if (!isOnCooldown){
-        newAngle = atan2(eventManager.mouse.y - ((pos.y + height/2)*SCALE_FACTOR), eventManager.mouse.x - ((pos.x + width/2)*SCALE_FACTOR)) * 180 / M_PI;
+        newAngle = atan2(targetPos.y - ((pos.y + height/2)*SCALE_FACTOR), targetPos.x - ((pos.x + width/2)*SCALE_FACTOR)) * 180 / M_PI;
     }
     // when the left mouse button is pressed attack with the weapon if it is not on cooldown
     if (eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT] && !isOnCooldown){

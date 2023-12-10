@@ -21,6 +21,7 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     fullHeart = utils::getHeartFullTexture();
     halfHeart = utils::getHeartHalfTexture();
     emptyHeart = utils::getHeartEmptyTexture();
+    flipSprite = false;
 }
 
 void Player::update(EventManager &eventManager)
@@ -40,9 +41,11 @@ void Player::update(EventManager &eventManager)
         }
         if (eventManager.Keys[SDL_SCANCODE_A] || eventManager.Keys[SDL_SCANCODE_LEFT]) {
             pos.x -= 1;
+            flipSprite = true;
         }
         if (eventManager.Keys[SDL_SCANCODE_D] || eventManager.Keys[SDL_SCANCODE_RIGHT]) {
             pos.x += 1;
+            flipSprite = false;
         }
         if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
@@ -65,7 +68,7 @@ void Player::render(Renderer *renderer)
     Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
     // render the entity
     SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopy(renderer->getRenderer(),tex, NULL, &dst);
+    SDL_RenderCopyEx(renderer->getRenderer(),tex, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 
     //render the weapon
     weapon.render(renderer);
