@@ -1,5 +1,6 @@
 #pragma once
 
+#include "renderer.hpp"
 #include "entity.hpp"
 #include "event_manager.hpp"
 
@@ -7,9 +8,9 @@ class Enemy : public Entity
 {
     public:
         Enemy();
-        Enemy(Vector2f p_pos, SDL_Texture *p_tex, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health);
+        Enemy(Vector2f p_pos, std::string e_texName, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health);
         void update(EventManager &eventManager);
-        void render(SDL_Renderer *renderer);
+        void render(Renderer *renderer);
         int getDamage() {return damage;}
         int getHealth() {return health;}
         void setHealth(int newHealth) {health = newHealth;}
@@ -19,6 +20,9 @@ class Enemy : public Entity
         void setWasHit(bool newWasHit) {wasHit = newWasHit;}
         bool getTriggered() {return triggered;}
         void setTriggered(bool newTriggered) {triggered = newTriggered;}
+        Vector2f *getPlayerPos() {return PlayerPos;}
+        void setPlayerPos(Vector2f *newPlayerPos) {PlayerPos = newPlayerPos;}
+        std::string texName;
     private:
         int health;
         int maxHealth;
@@ -29,5 +33,6 @@ class Enemy : public Entity
         float randomDirectionTimer;
         Vector2f randomDirection;
         float randomDirectionSpeed;
+
         int damage;
 };

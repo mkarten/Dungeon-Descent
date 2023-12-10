@@ -49,5 +49,12 @@
       "y": 32,
       "collidable": false
     }
-  ]
+  ],
+  "enemies": [
+  {
+    "type": "enemy",
+    "x": 140,
+    "y": 140
+  }
+]
 }

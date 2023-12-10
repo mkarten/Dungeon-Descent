@@ -2,6 +2,7 @@
 
 #include "level.hpp"
 #include "constants.hpp"
+#include "renderer.hpp"
 
 class MainMenu : public Level
 {
@@ -42,7 +43,7 @@ public:
     }
     MainMenu() {}
     void update(EventManager &eventManager);
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
 
     Vector2i startButtonPos;
     Vector2i startButtonSize;

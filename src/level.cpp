@@ -14,26 +14,14 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     // copy the static entities from the level data to the level
     staticEntities = levelData.getStaticEntities();
 
+    // copy the enemies from the level data to the level
+    enemies = levelData.getEnemies();
+
     // set the player to the player passed in from the main game
     player = Gplayer;
 
     // position the player at the spawn point
     player->pos = levelData.getPlayerSpawnPoint();
-
-    // add a temporary enemy to the level
-    SDL_Texture *enemyTex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap["big_demon_idle_anim_f0"], renderer);
-    int enemyWidth, enemyHeight;
-    SDL_QueryTexture(enemyTex, NULL, NULL, &enemyWidth, &enemyHeight);
-    Enemy enemy = Enemy(Vector2f(200, 200), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
-    Enemy enemy2 = Enemy(Vector2f(300, 200), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
-    Enemy enemy3 = Enemy(Vector2f(200, 300), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
-    Enemy enemy4 = Enemy(Vector2f(300, 300), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
-    Enemy enemy5 = Enemy(Vector2f(250, 250), enemyTex, enemyWidth, enemyHeight, 50, 1, &player->pos, 5);
-    enemies.push_back(enemy);
-    enemies.push_back(enemy2);
-    enemies.push_back(enemy3);
-    enemies.push_back(enemy4);
-    enemies.push_back(enemy5);
 
     // set the texture of the static entities to the tileset texture
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -47,6 +35,16 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
         } else{
             SDL_QueryTexture(staticEntities[i].tex, NULL, NULL, &staticEntities[i].width, &staticEntities[i].height);
         }
+    }
+
+    // set the texture of the enemies to the tileset texture
+    for (int i = 0; i < enemies.size(); i++) {
+        // get the texture from the tileset
+        enemies[i].tex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap[enemies[i].texName], renderer);
+        // set the width and height of the enemy
+        SDL_QueryTexture(enemies[i].tex, NULL, NULL, &enemies[i].width, &enemies[i].height);
+        // set the player position pointer of the enemy
+        enemies[i].setPlayerPos(&player->pos);
     }
 }
 
@@ -186,7 +184,26 @@ void Level::update(EventManager &eventManager){
     }
 }
 
-void Level::render(SDL_Renderer *renderer){
+void Level::render(Renderer *renderer){
+    //center the camera on the player
+    // the camera position is the top left corner of the camera
+    renderer->camera.x = (player->pos.x - renderer->camera.w/2);
+    renderer->camera.y = (player->pos.y - renderer->camera.h/2);
+    // clamp the camera to the level
+    if (renderer->camera.x < 0) {
+        renderer->camera.x = 0;
+    }
+    if (renderer->camera.y < 0) {
+        renderer->camera.y = 0;
+    }
+    if (renderer->camera.x > levelData.getLevelWidth() - renderer->camera.w) {
+        renderer->camera.x = levelData.getLevelWidth() - renderer->camera.w;
+    }
+    if (renderer->camera.y > levelData.getLevelHeight() - renderer->camera.h) {
+        renderer->camera.y = levelData.getLevelHeight() - renderer->camera.h;
+    }
+
+
     // render the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
         staticEntities[i].render(renderer);
@@ -198,24 +215,24 @@ void Level::render(SDL_Renderer *renderer){
     // render the player
     player->render(renderer);
     // print the level name for debug purposes
-    utils::renderText(renderer, getLevelName(), 0, WINDOW_HEIGHT-100, SDL_Color {0, 0, 0});
+    utils::renderText(renderer->getRenderer(), getLevelName(), 0, WINDOW_HEIGHT-100, SDL_Color {0, 0, 0});
     // print the timer with one digit precision
     std::stringstream stream;
     stream << std::fixed << std::setprecision(2) << timer;
     std::string timerText = stream.str();
-    utils::renderText(renderer, timerText, WINDOW_WIDTH-100, 100, SDL_Color {0, 0, 0});
+    utils::renderText(renderer->getRenderer(), timerText, WINDOW_WIDTH-100, 100, SDL_Color {0, 0, 0});
     // if the player is dead render the game over overlay
     if (player->health <= 0) {
         // change the blend mode to render the overlay
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawBlendMode(renderer->getRenderer(), SDL_BLENDMODE_BLEND);
         // draw the overlay
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 100);
         SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-        SDL_RenderFillRect(renderer, &rect);
+        SDL_RenderFillRect(renderer->getRenderer(), &rect);
         // render the game over text
-        utils::renderText(renderer, "Game Over", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2-50, SDL_Color {255, 0, 0});
+        utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2-50, SDL_Color {255, 0, 0});
         // render the restart text
-        utils::renderText(renderer, "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
+        utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
     }
 }
 
@@ -313,6 +330,60 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         // add the static entity to the staticEntities vector
         staticEntities.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()), texNameVal->value.GetString(),w,h,collidableVal->value.GetBool());
     }
+
+    // check if the enemies array was set
+    itr = obj.FindMember("enemies");
+    if (itr == obj.MemberEnd()) {
+        std::cout << "Error: enemies not found in level data" << std::endl;
+        return false;
+    }
+    // check if the enemies array is an array
+    if (!itr->value.IsArray()) {
+        std::cout << "Error: enemies is not an array in level data" << std::endl;
+        return false;
+    }
+
+    // iterate through the enemies array and print each object in the array
+    for (rapidjson::SizeType i = 0; i < itr->value.Size(); i++) {
+        if (!itr->value[i].IsObject()) {
+            std::cout << "Error: enemies[" << i << "] is not an object in level data" << std::endl;
+            return false;
+        }
+        auto tempObj = itr->value[i].GetObject();
+        rapidjson::Value::ConstMemberIterator typeVal = tempObj.FindMember("type");
+        if (typeVal == tempObj.MemberEnd()) {
+            std::cout << "Error: staticEntities[" << i << "].textureName not found in level data" << std::endl;
+            return false;
+        }
+        rapidjson::Value::ConstMemberIterator xVal = tempObj.FindMember("x");
+        if (xVal == tempObj.MemberEnd()) {
+            std::cout << "Error: staticEntities[" << i << "].x not found in level data" << std::endl;
+            return false;
+        }
+        rapidjson::Value::ConstMemberIterator yVal = tempObj.FindMember("y");
+        if (yVal == tempObj.MemberEnd()) {
+            std::cout << "Error: staticEntities[" << i << "].y not found in level data" << std::endl;
+            return false;
+        }
+        std::string type = typeVal->value.GetString();
+        if (type == "enemy") {
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 5, nullptr, 5);
+        }
+    }
+
+    //calculate the level width and height based on the static entities
+    int levelWidth = 0;
+    int levelHeight = 0;
+    for (int i = 0; i < staticEntities.size(); i++) {
+        if (staticEntities[i].pos.x + staticEntities[i].width > levelWidth) {
+            levelWidth = staticEntities[i].pos.x + staticEntities[i].width;
+        }
+        if (staticEntities[i].pos.y + staticEntities[i].height > levelHeight) {
+            levelHeight = staticEntities[i].pos.y + staticEntities[i].height;
+        }
+    }
+    setLevelWidth(levelWidth);
+    setLevelHeight(levelHeight);
     return true;
 }
 

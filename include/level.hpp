@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../include/renderer.hpp"
 #include <SDL2/SDL.h>
 #include "../include/entity.hpp"
 #include "../include/player.hpp"
@@ -32,10 +32,22 @@ public:
     std::vector<StaticEntity> getStaticEntities() const { return staticEntities; }
     void setStaticEntities(std::vector<StaticEntity> sEntities) { this->staticEntities = sEntities; }
 
+    std::vector<Enemy> getEnemies() const { return enemies; }
+    void setEnemies(std::vector<Enemy> enemiess) { this->enemies = enemiess; }
+
+    int getLevelWidth() const { return levelWidth; }
+    void setLevelWidth(int lWidth) { this->levelWidth = lWidth; }
+
+    int getLevelHeight() const { return levelHeight; }
+    void setLevelHeight(int lHeight) { this->levelHeight = lHeight; }
+
 private:
     std::string levelName;
     Vector2f playerSpawnPoint;
     std::vector<StaticEntity> staticEntities;
+    std::vector<Enemy> enemies;
+    int levelWidth;
+    int levelHeight;
 };
 
 
@@ -48,7 +60,7 @@ public:
     Level(SDL_Renderer *renderer,Player *player ,std::string levelDataFileName, SDL_Texture *tilesetTex, std::map<std::string, TileInfo> &tilesInfoMap);
     Level() {}
     void update(EventManager &eventManager);
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
 
     // getters
     std::string getLevelName() const { return levelData.getLevelName(); }

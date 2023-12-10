@@ -59,11 +59,13 @@ void Player::update(EventManager &eventManager)
 
 }
 
-void Player::render(SDL_Renderer *renderer)
+void Player::render(Renderer *renderer)
 {
+    // calculate the screenspace position of the player
+    Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
     // render the entity
-    SDL_Rect dst{static_cast<int>(pos.x*SCALE_FACTOR), static_cast<int>(pos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopy(renderer,tex, NULL, &dst);
+    SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
+    SDL_RenderCopy(renderer->getRenderer(),tex, NULL, &dst);
 
     //render the weapon
     weapon.render(renderer);
@@ -82,22 +84,22 @@ void Player::render(SDL_Renderer *renderer)
     for (int i = 0; i < maxHealth / 2; i++) {
         if (tempHealth >= 2) {
             SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
-            SDL_RenderCopy(renderer, fullHeart, NULL, &dst);
+            SDL_RenderCopy(renderer->getRenderer(), fullHeart, NULL, &dst);
         } else if (tempHealth == 1) {
             SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
-            SDL_RenderCopy(renderer, halfHeart, NULL, &dst);
+            SDL_RenderCopy(renderer->getRenderer(), halfHeart, NULL, &dst);
         } else {
             SDL_Rect dst{heartX, heartY, heartWidth, heartHeight};
-            SDL_RenderCopy(renderer, emptyHeart, NULL, &dst);
+            SDL_RenderCopy(renderer->getRenderer(), emptyHeart, NULL, &dst);
         }
         tempHealth -= 2;
         heartX += heartWidth + (heartSpacing*UI_SCALE_FACTOR);
     }
 
     // line around the player
-    utils::drawBoundingBox(renderer,
-                           pos.x*SCALE_FACTOR,
-                           pos.y*SCALE_FACTOR,
+    utils::drawBoundingBox(renderer->getRenderer(),
+                           screenPos.x*SCALE_FACTOR,
+                           screenPos.y*SCALE_FACTOR,
                            width*SCALE_FACTOR,
                            height*SCALE_FACTOR,
                            {255, 0, 0, 255}

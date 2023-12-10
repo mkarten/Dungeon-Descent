@@ -2,6 +2,7 @@
 
 #include "entity.hpp"
 #include <string>
+#include "renderer.hpp"
 
 class StaticEntity : public Entity
 {
@@ -14,7 +15,7 @@ public:
     }
     StaticEntity() {}
     SDL_Rect getRect(){return {static_cast<int>(pos.x), static_cast<int>(pos.y), width, height};};
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
     std::string texName;
     bool collidable = false;
 

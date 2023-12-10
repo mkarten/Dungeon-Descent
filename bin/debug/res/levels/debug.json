@@ -9,8 +9,8 @@
       "textureName":"floor_1",
       "x": 0,
       "y": 0,
-      "width": 1280,
-      "height": 1280,
+      "width": 5000,
+      "height": 5000,
       "collidable": false
     },
     {
@@ -48,6 +48,13 @@
       "x": 16,
       "y": 32,
       "collidable": false
+    }
+  ],
+  "enemies": [
+    {
+      "type": "enemy",
+      "x": 120,
+      "y": 100
     }
   ]
 }

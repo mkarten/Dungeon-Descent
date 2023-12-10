@@ -9,13 +9,13 @@
 
 Game::Game()
 {
-    renderer = Renderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+    renderer = new Renderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
     currentTime = utils::hireTimeInSeconds();
     timeStep = TIME_STEP;
     utils::TileMap tilesInfoMap = utils::LoadTileInfo("res/tile_offset_map.txt");
 
     // load the tileset
-    SDL_Texture *tileset = IMG_LoadTexture(renderer.getRenderer(), "res/gfx/tileset.png");
+    SDL_Texture *tileset = IMG_LoadTexture(renderer->getRenderer(), "res/gfx/tileset.png");
     // check if the tileset was loaded
     if (tileset == nullptr) {
         utils::logLastSDLError();
@@ -27,18 +27,18 @@ Game::Game()
     TileInfo knightWeaponTileInfo = tilesInfoMap["weapon_golden_sword"];
 
     // load the player tiles textures
-    SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer.getRenderer());
-    SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer.getRenderer());
+    SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer->getRenderer());
+    SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer->getRenderer());
 
-    utils::loadHeartTextures(tileset, tilesInfoMap, renderer.getRenderer());
+    utils::loadHeartTextures(tileset, tilesInfoMap, renderer->getRenderer());
 
     // create the player
     player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    levels.emplace_back(renderer.getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
-    levelEditor = LevelEditor(renderer.getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
-    mainMenu = MainMenu(renderer.getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
+    levelEditor = LevelEditor(renderer->getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
+    mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 
     levelPtr = 0;
     currentLevel = levels[levelPtr];
@@ -99,24 +99,27 @@ void Game::run()
         }
         if (inMainMenu){
             mainMenu.update(eventManager);
-            mainMenu.render(renderer.getRenderer());
+            mainMenu.render(renderer);
         } else if (inEditorMode){
             levelEditor.update(eventManager);
-            levelEditor.render(renderer.getRenderer());
+            levelEditor.render(renderer);
         } else {
             // update the game logic
             currentLevel.update(eventManager);
 
+            // clear the screen
+            SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 255);
+            SDL_RenderClear(renderer->getRenderer());
             // render the game
-            renderer.render(currentLevel);
+            currentLevel.render(renderer);
         }
 
 
 
         int roundFps = static_cast<int>(1.0f / frameTime);
-        utils::renderText(renderer.getRenderer(), "FPS: " + std::to_string(roundFps), 0, WINDOW_HEIGHT-50, {0, 0, 0, 255});
+        utils::renderText(renderer->getRenderer(), "FPS: " + std::to_string(roundFps), 0, WINDOW_HEIGHT-50, {0, 0, 0, 255});
 
-        SDL_RenderPresent(renderer.getRenderer());
+        SDL_RenderPresent(renderer->getRenderer());
     }
 }
 

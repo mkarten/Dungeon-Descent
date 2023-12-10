@@ -84,10 +84,10 @@ void LevelEditor::update(EventManager &eventManager) {
 
 }
 
-void LevelEditor::render(SDL_Renderer *renderer) {
+void LevelEditor::render(Renderer *renderer) {
     // clear the screen
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    SDL_RenderClear(renderer->getRenderer());
     // render the tiles
     std::vector<StaticEntity> staticEntities = *getStaticEntities();
     for (auto &staticEntity : staticEntities) {
@@ -96,12 +96,12 @@ void LevelEditor::render(SDL_Renderer *renderer) {
     // render the player
     getPlayer()->render(renderer);
     // render the placingCursor
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 0, 0, 255);
     SDL_Rect scaledPlacingCursor = {placingCursor.x*SCALE_FACTOR, placingCursor.y*SCALE_FACTOR, placingCursor.w*SCALE_FACTOR, placingCursor.h*SCALE_FACTOR};
-    SDL_RenderDrawRect(renderer, &scaledPlacingCursor);
+    SDL_RenderDrawRect(renderer->getRenderer(), &scaledPlacingCursor);
     // draw the current selected tile at the bottom right corner
     int w, h;
     SDL_QueryTexture(tilesetTexs[tilesetTexsIndex], NULL, NULL, &w, &h);
     SDL_Rect scaledTilesetTex = {WINDOW_WIDTH-w*SCALE_FACTOR, WINDOW_HEIGHT-h*SCALE_FACTOR, w*SCALE_FACTOR, h*SCALE_FACTOR};
-    SDL_RenderCopy(renderer, tilesetTexs[tilesetTexsIndex], NULL, &scaledTilesetTex);
+    SDL_RenderCopy(renderer->getRenderer(), tilesetTexs[tilesetTexsIndex], NULL, &scaledTilesetTex);
 }

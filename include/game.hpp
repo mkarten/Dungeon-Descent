@@ -27,6 +27,6 @@ private:
     bool inEditorMode = false;
     MainMenu mainMenu;
     bool inMainMenu = true;
-    Renderer renderer;
+    Renderer *renderer;
     EventManager eventManager;
 };

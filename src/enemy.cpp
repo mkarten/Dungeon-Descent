@@ -1,11 +1,13 @@
+#include <iostream>
 #include "../include/enemy.hpp"
 #include "../include/utils.hpp"
 #include "../include/constants.hpp"
 
 
-Enemy::Enemy(Vector2f p_pos, SDL_Texture *p_tex, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health)
-    : Entity(p_pos, p_tex, width, height),triggerDistance(triggerDistance),damage(damage),PlayerPos(PlayerPos)
+Enemy::Enemy(Vector2f p_pos, std::string e_texName, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health)
+    : Entity(p_pos, nullptr, width, height),triggerDistance(triggerDistance),damage(damage),PlayerPos(PlayerPos)
 {
+    texName = e_texName;
     triggered = false;
     randomDirectionTimer = 0;
     randomDirection = Vector2f{0, 0};
@@ -35,16 +37,19 @@ void Enemy::update(EventManager &eventManager)
         // wander in the random direction
         pos += randomDirection * randomDirectionSpeed;
     }
-
+    std::cout << "enemy random direction: " << randomDirection.x << ", " << randomDirection.y << std::endl;
+    std::cout << "random direction timer: " << randomDirectionTimer << std::endl;
 }
 
-void Enemy::render(SDL_Renderer *renderer)
+void Enemy::render(Renderer *renderer)
 {
-    SDL_Rect dst{static_cast<int>(pos.x*SCALE_FACTOR), static_cast<int>(pos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopy(renderer,tex, NULL, &dst);
-    utils::drawBoundingBox(renderer,
-                           pos.x*SCALE_FACTOR,
-                           pos.y*SCALE_FACTOR,
+    // calculate the screenspace position of the enemy
+    Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
+    SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
+    SDL_RenderCopy(renderer->getRenderer(),tex, NULL, &dst);
+    utils::drawBoundingBox(renderer->getRenderer(),
+                           screenPos.x*SCALE_FACTOR,
+                           screenPos.y*SCALE_FACTOR,
                            width*SCALE_FACTOR,
                            height*SCALE_FACTOR,
                            {255, 0, 0, 255}
@@ -53,16 +58,16 @@ void Enemy::render(SDL_Renderer *renderer)
     int barWidth = 20;
     int barHeightOffset = 5;
     // calculate the x position of the health bar based on the width of the enemy and the width of the health bar
-    int barPosX = pos.x+(width - barWidth) / 2;
+    int barPosX = screenPos.x+(width - barWidth) / 2;
     // render the background of the health bar as a black rectangle
-    SDL_Rect healthBarBackground{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((pos.y- barHeightOffset)*SCALE_FACTOR), static_cast<int>(barWidth*SCALE_FACTOR), 5};
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &healthBarBackground);
+    SDL_Rect healthBarBackground{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((screenPos.y- barHeightOffset)*SCALE_FACTOR), static_cast<int>(barWidth*SCALE_FACTOR), 5};
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(renderer->getRenderer(), &healthBarBackground);
 
     // render the health bar above the enemy as a red rectangle that shrinks as the enemy takes damage
-    SDL_Rect healthBar{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((pos.y- barHeightOffset)*SCALE_FACTOR ), static_cast<int>(barWidth*SCALE_FACTOR * (static_cast<float>(health) / static_cast<float>(maxHealth))), 5};
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &healthBar);
+    SDL_Rect healthBar{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((screenPos.y- barHeightOffset)*SCALE_FACTOR ), static_cast<int>(barWidth*SCALE_FACTOR * (static_cast<float>(health) / static_cast<float>(maxHealth))), 5};
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 0, 0, 255);
+    SDL_RenderFillRect(renderer->getRenderer(), &healthBar);
 
 }
 

@@ -2,6 +2,7 @@
 #include "level.hpp"
 #include "utils.hpp"
 #include <string>
+#include "renderer.hpp"
 
 
 class LevelEditor : public Level
@@ -24,7 +25,7 @@ public:
     }
     LevelEditor() {}
     void update(EventManager &eventManager);
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
 private:
     SDL_Texture *tilesetTex;
     std::vector<SDL_Texture *> tilesetTexs;

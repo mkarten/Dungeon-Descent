@@ -1,1 +1,7 @@
-{"levelName":"Level Editor","playerSpawnPoint":{"x":20.0,"y":20.0},"staticEntities":[{"textureName":"floor_1","x":0.0,"y":0.0,"collidable":false,"width":640,"height":640}]}
+{"levelName":"Level Editor","playerSpawnPoint":{"x":20.0,"y":20.0},"staticEntities":[{"textureName":"floor_1","x":0.0,"y":0.0,"collidable":false,"width":640,"height":640}],  "enemies": [
+  {
+    "type": "enemy",
+    "x": 100,
+    "y": 100
+  }
+]}

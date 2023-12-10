@@ -1,3 +1,4 @@
+#pragma once
 #include "../include/renderer.hpp"
 #include "../include/utils.hpp"
 
@@ -18,12 +19,8 @@ Renderer::Renderer(const char* title, int width, int height){
         utils::logLastSDLError();
         exit(1);
     }
-}
-
-void Renderer::render(Level &level){
-    // clear the screen
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
-    // send the renderer to the level
-    level.render(renderer);
+    camera.w = width;
+    camera.h = height;
+    camera.x = 0;
+    camera.y = 0;
 }

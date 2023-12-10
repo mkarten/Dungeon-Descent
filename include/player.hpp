@@ -1,11 +1,10 @@
 #pragma once
 
+#include "../include/renderer.hpp"
 #include <SDL2/SDL.h>
 #include "../include/entity.hpp"
 #include "event_manager.hpp"
 #include "../include/weapon.hpp"
-
-
 
 class Player : public Entity{
 public:
@@ -18,6 +17,6 @@ public:
     SDL_Texture *fullHeart;
     SDL_Texture *halfHeart;
     SDL_Texture *emptyHeart;
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
     void update(EventManager &eventManager);
 };

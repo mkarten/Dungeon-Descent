@@ -1,9 +1,10 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include "../include/entity.hpp"
+#include "entity.hpp"
 #include "event_manager.hpp"
-
+#include "utils.hpp"
+#include "renderer.hpp"
 
 class Weapon : public Entity{
 public:
@@ -17,6 +18,6 @@ public:
     float cooldownTimer;
     bool isOnCooldown;
     float range;
-    void render(SDL_Renderer *renderer);
+    void render(Renderer *renderer);
     void update(EventManager &eventManager);
 };
