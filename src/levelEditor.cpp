@@ -74,9 +74,11 @@ void LevelEditor::update(EventManager &eventManager) {
     if (eventManager.Keys[SDL_SCANCODE_KP_ENTER] && !eventManager.LastKeys[SDL_SCANCODE_KP_ENTER]){
         std::string cwd = utils::getCurrentWorkingDirectory();
         std::string path = utils::chooseFile("Save level", cwd, "Level files (*.json)\0*.lvl\0All files (*.*)\0*.*\0");
-        std::cout << path << std::endl;
-        levelData.setStaticEntities(*getStaticEntities());
-        getLevelData()->SerializeToFile(path);
+        if (path != ""){
+            std::cout << path << std::endl;
+            levelData.setStaticEntities(*getStaticEntities());
+            getLevelData()->SerializeToFile(path);
+        }
     }
 
     // update the player

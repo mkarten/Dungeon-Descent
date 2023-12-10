@@ -60,6 +60,7 @@ void Level::update(EventManager &eventManager){
 
     // check if the timer has exeded the level time limit
     if (timer>=TIME_LIMIT && !playerDead){
+        std::cout << "Player dead and timer exeeded" << std::endl;
         // kill the player
         player->health = 0;
         playerDead = true;
@@ -67,7 +68,8 @@ void Level::update(EventManager &eventManager){
         for (int i = 0; i < enemies.size(); i++) {
             enemies[i].setTriggered(false);
         }
-    }else{
+    }
+    if (!playerDead){
         // update the timer with the delta time
         timer += eventManager.deltaTime;
     }
@@ -78,7 +80,6 @@ void Level::update(EventManager &eventManager){
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::LEVEL, Messages::GAME_RESTART);
         }
     }
-
 
     // check for collisions between the player and the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -179,6 +180,10 @@ void Level::update(EventManager &eventManager){
             for (int i = 0; i < enemies.size(); i++) {
                 enemies[i].setWasHit(false);
             }
+            eventManager.clearMessage(message.MessageID);
+        }
+        if (message.message == Messages::PLAYER_DIED) {
+            playerDead = true;
             eventManager.clearMessage(message.MessageID);
         }
     }
@@ -371,7 +376,7 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         }
         std::string type = typeVal->value.GetString();
         if (type == "enemy") {
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 5, nullptr, 5);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 100, nullptr, 5);
         }
     }
 
@@ -423,6 +428,19 @@ bool LevelData::Serialize(rapidjson::Writer<rapidjson::StringBuffer> *writer) co
                         }
                     writer->EndObject();
                 }
+        writer->EndArray();
+        writer->String("enemies");
+        writer->StartArray();
+            for (int i = 0; i < enemies.size(); i++) {
+                writer->StartObject();
+                    writer->String("type");
+                    writer->String(enemies[i].type.c_str());
+                    writer->String("x");
+                    writer->Double(enemies[i].pos.x);
+                    writer->String("y");
+                    writer->Double(enemies[i].pos.y);
+                writer->EndObject();
+            }
         writer->EndArray();
 
 

@@ -160,6 +160,8 @@ namespace utils{
 
         if(GetSaveFileNameA(&ofn)){
             return ofn.lpstrFile;
+        }else{
+            return "";
         }
     }
 

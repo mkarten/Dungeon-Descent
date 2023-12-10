@@ -78,10 +78,6 @@ void Game::run()
 
         // handle the messages from the event manager
         for (auto &message : eventManager.getMessages(Messages::IDs::GAME)) {
-            if (message.message == Messages::PLAYER_DIED) {
-                // show the death screen
-                eventManager.clearMessage(message.MessageID);
-            }
             if (message.message == Messages::START_GAME) {
                 inMainMenu = false;
                 eventManager.clearMessage(message.MessageID);

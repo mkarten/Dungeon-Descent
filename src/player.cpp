@@ -29,7 +29,7 @@ void Player::update(EventManager &eventManager)
     if (!dead){
         if (health <= 0){
             dead = true;
-            eventManager.sendMessage(Messages::IDs::GAME,Messages::IDs::PLAYER,Messages::PLAYER_DIED);
+            eventManager.sendMessage(Messages::IDs::LEVEL,Messages::IDs::PLAYER,Messages::PLAYER_DIED);
         }
         lastPos = pos;
         // update the entity
