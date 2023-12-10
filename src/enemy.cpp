@@ -37,8 +37,6 @@ void Enemy::update(EventManager &eventManager)
         // wander in the random direction
         pos += randomDirection * randomDirectionSpeed;
     }
-    std::cout << "enemy random direction: " << randomDirection.x << ", " << randomDirection.y << std::endl;
-    std::cout << "random direction timer: " << randomDirectionTimer << std::endl;
 }
 
 void Enemy::render(Renderer *renderer)

@@ -187,8 +187,8 @@ void Level::update(EventManager &eventManager){
 void Level::render(Renderer *renderer){
     //center the camera on the player
     // the camera position is the top left corner of the camera
-    renderer->camera.x = (player->pos.x - renderer->camera.w/2);
-    renderer->camera.y = (player->pos.y - renderer->camera.h/2);
+    renderer->camera.x = player->pos.x - 100;
+    renderer->camera.y = player->pos.y - 100;
     // clamp the camera to the level
     if (renderer->camera.x < 0) {
         renderer->camera.x = 0;
