@@ -26,6 +26,8 @@ public:
     CollisionInfo getCollisionInfo(const Entity &other) const;
     Vector2f pos;
     Vector2f lastPos;
+    float speed;
+    float maxSpeed;
     SDL_Texture *tex;
     std::string tag;
     int width, height;

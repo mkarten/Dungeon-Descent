@@ -60,7 +60,6 @@ void Level::update(EventManager &eventManager){
 
     // check if the timer has exeded the level time limit
     if (timer>=TIME_LIMIT && !playerDead){
-        std::cout << "Player dead and timer exeeded" << std::endl;
         // kill the player
         player->health = 0;
         playerDead = true;
@@ -209,7 +208,6 @@ void Level::render(Renderer *renderer){
     }
     // lerping the camera position
     renderer->camera.pos = utils::lerpVector2f(renderer->camera.pos, renderer->camera.newPos, 0.07f);
-    std::cout << renderer->camera.pos.x << " " << renderer->camera.pos.y << std::endl;
 
     // render the static entities
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -241,10 +239,6 @@ void Level::render(Renderer *renderer){
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
     }
-    // draw a crosshair at the center of the screen
-    SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 255);
-    SDL_RenderDrawLine(renderer->getRenderer(), WINDOW_WIDTH/2-10, WINDOW_HEIGHT/2, WINDOW_WIDTH/2+10, WINDOW_HEIGHT/2);
-    SDL_RenderDrawLine(renderer->getRenderer(), WINDOW_WIDTH/2, WINDOW_HEIGHT/2-10, WINDOW_WIDTH/2, WINDOW_HEIGHT/2+10);
 }
 
 LevelData::LevelData() {
@@ -378,7 +372,7 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         }
         std::string type = typeVal->value.GetString();
         if (type == "enemy") {
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 100, nullptr, 5);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 1, nullptr, 5);
         }
     }
 

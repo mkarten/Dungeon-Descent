@@ -13,15 +13,20 @@ Enemy::Enemy(Vector2f p_pos, std::string e_texName, int width, int height,int tr
     randomDirection = Vector2f{0, 0};
     this->maxHealth = health;
     this->health = health;
+    speed = 0;
+    maxSpeed = 0.5f;
 }
 
 void Enemy::update(EventManager &eventManager)
 {
     lastPos = pos;
+    Vector2f direction = Vector2f(0, 0);
     if (triggered) {
-        // move towards the player
-        Vector2f direction = utils::normalize(*PlayerPos - pos);
-        pos += direction * 0.5f;
+        direction = *PlayerPos - pos;
+        // need to look if this feature is interesting
+//        if (utils::distance(pos, *PlayerPos) > triggerDistance) {
+//            triggered = false;
+//        }
     }else{
         if (utils::distance(pos, *PlayerPos) < triggerDistance) {
             triggered = true;
@@ -35,7 +40,21 @@ void Enemy::update(EventManager &eventManager)
         }
         randomDirectionTimer -= eventManager.deltaTime;
         // wander in the random direction
-        pos += randomDirection * randomDirectionSpeed;
+        direction = randomDirection;
+    }
+    if (direction.x != 0 || direction.y != 0) {
+        direction = utils::normalize(direction);
+        // lerp the speed to maxSpeed
+        if (triggered) {
+            speed = utils::lerpf(speed, maxSpeed, 0.06f);
+        }else{
+            speed = utils::lerpf(speed, randomDirectionSpeed, 0.06f);
+        }
+        pos += direction * speed;
+    }else{
+        // lerp the speed to 0
+        speed = utils::lerpf(speed, 0, 0.06f);
+        pos += direction * speed;
     }
     // if the enemy is going left, flip the sprite
     if (pos.x < lastPos.x) {

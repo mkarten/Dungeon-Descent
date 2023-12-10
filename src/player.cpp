@@ -22,6 +22,8 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     halfHeart = utils::getHeartHalfTexture();
     emptyHeart = utils::getHeartEmptyTexture();
     flipSprite = false;
+    speed = 0;
+    maxSpeed = 1.0f;
 }
 
 void Player::update(EventManager &eventManager)
@@ -32,20 +34,32 @@ void Player::update(EventManager &eventManager)
             eventManager.sendMessage(Messages::IDs::LEVEL,Messages::IDs::PLAYER,Messages::PLAYER_DIED);
         }
         lastPos = pos;
+        Vector2f direction = Vector2f(0, 0);
         // update the entity
         if (eventManager.Keys[SDL_SCANCODE_W] || eventManager.Keys[SDL_SCANCODE_UP]) {
-            pos.y -= 1;
+            direction.y -= 1;
         }
         if (eventManager.Keys[SDL_SCANCODE_S] || eventManager.Keys[SDL_SCANCODE_DOWN]) {
-            pos.y += 1;
+            direction.y += 1;
         }
         if (eventManager.Keys[SDL_SCANCODE_A] || eventManager.Keys[SDL_SCANCODE_LEFT]) {
-            pos.x -= 1;
+            direction.x -= 1;
             flipSprite = true;
         }
         if (eventManager.Keys[SDL_SCANCODE_D] || eventManager.Keys[SDL_SCANCODE_RIGHT]) {
-            pos.x += 1;
+            direction.x += 1;
             flipSprite = false;
+        }
+
+        if (direction.x != 0 || direction.y != 0) {
+            direction = utils::normalize(direction);
+            // lerp the speed to maxSpeed
+            speed = utils::lerpf(speed, maxSpeed, 0.06f);
+            pos += direction * speed;
+        }else{
+            // lerp the speed to 0
+            speed = utils::lerpf(speed, 0, 0.06f);
+            pos += direction * speed;
         }
         if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
