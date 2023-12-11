@@ -128,6 +128,7 @@ void Level::update(EventManager &eventManager){
                 }
             }
             // check for collisions between the player weapon and the enemies
+            // check for collisions between the player weapon and the enemies
             if (player->weapon.isCollidingWith(enemies[j])) {
                 // to avoid unnecessary calculations, only check for collisions if the weapon is not on cooldown or if the enemy was not already hit by the weapon
                 if (player->weapon.isOnCooldown && !enemies[j].getWasHit()) {
@@ -145,9 +146,14 @@ void Level::update(EventManager &eventManager){
                     // if the enemy is dead, remove it from the level
                     if (enemies[j].getHealth() <= 0) {
                         enemies.erase(enemies.begin() + j);
+                        // play the death sound
+                        utils::playEnemyDeathSound();
                     }
                     // set the enemy to wasHit so that it doesn't get hit multiple times by the same weapon swing
                     enemies[j].setWasHit(true);
+
+                    // play the hit sound
+                    utils::playEnemyHitSound();
                 }
             }
         }
@@ -164,6 +170,8 @@ void Level::update(EventManager &eventManager){
             // if the enemy is dead, remove it from the level
             if (enemies[i].getHealth() <= 0) {
                 enemies.erase(enemies.begin() + i);
+                // play the death sound
+                utils::playEnemyDeathSound();
             }
         }
     }

@@ -14,6 +14,10 @@ namespace utils{
     SDL_Texture *emptyHeart;
     bool heartTexturesLoaded = false;
 
+    Mix_Music *music;
+    Mix_Chunk *enemyHitSound;
+    Mix_Chunk *enemyDeathSound;
+
     float hireTimeInSeconds()
     {
         float t = SDL_GetTicks(); // Récupère le temps depuis le lancement du programme en millisecondes
@@ -230,22 +234,36 @@ namespace utils{
         return {lerpf(a.x, b.x, t), lerpf(a.y, b.y, t)};
     }
 
-    void drawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, SDL_Color color) {
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+    void loadMusicAndSoundEffects(){
+        music = Mix_LoadMUS("res/sfx/music.wav");
+        if (music == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+        enemyHitSound = Mix_LoadWAV("res/sfx/enemy_hit.wav");
+        if (enemyHitSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+        enemyDeathSound = Mix_LoadWAV("res/sfx/enemy_death.wav");
+        if (enemyDeathSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
     }
 
-    void drawCircle(SDL_Renderer *renderer, int x, int y, int radius, SDL_Color color){
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        for (int w = 0; w < radius * 2; w++) {
-            for (int h = 0; h < radius * 2; h++) {
-                int dx = radius - w; // horizontal offset
-                int dy = radius - h; // vertical offset
-                if ((dx*dx + dy*dy) <= (radius * radius)) {
-                    SDL_RenderDrawPoint(renderer, x + dx, y + dy);
-                }
-            }
+    void playMusic(){
+        if (Mix_PlayingMusic() == 0) {
+            Mix_PlayMusic(music, -1);
         }
+    }
+
+    void playEnemyHitSound(){
+        Mix_PlayChannel(-1, enemyHitSound, 0);
+    }
+
+    void playEnemyDeathSound(){
+        Mix_PlayChannel(-1, enemyDeathSound, 0);
     }
 
 }

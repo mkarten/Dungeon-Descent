@@ -34,7 +34,11 @@ Game::Game()
     // load all the animations
     animation::loadAllAnimations(tileset, tilesInfoMap, renderer->getRenderer());
 
+    // load the heart textures
     utils::loadHeartTextures(tileset, tilesInfoMap, renderer->getRenderer());
+
+    // load the music and sound effects
+    utils::loadMusicAndSoundEffects();
 
     // create the player
     player = Player(Vector2f(0, 0), &animation::knight_mAnimations,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
@@ -65,6 +69,7 @@ void Game::run()
 {
     srand( (unsigned)time(NULL) );
     bool GameIsRunning = true;
+    utils::playMusic();
     while (GameIsRunning)
     {
         // calculate the DeltaTime and sleep if needed

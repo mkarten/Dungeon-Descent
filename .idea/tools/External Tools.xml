@@ -2,8 +2,8 @@
   <tool name="g++" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="false" showConsoleOnStdErr="false" synchronizeAfterRun="true">
     <exec>
       <option name="COMMAND" value="g++" />
-      <option name="PARAMETERS" value="-g ./src/*.cpp -o bin/debug/Dungeon-Descent -IC:/SDL2/include -Iinclude -LC:/SDL2/lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lcomdlg32" />
-      <option name="WORKING_DIRECTORY" value="C:/Users/Mkarten/CLionProjects/Dungeon-Descent" />
+      <option name="PARAMETERS" value="-g ./src/*.cpp -o bin/debug/Dungeon-Descent -IC:/SDL2/include -Iinclude -LC:/SDL2/lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lcomdlg32" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/CLionProjects/Dungeon-Descent" />
     </exec>
   </tool>
 </toolSet>

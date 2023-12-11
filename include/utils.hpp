@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include "SDL2/SDL_mixer.h"
 #include "../include/tile_info.hpp"
 #include <map>
 #include <string>
@@ -20,6 +22,11 @@ namespace utils
     extern SDL_Texture *halfHeart;
     extern SDL_Texture *emptyHeart;
     extern bool heartTexturesLoaded;
+
+    //variables for the music and sound effects
+    extern Mix_Music *music;
+    extern Mix_Chunk *enemyHitSound;
+    extern Mix_Chunk *enemyDeathSound;
 
     using TileMap = std::map<std::string, TileInfo>;
 
@@ -65,9 +72,13 @@ namespace utils
 
     Vector2f lerpVector2f(Vector2f a, Vector2f b, float t);
 
-    void drawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, SDL_Color color);
+    void loadMusicAndSoundEffects();
 
-    void drawCircle(SDL_Renderer *renderer, int x, int y, int radius, SDL_Color color);
+    void playMusic();
+
+    void playEnemyHitSound();
+
+    void playEnemyDeathSound();
 
 
 }
