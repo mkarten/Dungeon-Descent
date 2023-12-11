@@ -35,6 +35,8 @@ bool initSDL()
         return false;
     }
     Mix_AllocateChannels(32);
+    Mix_Volume(-1, MIX_MAX_VOLUME / 2);
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 
     // SDL2_ttf init
     if (TTF_Init() != 0)
