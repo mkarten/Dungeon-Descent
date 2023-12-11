@@ -8,6 +8,7 @@
 #include <string>
 #include <SDL2/SDL_ttf.h>
 #include "vector.hpp"
+#include <vector>
 
 namespace utils
 {
@@ -25,6 +26,8 @@ namespace utils
     float hireTimeInSeconds(); // Returns the time since the program started in seconds
 
     SDL_Texture* loadTileFromTileset(SDL_Texture* tileset, TileInfo tileInfo, SDL_Renderer* renderer);
+
+    std::vector<SDL_Texture*> loadTilesFromTileset(SDL_Texture* tileset, std::vector<TileInfo> tileInfos, SDL_Renderer* renderer);
 
     void drawBoundingBox(SDL_Renderer* renderer, float x, float y, float w, float h, SDL_Color color);
 

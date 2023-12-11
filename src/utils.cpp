@@ -35,6 +35,16 @@ namespace utils{
         return knightIdleTex;
     }
 
+    std::vector<SDL_Texture*> loadTilesFromTileset(SDL_Texture* tileset, std::vector<TileInfo> tileInfos, SDL_Renderer* renderer)
+    {
+        std::vector<SDL_Texture*> tiles;
+        for (TileInfo tileInfo : tileInfos)
+        {
+            tiles.push_back(loadTileFromTileset(tileset, tileInfo, renderer));
+        }
+        return tiles;
+    }
+
 
     void drawBoundingBox(SDL_Renderer* renderer, float x, float y, float w, float h, SDL_Color color)
     {

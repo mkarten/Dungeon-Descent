@@ -4,6 +4,7 @@
 #include "../include/levelEditor.hpp"
 #include <iostream>
 #include <map>
+#include "../include/animation.hpp"
 
 
 
@@ -29,6 +30,9 @@ Game::Game()
     // load the player tiles textures
     SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer->getRenderer());
     SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer->getRenderer());
+
+    // load all the animations
+    animation::loadAllAnimations(tileset, tilesInfoMap, renderer->getRenderer());
 
     utils::loadHeartTextures(tileset, tilesInfoMap, renderer->getRenderer());
 
