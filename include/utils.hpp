@@ -27,6 +27,10 @@ namespace utils
     extern Mix_Music *music;
     extern Mix_Chunk *enemyHitSound;
     extern Mix_Chunk *enemyDeathSound;
+    extern Mix_Chunk *clickSound;
+    extern Mix_Chunk *selectSound;
+    extern Mix_Chunk *playerHitSound;
+    extern Mix_Chunk *cooldownResetSound;
 
     using TileMap = std::map<std::string, TileInfo>;
 
@@ -76,11 +80,19 @@ namespace utils
 
     void playMusic();
 
+    void stopMusic();
+
     void playEnemyHitSound();
 
     void playEnemyDeathSound();
 
+    void playClickSound();
 
+    void playSelectSound();
+
+    void playPlayerHitSound();
+
+    void playCooldownResetSound();
 }
 
 

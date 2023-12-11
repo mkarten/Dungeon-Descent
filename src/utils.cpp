@@ -17,6 +17,10 @@ namespace utils{
     Mix_Music *music;
     Mix_Chunk *enemyHitSound;
     Mix_Chunk *enemyDeathSound;
+    Mix_Chunk *clickSound;
+    Mix_Chunk *selectSound;
+    Mix_Chunk *playerHitSound;
+    Mix_Chunk *cooldownResetSound;
 
     float hireTimeInSeconds()
     {
@@ -250,6 +254,26 @@ namespace utils{
             logLastSDLError();
             exit(1);
         }
+        clickSound = Mix_LoadWAV("res/sfx/click.wav");
+        if (clickSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+        selectSound = Mix_LoadWAV("res/sfx/select.wav");
+        if (selectSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+        playerHitSound = Mix_LoadWAV("res/sfx/player_hit.wav");
+        if (playerHitSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
+        cooldownResetSound = Mix_LoadWAV("res/sfx/cooldown_reset.wav");
+        if (cooldownResetSound == nullptr) {
+            logLastSDLError();
+            exit(1);
+        }
     }
 
     void playMusic(){
@@ -258,12 +282,32 @@ namespace utils{
         }
     }
 
+    void stopMusic(){
+        Mix_HaltMusic();
+    }
+
     void playEnemyHitSound(){
         Mix_PlayChannel(-1, enemyHitSound, 0);
     }
 
     void playEnemyDeathSound(){
         Mix_PlayChannel(-1, enemyDeathSound, 0);
+    }
+
+    void playClickSound(){
+        Mix_PlayChannel(-1, clickSound, 0);
+    }
+
+    void playSelectSound(){
+        Mix_PlayChannel(-1, selectSound, 0);
+    }
+
+    void playPlayerHitSound(){
+        Mix_PlayChannel(-1, playerHitSound, 0);
+    }
+
+    void playCooldownResetSound(){
+        Mix_PlayChannel(-1, cooldownResetSound, 0);
     }
 
 }

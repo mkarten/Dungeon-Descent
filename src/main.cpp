@@ -34,6 +34,7 @@ bool initSDL()
         SDL_Quit();
         return false;
     }
+    Mix_AllocateChannels(32);
 
     // SDL2_ttf init
     if (TTF_Init() != 0)

@@ -6,13 +6,21 @@
 
 void MainMenu::update(EventManager &eventManager)
 {
+    bool lastStartButtonHovered = startButtonHovered;
+    bool lastQuitButtonHovered = quitButtonHovered;
     if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, startGameButton)){
         startButtonHovered = true;
+        if (!lastStartButtonHovered){
+            utils::playSelectSound();
+        }
     } else{
         startButtonHovered = false;
     }
     if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, quitGameButton)){
         quitButtonHovered = true;
+        if (!lastQuitButtonHovered){
+            utils::playSelectSound();
+        }
     } else{
         quitButtonHovered = false;
     }
@@ -20,10 +28,13 @@ void MainMenu::update(EventManager &eventManager)
 
     // check if the start game button is pressed
     if (startButtonHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
+        // play click sound
+        utils::playClickSound();
         eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::START_GAME);
     }
     if (quitButtonHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
-        // quit the game
+        // play click sound
+        utils::playClickSound();
         eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::QUIT_GAME);
     }
     // update the enemies

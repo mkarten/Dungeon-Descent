@@ -13,6 +13,7 @@ Enemy::Enemy(Vector2f p_pos, Animations *e_anim, int width, int height,int trigg
     currentFrameIndex = 0;
     currentFrame = anim->idleAnimation[currentFrameIndex];
     isRunning = false;
+    wasHit = false;
     triggered = false;
     randomDirectionTimer = 0;
     randomDirection = Vector2f{0, 0};

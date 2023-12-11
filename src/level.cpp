@@ -165,8 +165,11 @@ void Level::update(EventManager &eventManager){
 //            player->pos += direction * (15.0f*SCALE_FACTOR);
             // hurt the player
             player->health -= enemies[i].getDamage();
+            utils::playPlayerHitSound();
             // deal damage to the enemy
             enemies[i].dealDamage(5);
+            // change its speed to negative so that it gets pushed away from the player
+            enemies[i].speed = -8;
             // if the enemy is dead, remove it from the level
             if (enemies[i].getHealth() <= 0) {
                 enemies.erase(enemies.begin() + i);
@@ -182,10 +185,18 @@ void Level::update(EventManager &eventManager){
             for (int i = 0; i < enemies.size(); i++) {
                 enemies[i].setWasHit(false);
             }
+            // play the cooldown reset sound
+            utils::playCooldownResetSound();
             eventManager.clearMessage(message.MessageID);
         }
         if (message.message == Messages::PLAYER_DIED) {
             playerDead = true;
+            // stop the music
+            utils::stopMusic();
+            // remove trigger from all the entities
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies[i].setTriggered(false);
+            }
             eventManager.clearMessage(message.MessageID);
         }
     }
@@ -377,7 +388,7 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         if (type == "enemy") {
             int w, h;
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 5);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 10);
         }
     }
 
