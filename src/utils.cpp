@@ -230,5 +230,23 @@ namespace utils{
         return {lerpf(a.x, b.x, t), lerpf(a.y, b.y, t)};
     }
 
+    void drawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, SDL_Color color) {
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+    }
+
+    void drawCircle(SDL_Renderer *renderer, int x, int y, int radius, SDL_Color color){
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        for (int w = 0; w < radius * 2; w++) {
+            for (int h = 0; h < radius * 2; h++) {
+                int dx = radius - w; // horizontal offset
+                int dy = radius - h; // vertical offset
+                if ((dx*dx + dy*dy) <= (radius * radius)) {
+                    SDL_RenderDrawPoint(renderer, x + dx, y + dy);
+                }
+            }
+        }
+    }
+
 }
 

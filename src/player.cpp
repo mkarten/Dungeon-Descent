@@ -5,14 +5,17 @@
 #include "../include/constants.hpp"
 #include "../include/utils.hpp"
 
-Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int h)
-        : Entity(p_pos, p_tex, w, h)
+Player::Player(Vector2f p_pos,Animations *p_anim,SDL_Texture *w_tex, int w, int h)
+        : Entity(p_pos, nullptr, w, h)
 {
     int w_w, w_h;
     SDL_QueryTexture(w_tex, NULL, NULL, &w_w, &w_h);
     weapon = Weapon(Vector2f(0, 0), w_tex, w_w, w_h, 1, 0.5, 100);
     pos = p_pos;
-    tex = p_tex;
+    anim = p_anim;
+    animationTimer = 0;
+    currentFrameIndex = 0;
+    currentFrame = anim->idleAnimation[currentFrameIndex];
     width = w;
     height = h;
     dead = false;
@@ -22,6 +25,7 @@ Player::Player(Vector2f p_pos,SDL_Texture *p_tex,SDL_Texture *w_tex, int w, int 
     halfHeart = utils::getHeartHalfTexture();
     emptyHeart = utils::getHeartEmptyTexture();
     flipSprite = false;
+    isRunning = false;
     speed = 0;
     maxSpeed = 1.0f;
 }
@@ -61,6 +65,34 @@ void Player::update(EventManager &eventManager)
             speed = utils::lerpf(speed, 0, 0.06f);
             pos += direction * speed;
         }
+
+        // update the animation
+        animationTimer += eventManager.deltaTime;
+        // change the animation with the speed
+        if (speed > 0.08f) {
+            if (isRunning){
+                currentFrameIndex = 0;
+                isRunning = false;
+            }
+            currentFrameIndex = (int) (animationTimer * 10) % anim->runAnimation.size();
+            currentFrame = anim->runAnimation[currentFrameIndex];
+        } else {
+            if (!isRunning){
+                currentFrameIndex = 0;
+                isRunning = true;
+            }
+            currentFrameIndex = (int) (animationTimer * 10) % anim->idleAnimation.size();
+            currentFrame = anim->idleAnimation[currentFrameIndex];
+        }
+        if (animationTimer > animation::timeBetweenFrames) {
+            animationTimer = 0;
+            currentFrameIndex += 1;
+            if (currentFrameIndex >= anim->idleAnimation.size()) {
+                currentFrameIndex = 0;
+            }
+        }
+
+
         if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
         }
@@ -82,7 +114,7 @@ void Player::render(Renderer *renderer)
     Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
     // render the entity
     SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopyEx(renderer->getRenderer(),tex, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer->getRenderer(),currentFrame, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 
     //render the weapon
     weapon.render(renderer);
@@ -113,12 +145,12 @@ void Player::render(Renderer *renderer)
         heartX += heartWidth + (heartSpacing*UI_SCALE_FACTOR);
     }
 
-    // line around the player
-    utils::drawBoundingBox(renderer->getRenderer(),
-                           screenPos.x*SCALE_FACTOR,
-                           screenPos.y*SCALE_FACTOR,
-                           width*SCALE_FACTOR,
-                           height*SCALE_FACTOR,
-                           {255, 0, 0, 255}
-                           );
+//    // line around the player
+//    utils::drawBoundingBox(renderer->getRenderer(),
+//                           screenPos.x*SCALE_FACTOR,
+//                           screenPos.y*SCALE_FACTOR,
+//                           width*SCALE_FACTOR,
+//                           height*SCALE_FACTOR,
+//                           {255, 0, 0, 255}
+//                           );
 }

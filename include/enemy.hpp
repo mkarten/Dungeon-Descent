@@ -8,7 +8,7 @@ class Enemy : public Entity
 {
     public:
         Enemy();
-        Enemy(Vector2f p_pos, std::string e_texName, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health);
+        Enemy(Vector2f p_pos,Animations *e_anim, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health);
         void update(EventManager &eventManager);
         void render(Renderer *renderer);
         int getDamage() {return damage;}

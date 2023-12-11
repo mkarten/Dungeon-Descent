@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include "../include/utils.hpp"
+#include "../include/animation.hpp"
 
 struct CollisionInfo
 {
@@ -26,6 +27,11 @@ public:
     CollisionInfo getCollisionInfo(const Entity &other) const;
     Vector2f pos;
     Vector2f lastPos;
+    Animations *anim;
+    bool isRunning;
+    float animationTimer;
+    int currentFrameIndex;
+    SDL_Texture *currentFrame;
     float speed;
     float maxSpeed;
     SDL_Texture *tex;

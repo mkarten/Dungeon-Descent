@@ -37,12 +37,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
         }
     }
 
-    // set the texture of the enemies to the tileset texture
     for (int i = 0; i < enemies.size(); i++) {
-        // get the texture from the tileset
-        enemies[i].tex = utils::loadTileFromTileset(tilesetTex, tilesInfoMap[enemies[i].texName], renderer);
-        // set the width and height of the enemy
-        SDL_QueryTexture(enemies[i].tex, NULL, NULL, &enemies[i].width, &enemies[i].height);
         // set the player position pointer of the enemy
         enemies[i].setPlayerPos(&player->pos);
     }
@@ -372,7 +367,9 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         }
         std::string type = typeVal->value.GetString();
         if (type == "enemy") {
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),"big_demon_idle_anim_f0", 0, 0, 100, 1, nullptr, 5);
+            int w, h;
+            SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 5);
         }
     }
 

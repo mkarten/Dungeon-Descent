@@ -4,10 +4,15 @@
 #include "../include/constants.hpp"
 
 
-Enemy::Enemy(Vector2f p_pos, std::string e_texName, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health)
+Enemy::Enemy(Vector2f p_pos, Animations *e_anim, int width, int height,int triggerDistance,int damage,Vector2f *PlayerPos,int health)
     : Entity(p_pos, nullptr, width, height),triggerDistance(triggerDistance),damage(damage),PlayerPos(PlayerPos)
 {
-    texName = e_texName;
+
+    anim = e_anim;
+    animationTimer = 0;
+    currentFrameIndex = 0;
+    currentFrame = anim->idleAnimation[currentFrameIndex];
+    isRunning = false;
     triggered = false;
     randomDirectionTimer = 0;
     randomDirection = Vector2f{0, 0};
@@ -56,6 +61,33 @@ void Enemy::update(EventManager &eventManager)
         speed = utils::lerpf(speed, 0, 0.06f);
         pos += direction * speed;
     }
+
+    // update the animation
+    animationTimer += eventManager.deltaTime;
+    // change the animation with the speed
+    if (speed > 0.1f) {
+        if (isRunning){
+            currentFrameIndex = 0;
+            isRunning = false;
+        }
+        currentFrameIndex = (int) (animationTimer * 10) % anim->runAnimation.size();
+        currentFrame = anim->runAnimation[currentFrameIndex];
+    } else {
+        if (!isRunning){
+            currentFrameIndex = 0;
+            isRunning = true;
+        }
+        currentFrameIndex = (int) (animationTimer * 10) % anim->idleAnimation.size();
+        currentFrame = anim->idleAnimation[currentFrameIndex];
+    }
+    if (animationTimer > animation::timeBetweenFrames) {
+        animationTimer = 0;
+        currentFrameIndex += 1;
+        if (currentFrameIndex >= anim->idleAnimation.size()) {
+            currentFrameIndex = 0;
+        }
+    }
+
     // if the enemy is going left, flip the sprite
     if (pos.x < lastPos.x) {
         flipSprite = true;
@@ -69,14 +101,14 @@ void Enemy::render(Renderer *renderer)
     // calculate the screenspace position of the enemy
     Vector2f screenPos = renderer->worldspaceToScreenspace(pos);
     SDL_Rect dst{static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), width*SCALE_FACTOR, height*SCALE_FACTOR};
-    SDL_RenderCopyEx(renderer->getRenderer(),tex, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-    utils::drawBoundingBox(renderer->getRenderer(),
-                           screenPos.x*SCALE_FACTOR,
-                           screenPos.y*SCALE_FACTOR,
-                           width*SCALE_FACTOR,
-                           height*SCALE_FACTOR,
-                           {255, 0, 0, 255}
-                           );
+    SDL_RenderCopyEx(renderer->getRenderer(),currentFrame, NULL, &dst, 0, NULL, flipSprite ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+//    utils::drawBoundingBox(renderer->getRenderer(),
+//                           screenPos.x*SCALE_FACTOR,
+//                           screenPos.y*SCALE_FACTOR,
+//                           width*SCALE_FACTOR,
+//                           height*SCALE_FACTOR,
+//                           {255, 0, 0, 255}
+//                           );
     // render the health bar centered above the enemy
     int barWidth = 20;
     int barHeightOffset = 5;
@@ -91,6 +123,13 @@ void Enemy::render(Renderer *renderer)
     SDL_Rect healthBar{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((screenPos.y- barHeightOffset)*SCALE_FACTOR ), static_cast<int>(barWidth*SCALE_FACTOR * (static_cast<float>(health) / static_cast<float>(maxHealth))), 5};
     SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 0, 0, 255);
     SDL_RenderFillRect(renderer->getRenderer(), &healthBar);
+
+    // if the enemy is hit, render a white rectangle above the enemy
+    if (wasHit) {
+        SDL_Rect hitBar{static_cast<int>(barPosX*SCALE_FACTOR), static_cast<int>((screenPos.y- barHeightOffset)*SCALE_FACTOR ), static_cast<int>(barWidth*SCALE_FACTOR * (static_cast<float>(health) / static_cast<float>(maxHealth))), 5};
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+        SDL_RenderFillRect(renderer->getRenderer(), &hitBar);
+    }
 
 }
 

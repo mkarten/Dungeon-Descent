@@ -128,6 +128,30 @@ Dungeon-Descent/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/build
 .PHONY : Dungeon-Descent/fast
 
+src/animation.obj: src/animation.cpp.obj
+.PHONY : src/animation.obj
+
+# target to build an object file
+src/animation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/animation.cpp.obj
+.PHONY : src/animation.cpp.obj
+
+src/animation.i: src/animation.cpp.i
+.PHONY : src/animation.i
+
+# target to preprocess a source file
+src/animation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/animation.cpp.i
+.PHONY : src/animation.cpp.i
+
+src/animation.s: src/animation.cpp.s
+.PHONY : src/animation.s
+
+# target to generate assembly for a file
+src/animation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Dungeon-Descent.dir\build.make CMakeFiles/Dungeon-Descent.dir/src/animation.cpp.s
+.PHONY : src/animation.cpp.s
+
 src/enemy.obj: src/enemy.cpp.obj
 .PHONY : src/enemy.obj
 
@@ -473,6 +497,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Dungeon-Descent
+	@echo ... src/animation.obj
+	@echo ... src/animation.i
+	@echo ... src/animation.s
 	@echo ... src/enemy.obj
 	@echo ... src/enemy.i
 	@echo ... src/enemy.s

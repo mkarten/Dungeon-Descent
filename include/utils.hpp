@@ -65,6 +65,10 @@ namespace utils
 
     Vector2f lerpVector2f(Vector2f a, Vector2f b, float t);
 
+    void drawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, SDL_Color color);
+
+    void drawCircle(SDL_Renderer *renderer, int x, int y, int radius, SDL_Color color);
+
 
 }
 

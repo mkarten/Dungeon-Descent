@@ -2,7 +2,7 @@
 
 namespace animation {
 
-    float timeBetweenFrames = 0.05f;
+    float timeBetweenFrames = 0.6f;
     Animations big_demonAnimations = Animations();
     Animations big_zombieAnimations = Animations();
     Animations coinAnimations = Animations();

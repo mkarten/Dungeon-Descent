@@ -37,7 +37,7 @@ Game::Game()
     utils::loadHeartTextures(tileset, tilesInfoMap, renderer->getRenderer());
 
     // create the player
-    player = Player(Vector2f(0, 0), knightIdleTex,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
+    player = Player(Vector2f(0, 0), &animation::knight_mAnimations,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
     levels.emplace_back(renderer->getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
