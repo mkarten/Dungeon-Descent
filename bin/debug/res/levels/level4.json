@@ -1,7 +1,7 @@
 {"levelName":"Level 4","playerSpawnPoint":{"x":96.0,"y":80.0},"staticEntities":[{"textureName":"floor_1","x":32.0,"y":32.0,"collidable":false,"width":144,"height":144},{"textureName":"wall_mid","x":16.0,"y":16.0,"collidable":true,"width":16,"height":176},{"textureName":"wall_mid","x":32.0,"y":16.0,"collidable":true,"width":144,"height":16},{"textureName":"button_red_down","x":96.0,"y":96.0,"collidable":false,"width":16,"height":16},{"textureName":"wall_mid","x":32.0,"y":176.0,"collidable":true,"width":144,"height":16},{"textureName":"floor_1","x":176.0,"y":128.0,"collidable":false,"width":800,"height":48},{"textureName":"floor_1","x":176.0,"y":576.0,"collidable":false,"width":800,"height":48},{"textureName":"floor_1","x":976.0,"y":128.0,"collidable":false,"width":48,"height":496},{"textureName":"floor_1","x":1024.0,"y":320.0,"collidable":false,"width":112,"height":48},{"textureName":"floor_1","x":1136.0,"y":272.0,"collidable":false,"width":176,"height":144},{"textureName":"floor_1","x":896.0,"y":512.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":304.0,"y":64.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":496.0,"y":64.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":576.0,"y":176.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":704.0,"y":64.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":912.0,"y":64.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":832.0,"y":176.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":848.0,"y":624.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":608.0,"y":512.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":464.0,"y":512.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":272.0,"y":512.0,"collidable":false,"width":48,"height":64},{"textureName":"floor_1","x":176.0,"y":624.0,"collidable":false,"width":48,"height":64},{"textureName":"wall_mid","x":176.0,"y":112.0,"collidable":true,"width":128,"height":16},{"textureName":"wall_mid","x":352.0,"y":112.0,"collidable":true,"width":144,"height":16},{"textureName":"wall_mid","x":544.0,"y":112.0,"collidable":true,"width":160,"height":16},{"textureName":"wall_mid","x":752.0,"y":112.0,"collidable":true,"width":160,"height":16},{"textureName":"wall_mid","x":624.0,"y":176.0,"collidable":true,"width":208,"height":16},{"textureName":"wall_mid","x":880.0,"y":176.0,"collidable":true,"width":96,"height":16},{"textureName":"wall_mid","x":176.0,"y":176.0,"collidable":true,"width":400,"height":16},{"textureName":"wall_mid","x":320.0,"y":560.0,"collidable":true,"width":144,"height":16},{"textureName":"wall_mid","x":512.0,"y":560.0,"collidable":true,"width":96,"height":16},{"textureName":"wall_mid","x":656.0,"y":560.0,"collidable":true,"width":240,"height":16},{"textureName":"wall_mid","x":944.0,"y":560.0,"collidable":true,"width":32,"height":16},{"textureName":"wall_mid","x":896.0,"y":624.0,"collidable":true,"width":128,"height":16},{"textureName":"wall_mid","x":224.0,"y":624.0,"collidable":true,"width":624,"height":16},{"textureName":"wall_mid","x":176.0,"y":560.0,"collidable":true,"width":96,"height":16},{"textureName":"wall_mid","x":304.0,"y":48.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":496.0,"y":48.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":704.0,"y":48.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":912.0,"y":48.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":832.0,"y":240.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":576.0,"y":240.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":608.0,"y":496.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":464.0,"y":496.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":272.0,"y":496.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":896.0,"y":496.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":848.0,"y":688.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":176.0,"y":688.0,"collidable":true,"width":48,"height":16},{"textureName":"wall_mid","x":1024.0,"y":304.0,"collidable":true,"width":112,"height":16},{"textureName":"wall_mid","x":1024.0,"y":368.0,"collidable":true,"width":112,"height":16},{"textureName":"wall_mid","x":1136.0,"y":256.0,"collidable":true,"width":176,"height":16},{"textureName":"wall_mid","x":1136.0,"y":416.0,"collidable":true,"width":176,"height":16},{"textureName":"wall_mid","x":960.0,"y":112.0,"collidable":true,"width":64,"height":16},{"textureName":"wall_mid","x":176.0,"y":16.0,"collidable":true,"width":16,"height":96},{"textureName":"wall_mid","x":352.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":288.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":480.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":544.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":688.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":752.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":624.0,"y":192.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":560.0,"y":192.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":816.0,"y":192.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":880.0,"y":192.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":896.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":960.0,"y":48.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":1024.0,"y":112.0,"collidable":true,"width":16,"height":192},{"textureName":"wall_mid","x":960.0,"y":192.0,"collidable":true,"width":16,"height":368},{"textureName":"wall_mid","x":944.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":880.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":656.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":592.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":512.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":448.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":320.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":256.0,"y":496.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":160.0,"y":560.0,"collidable":true,"width":16,"height":144},{"textureName":"wall_mid","x":896.0,"y":640.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":832.0,"y":640.0,"collidable":true,"width":16,"height":64},{"textureName":"wall_mid","x":1024.0,"y":384.0,"collidable":true,"width":16,"height":256},{"textureName":"wall_mid","x":1120.0,"y":256.0,"collidable":true,"width":16,"height":48},{"textureName":"wall_mid","x":1120.0,"y":384.0,"collidable":true,"width":16,"height":48},{"textureName":"wall_mid","x":1312.0,"y":256.0,"collidable":true,"width":16,"height":176}, {"textureName":"wall_mid","x":224.0,"y":640.0,"collidable":true,"width":16,"height":64}],
   "enemies": [
     {
-      "type":"enemy",
+      "type":"goons",
       "x":864,
       "y":656
     },
@@ -16,7 +16,7 @@
       "y":528
     },
     {
-      "type":"enemy",
+      "type":"imp",
       "x":288,
       "y":528
     },
@@ -26,12 +26,12 @@
       "y":528
     },
     {
-      "type":"enemy",
+      "type":"goons",
       "x":192,
       "y":656
     },
     {
-      "type":"enemy",
+      "type":"knight",
       "x":320,
       "y":80
     },
@@ -41,7 +41,7 @@
       "y":80
     },
     {
-      "type":"enemy",
+      "type":"imp",
       "x":592,
       "y":208
     },
@@ -51,7 +51,7 @@
       "y":80
     },
     {
-      "type":"enemy",
+      "type":"knight",
       "x":848,
       "y":208
     },
@@ -66,22 +66,22 @@
       "y":288
     },
     {
-      "type":"enemy",
+      "type":"imp",
       "x":1152,
       "y":288
     },
     {
-      "type":"enemy",
+      "type":"knight",
       "x":1280,
       "y":288
     },
     {
-      "type":"enemy",
+      "type":"goons",
       "x":1152,
       "y":384
     },
     {
-      "type":"enemy",
+      "type":"imp",
       "x":1280,
       "y":384
     }

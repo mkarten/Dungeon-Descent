@@ -261,6 +261,56 @@ void Level::render(Renderer *renderer){
     for (int i = 0; i < enemies.size(); i++) {
         enemies[i].render(renderer);
     }
+    // draw tutorial text if the level name is Level 1
+    if (getLevelName() == "Level 1") {
+        timer = 0;
+        // fist tutorial text is on to of the player spawn point
+        Vector2f textPos = levelData.getPlayerSpawnPoint();
+        textPos.y -= 10*SCALE_FACTOR;
+
+        Vector2f pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "Use ZQSD to move", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 87;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You can left click", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 97;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to deal damage to enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 117;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "Enemies randomly give", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 127;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "1 HP when killed", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 662;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You need to kill all enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 672;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to progress", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 480;
+        textPos.y = 480;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You have 60 seconds", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 480;
+        textPos.y = 490;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to clear the level", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 750;
+        textPos.y = 480;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "Your sword deals +1 damage", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 750;
+        textPos.y = 490;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "for every level you clear", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+    }
     // render the player
     player->render(renderer);
     // print the level name for debug purposes
@@ -306,48 +356,7 @@ void Level::render(Renderer *renderer){
         utils::renderText(renderer->getRenderer(), "Made by : Luca Morgado", WINDOW_WIDTH/2, WINDOW_HEIGHT-50, SDL_Color {255, 255, 255});
     }
 
-    // draw tutorial text if the level name is Level 1
-    if (getLevelName() == "Level 1") {
-        timer = 0;
-        // fist tutorial text is on to of the player spawn point
-        Vector2f textPos = levelData.getPlayerSpawnPoint();
-        textPos.y -= 10*SCALE_FACTOR;
 
-        Vector2f pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "Use ZQSD to move", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 614;
-        textPos.y = 87;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "You can left click", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 614;
-        textPos.y = 97;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "to deal damage to enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 614;
-        textPos.y = 662;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "You need to kill all enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 614;
-        textPos.y = 672;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "to progress", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 480;
-        textPos.y = 480;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "You have 60 seconds", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 480;
-        textPos.y = 490;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "to clear the level", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 750;
-        textPos.y = 480;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "Your sword deals +1 damage", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-        textPos.x = 750;
-        textPos.y = 490;
-        pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "for every level you clear", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
-    }
 
 
 
@@ -488,6 +497,11 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
             enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 10);
         }
+        if (type == "knight") {
+            int w, h;
+            SDL_QueryTexture(animation::knight_fAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::knight_fAnimations, w, h, 100, 2, nullptr, 20);
+        }
         if (type == "tutorialEnemy"){
             int w, h;
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
@@ -512,10 +526,8 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         if (type == "boss"){
             int w, h;
             SDL_QueryTexture(animation::big_zombieAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_zombieAnimations, w, h, 100, 3, nullptr, 20);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_zombieAnimations, w, h, 100, 3, nullptr, 200);
         }
-
-
     }
 
     //calculate the level width and height based on the static entities

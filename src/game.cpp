@@ -160,6 +160,13 @@ void Game::run()
             // render the game
             currentLevel.render(renderer);
         }
+
+        // if i press the plus key, i go to the next level
+        if (eventManager.Keys[SDL_SCANCODE_KP_PLUS] && !eventManager.LastKeys[SDL_SCANCODE_KP_PLUS]) {
+            eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::GO_TO_NEXT_LEVEL);
+        }
+
+
         SDL_RenderPresent(renderer->getRenderer());
     }
 }
