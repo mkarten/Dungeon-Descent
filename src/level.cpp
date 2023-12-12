@@ -150,6 +150,10 @@ void Level::update(EventManager &eventManager){
                     // if the enemy is dead, remove it from the level
                     if (enemies[j].getHealth() <= 0) {
                         enemies.erase(enemies.begin() + j);
+                        // heal the player for 1 hp 1 out of 5 times
+                        if (rand()%5 == 0 && player->health < PLAYER_MAX_HP) {
+                            player->health += 1;
+                        }
                         // play the death sound
                         utils::playEnemyDeathSound();
                         // if all the enemies are dead, send the go to next level event
@@ -499,6 +503,16 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
             int w, h;
             SDL_QueryTexture(animation::impAnimations.idleAnimation[0], NULL, NULL, &w, &h);
             enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::impAnimations, w, h, 100, 1, nullptr, 2);
+        }
+        if (type == "goons"){
+            int w, h;
+            SDL_QueryTexture(animation::goblinAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::goblinAnimations, w, h, 100, 2, nullptr, 5);
+        }
+        if (type == "boss"){
+            int w, h;
+            SDL_QueryTexture(animation::big_zombieAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_zombieAnimations, w, h, 100, 3, nullptr, 20);
         }
 
 

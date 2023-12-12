@@ -53,6 +53,10 @@ void Game::RestartGame()
     // create the level
     levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level1.json", tileset, tilesInfoMap);
     levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level2.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level3.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level4.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level5.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level6.json", tileset, tilesInfoMap);
     levelEditor = LevelEditor(renderer->getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
     mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 
