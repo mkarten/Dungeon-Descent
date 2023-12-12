@@ -2,19 +2,15 @@
 
 ## Overview
 
-The goal of the game is to reach the bottom of the tower, defeat the final boss, and collect as many coins and items as possible within one minute per stage.
+The goal of the game is to reach the bottom of the tower and defeat the final boss within one minute per stage.
 
 ## Gameplay Mechanics
 
 ### Stages
 
 - Each stage has a duration of one minute.
-- Collect coins and items during each stage.
-- Encounter enemies, buttons, and chests on each stage.
-
-### Shop
-
-- Access the shop in between stages to purchase upgrades and items.
+- When you finish a stage, your sword is upgraded.
+- Encounter enemies and kill them all to progress to the next stage.
 
 ### Death and Restart
 
@@ -23,15 +19,6 @@ The goal of the game is to reach the bottom of the tower, defeat the final boss,
 ### Enemies
 
 - Enemies become progressively harder to defeat on each stage.
-
-### Switches and Buttons
-
-- Use switches and buttons to open doors that may be blocking your path to a chest.
-
-### Boss Fights
-
-- Encounter a boss every 5 stages.
-- Defeat the boss to progress to the next set of stages.
 
 ## Objective
 
