@@ -6,7 +6,7 @@
 #include <map>
 #include "../include/animation.hpp"
 
-
+//TODO: bombs are enemies in the level
 
 Game::Game()
 {
