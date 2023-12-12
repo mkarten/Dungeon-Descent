@@ -17,6 +17,7 @@ namespace Messages{
     const std::string START_GAME = "START_GAME";
     const std::string COOLDOWN_RESET = "COOLDOWN_RESET";
     const std::string GAME_RESTART = "GAME_RESTART";
+    const std::string GO_TO_NEXT_LEVEL = "GO_TO_NEXT_LEVEL";
 
     enum IDs{
         GAME,

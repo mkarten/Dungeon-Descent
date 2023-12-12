@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     player = Gplayer;
 
     // position the player at the spawn point
-    player->pos = levelData.getPlayerSpawnPoint();
+    playerSpawnPoint = levelData.getPlayerSpawnPoint();
 
     // set the texture of the static entities to the tileset texture
     for (int i = 0; i < staticEntities.size(); i++) {
@@ -148,6 +148,11 @@ void Level::update(EventManager &eventManager){
                         enemies.erase(enemies.begin() + j);
                         // play the death sound
                         utils::playEnemyDeathSound();
+                        // if all the enemies are dead, send the go to next level event
+                        if (enemies.size() == 0) {
+                            eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::LEVEL, Messages::GO_TO_NEXT_LEVEL);
+                        }
+
                     }
                     // set the enemy to wasHit so that it doesn't get hit multiple times by the same weapon swing
                     enemies[j].setWasHit(true);
@@ -175,6 +180,10 @@ void Level::update(EventManager &eventManager){
                 enemies.erase(enemies.begin() + i);
                 // play the death sound
                 utils::playEnemyDeathSound();
+                // if all the enemies are dead, send the go to next level event
+                if (enemies.size() == 0) {
+                    eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::LEVEL, Messages::GO_TO_NEXT_LEVEL);
+                }
             }
         }
     }
@@ -214,13 +223,12 @@ void Level::render(Renderer *renderer){
     if (renderer->camera.newPos.y < 0) {
         renderer->camera.newPos.y = 0;
     }
-    if (renderer->camera.newPos.x > levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w) {
-        renderer->camera.newPos.x = levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w;
+    if (renderer->camera.newPos.x > levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w+16*SCALE_FACTOR) {
+        renderer->camera.newPos.x = levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w+16*SCALE_FACTOR;
     }
     if (renderer->camera.newPos.y > levelData.getLevelHeight()*SCALE_FACTOR - renderer->camera.h) {
         renderer->camera.newPos.y = levelData.getLevelHeight()*SCALE_FACTOR - renderer->camera.h;
     }
-    std::cout << renderer->camera.newPos.x << " " << renderer->camera.newPos.y << std::endl;
     // lerping the camera position
     renderer->camera.pos = utils::lerpVector2f(renderer->camera.pos, renderer->camera.newPos, 0.07f);
 
@@ -235,7 +243,7 @@ void Level::render(Renderer *renderer){
     // render the player
     player->render(renderer);
     // print the level name for debug purposes
-    utils::renderText(renderer->getRenderer(), getLevelName(), 0, WINDOW_HEIGHT-100, SDL_Color {0, 0, 0});
+    utils::renderText(renderer->getRenderer(), getLevelName(), WINDOW_WIDTH/2, 20, SDL_Color {255, 255, 255});
     // print the timer with one digit precision
     std::stringstream stream;
     stream << std::fixed << std::setprecision(2) << timer;

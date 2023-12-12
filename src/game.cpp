@@ -44,15 +44,15 @@ Game::Game()
     player = Player(Vector2f(0, 0), &animation::knight_mAnimations,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/save.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level1.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/level2.json", tileset, tilesInfoMap);
     levelEditor = LevelEditor(renderer->getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
     mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 
     levelPtr = 0;
     currentLevel = levels[levelPtr];
-
-    // TODO: Create the levels based on all the level data files
-
+    player.pos = currentLevel.playerSpawnPoint;
+    player.weapon.pos = player.pos;
 }
 
 
@@ -99,6 +99,16 @@ void Game::run()
             }
             if (message.message == Messages::ENTER_EDITOR_MODE) {
                 inEditorMode = !inEditorMode;
+                eventManager.clearMessage(message.MessageID);
+            }
+            if (message.message == Messages::GO_TO_NEXT_LEVEL) {
+                levelPtr++;
+                if (levelPtr >= levels.size()) {
+                    levelPtr = 0;
+                }
+                currentLevel = levels[levelPtr];
+                player.pos = currentLevel.playerSpawnPoint;
+                player.weapon.pos = player.pos;
                 eventManager.clearMessage(message.MessageID);
             }
         }

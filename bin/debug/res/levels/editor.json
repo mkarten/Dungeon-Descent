@@ -1,7 +1,1 @@
-{"levelName":"Level Editor","playerSpawnPoint":{"x":20.0,"y":20.0},"staticEntities":[{"textureName":"floor_1","x":0.0,"y":0.0,"collidable":false,"width":640,"height":640}],  "enemies": [
-  {
-    "type": "enemy",
-    "x": 100,
-    "y": 100
-  }
-]}
+{"levelName":"Level Editor","playerSpawnPoint":{"x":100.0,"y":100.0},"staticEntities":[{"textureName":"floor_1","x":32.0,"y":32.0,"collidable":false,"width":144,"height":144},{"textureName":"floor_1","x":816.0,"y":784.0,"collidable":false,"width":336,"height":48},{"textureName":"floor_1","x":1152.0,"y":704.0,"collidable":false,"width":48,"height":128},{"textureName":"wall_mid","x":16.0,"y":16.0,"collidable":true,"width":16,"height":176},{"textureName":"wall_mid","x":816.0,"y":832.0,"collidable":true,"width":16,"height":112},{"textureName":"wall_mid","x":1200.0,"y":704.0,"collidable":true,"width":16,"height":144},{"textureName":"wall_mid","x":1136.0,"y":704.0,"collidable":true,"width":16,"height":80},{"textureName":"wall_mid","x":32.0,"y":16.0,"collidable":true,"width":144,"height":16},{"textureName":"wall_mid","x":1120.0,"y":704.0,"collidable":true,"width":16,"height":16},{"textureName":"wall_mid","x":1216.0,"y":704.0,"collidable":true,"width":16,"height":16},{"textureName":"wall_mid","x":832.0,"y":768.0,"collidable":true,"width":304,"height":16},{"textureName":"wall_mid","x":832.0,"y":832.0,"collidable":true,"width":368,"height":16},{"textureName":"wall_mid","x":640.0,"y":928.0,"collidable":true,"width":176,"height":16},{"textureName":"wall_mid","x":176.0,"y":16.0,"collidable":false,"width":16,"height":176},{"textureName":"wall_mid","x":32.0,"y":176.0,"collidable":false,"width":144,"height":16}],"enemies":[]}

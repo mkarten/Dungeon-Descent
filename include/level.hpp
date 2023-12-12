@@ -76,6 +76,7 @@ public:
     std::vector<StaticEntity> staticEntities;
     float timer;
     Player *player;
+    Vector2f playerSpawnPoint;
     bool playerDead;
     LevelData levelData;
 };
