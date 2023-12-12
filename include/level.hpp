@@ -78,5 +78,6 @@ public:
     Player *player;
     Vector2f playerSpawnPoint;
     bool playerDead;
+    bool gameWon;
     LevelData levelData;
 };

@@ -23,6 +23,9 @@ Level::Level(SDL_Renderer *renderer, Player *Gplayer , std::string levelDataFile
     // position the player at the spawn point
     playerSpawnPoint = levelData.getPlayerSpawnPoint();
 
+    gameWon = false;
+    playerDead = false;
+
     // set the texture of the static entities to the tileset texture
     for (int i = 0; i < staticEntities.size(); i++) {
 
@@ -63,15 +66,16 @@ void Level::update(EventManager &eventManager){
             enemies[i].setTriggered(false);
         }
     }
-    if (!playerDead){
+    if (!playerDead && !gameWon){
         // update the timer with the delta time
         timer += eventManager.deltaTime;
     }
 
-    if (playerDead){
+    if (playerDead || gameWon){
         if (eventManager.Keys[SDL_SCANCODE_RETURN] && !eventManager.LastKeys[SDL_SCANCODE_RETURN]){
             // send the restart game event
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::LEVEL, Messages::GAME_RESTART);
+            return;
         }
     }
 
@@ -208,6 +212,19 @@ void Level::update(EventManager &eventManager){
             }
             eventManager.clearMessage(message.MessageID);
         }
+        if (message.message == Messages::WIN_GAME) {
+            // set the game to won
+            gameWon = true;
+            // set the player to dead so that it doesn't move
+            player->dead = true;
+            // stop the music
+            utils::stopMusic();
+            // remove trigger from all the entities
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies[i].setTriggered(false);
+            }
+            eventManager.clearMessage(message.MessageID);
+        }
     }
 }
 
@@ -245,10 +262,12 @@ void Level::render(Renderer *renderer){
     // print the level name for debug purposes
     utils::renderText(renderer->getRenderer(), getLevelName(), WINDOW_WIDTH/2, 20, SDL_Color {255, 255, 255});
     // print the timer with one digit precision
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(2) << timer;
-    std::string timerText = stream.str();
-    utils::renderText(renderer->getRenderer(), timerText, WINDOW_WIDTH-100, 100, SDL_Color {0, 0, 0});
+    if (getLevelName() != "Level 1") {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << timer;
+        std::string timerText = stream.str();
+        utils::renderText(renderer->getRenderer(), "Timer : "+timerText, WINDOW_WIDTH - 120, 20, SDL_Color{255, 255, 255});
+    }
     // if the player is dead render the game over overlay
     if (player->health <= 0) {
         // change the blend mode to render the overlay
@@ -258,10 +277,61 @@ void Level::render(Renderer *renderer){
         SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
         SDL_RenderFillRect(renderer->getRenderer(), &rect);
         // render the game over text
-        utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2-50, SDL_Color {255, 0, 0});
+        utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-20, SDL_Color {255, 0, 0});
         // render the restart text
-        utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
+        utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
     }
+    // if the game is won render the game won overlay
+    if (gameWon) {
+        // change the blend mode to render the overlay
+        SDL_SetRenderDrawBlendMode(renderer->getRenderer(), SDL_BLENDMODE_BLEND);
+        // draw the overlay
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 100);
+        SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+        SDL_RenderFillRect(renderer->getRenderer(), &rect);
+        // render the game won text
+        utils::renderText(renderer->getRenderer(), "You Won", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-20, SDL_Color {0, 255, 0});
+        // render the restart text
+        utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {0, 255, 0});
+    }
+
+    // draw tutorial text if the level name is Level 1
+    if (getLevelName() == "Level 1") {
+        timer = 0;
+        // fist tutorial text is on to of the player spawn point
+        Vector2f textPos = levelData.getPlayerSpawnPoint();
+        textPos.y -= 10*SCALE_FACTOR;
+
+        Vector2f pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "Use ZQSD to move", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 87;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You can Right Click", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 97;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to deal damage to enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 662;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You need to kill all enemies", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 614;
+        textPos.y = 672;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to progress", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 480;
+        textPos.y = 480;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "You have 60 seconds", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 480;
+        textPos.y = 490;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "to clear the level", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+    }
+
+
+
 }
 
 LevelData::LevelData() {
@@ -398,6 +468,11 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
             int w, h;
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
             enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 10);
+        }
+        if (type == "tutorialEnemy"){
+            int w, h;
+            SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 2);
         }
     }
 

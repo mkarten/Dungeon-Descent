@@ -29,6 +29,8 @@ void Weapon::render(Renderer *renderer){
 
     // calculate the worldspace position of the mouse to set as the target position
     targetPos = renderer->screenspaceToWorldspace(mousePos);
+    // print the target position
+    //std::cout << "targetPos: " << targetPos.x/SCALE_FACTOR << ", " << targetPos.y/SCALE_FACTOR << std::endl;
 }
 
 void Weapon::update(EventManager &eventManager){

@@ -11,6 +11,14 @@
 Game::Game()
 {
     renderer = new Renderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+    RestartGame();
+}
+
+void Game::RestartGame()
+{
+    // clean up all before restarting
+    levels.clear();
+
     currentTime = utils::hireTimeInSeconds();
     timeStep = TIME_STEP;
     utils::TileMap tilesInfoMap = utils::LoadTileInfo("res/tile_offset_map.txt");
@@ -28,7 +36,6 @@ Game::Game()
     TileInfo knightWeaponTileInfo = tilesInfoMap["weapon_golden_sword"];
 
     // load the player tiles textures
-    SDL_Texture *knightIdleTex = utils::loadTileFromTileset(tileset, knightIdleTileInfo, renderer->getRenderer());
     SDL_Texture *knightWeaponTex = utils::loadTileFromTileset(tileset, knightWeaponTileInfo, renderer->getRenderer());
 
     // load all the animations
@@ -49,11 +56,14 @@ Game::Game()
     levelEditor = LevelEditor(renderer->getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
     mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 
+    inMainMenu = true;
+
     levelPtr = 0;
     currentLevel = levels[levelPtr];
     player.pos = currentLevel.playerSpawnPoint;
     player.weapon.pos = player.pos;
 }
+
 
 
 
@@ -104,12 +114,22 @@ void Game::run()
             if (message.message == Messages::GO_TO_NEXT_LEVEL) {
                 levelPtr++;
                 if (levelPtr >= levels.size()) {
-                    levelPtr = 0;
+                    levelPtr -=1;
+                    //send a message to the level to display a win message
+                    eventManager.sendMessage(Messages::IDs::LEVEL, Messages::IDs::GAME, Messages::WIN_GAME);
+                    eventManager.clearMessage(message.MessageID);
+                    continue;
                 }
                 currentLevel = levels[levelPtr];
+                player.weapon.isOnCooldown = false;
                 player.pos = currentLevel.playerSpawnPoint;
                 player.weapon.pos = player.pos;
                 eventManager.clearMessage(message.MessageID);
+            }
+            if (message.message == Messages::GAME_RESTART) {
+                RestartGame();
+                eventManager.clearMessage(message.MessageID);
+                continue;
             }
         }
         if (inMainMenu){
@@ -146,3 +166,4 @@ void Game::cleanUp(int exitCode)
     SDL_Quit();       // Nettoyage des ressources de SDL
     exit(exitCode);   // Fermeture du programme
 }
+
