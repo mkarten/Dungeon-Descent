@@ -4,9 +4,8 @@
 #include <iostream>
 
 void LevelEditor::update(EventManager &eventManager) {
-    // update the placingCursor position according to the mouse position to fit a 16x16 grid
-    placingCursor.x = (eventManager.mouse.x/SCALE_FACTOR - (eventManager.mouse.x/SCALE_FACTOR)%16);
-    placingCursor.y = (eventManager.mouse.y/SCALE_FACTOR - (eventManager.mouse.y/SCALE_FACTOR)%16);
+    placingCursor.x = (mousePos.x/SCALE_FACTOR - (int)(mousePos.x/SCALE_FACTOR)%16);
+    placingCursor.y = (mousePos.y/SCALE_FACTOR - (int)(mousePos.y/SCALE_FACTOR)%16);
 
 
     // when the right mouse button is pressed, remove the first tile that is under the cursor
@@ -14,7 +13,7 @@ void LevelEditor::update(EventManager &eventManager) {
         std::vector<StaticEntity> staticEntities = *getStaticEntities();
         // range over the staticEntities backwards to remove the first one that is under the cursor
         for (int i = staticEntities.size()-1; i >= 0; i--) {
-            if (utils::isPointInRect(eventManager.mouse.x/SCALE_FACTOR, eventManager.mouse.y/SCALE_FACTOR, staticEntities[i].getRect())) {
+            if (utils::isPointInRect(mousePos.x/SCALE_FACTOR, mousePos.y/SCALE_FACTOR, staticEntities[i].getRect())) {
                 staticEntities.erase(staticEntities.begin()+i);
                 break;
             }
@@ -81,12 +80,27 @@ void LevelEditor::update(EventManager &eventManager) {
         }
     }
 
-    // update the player
-    getPlayer()->update(eventManager);
-
+    // change the mouving direction based on the keys pressed
+    mouvingDirection = Vector2f{0, 0};
+    if (eventManager.Keys[SDL_SCANCODE_W]) mouvingDirection.y = -1;
+    if (eventManager.Keys[SDL_SCANCODE_S]) mouvingDirection.y = 1;
+    if (eventManager.Keys[SDL_SCANCODE_A]) mouvingDirection.x = -1;
+    if (eventManager.Keys[SDL_SCANCODE_D]) mouvingDirection.x = 1;
+    mousePos = Vector2f{static_cast<float>(eventManager.mouse.x), static_cast<float>(eventManager.mouse.y)};
 }
 
 void LevelEditor::render(Renderer *renderer) {
+    mousePos = renderer->screenspaceToWorldspace(mousePos);
+
+    // move the camera based on the mouving direction
+    renderer->camera.pos.x += mouvingDirection.x * 1;
+    renderer->camera.pos.y += mouvingDirection.y * 1;
+
+    // make sure the camera is not out of bounds
+    if (renderer->camera.pos.x < 0) renderer->camera.pos.x = 0;
+    if (renderer->camera.pos.y < 0) renderer->camera.pos.y = 0;
+
+
     // clear the screen
     SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
     SDL_RenderClear(renderer->getRenderer());
@@ -95,11 +109,10 @@ void LevelEditor::render(Renderer *renderer) {
     for (auto &staticEntity : staticEntities) {
         staticEntity.render(renderer);
     }
-    // render the player
-    getPlayer()->render(renderer);
     // render the placingCursor
     SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 0, 0, 255);
-    SDL_Rect scaledPlacingCursor = {placingCursor.x*SCALE_FACTOR, placingCursor.y*SCALE_FACTOR, placingCursor.w*SCALE_FACTOR, placingCursor.h*SCALE_FACTOR};
+    Vector2f screenPos = renderer->worldspaceToScreenspace(Vector2f{static_cast<float>(placingCursor.x), static_cast<float>(placingCursor.y)});
+    SDL_Rect scaledPlacingCursor = {static_cast<int>(screenPos.x*SCALE_FACTOR), static_cast<int>(screenPos.y*SCALE_FACTOR), placingCursor.w*SCALE_FACTOR, placingCursor.h*SCALE_FACTOR};
     SDL_RenderDrawRect(renderer->getRenderer(), &scaledPlacingCursor);
     // draw the current selected tile at the bottom right corner
     int w, h;

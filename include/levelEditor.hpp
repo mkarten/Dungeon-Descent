@@ -33,5 +33,6 @@ private:
     utils::TileMap tilesInfoMap;
     SDL_Rect placingCursor;
     SDL_Renderer *renderer;
-
+    Vector2f mousePos;
+    Vector2f mouvingDirection;
 };
