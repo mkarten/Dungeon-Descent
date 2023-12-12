@@ -511,22 +511,22 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
         if (type == "bigDemon") {
             int w, h;
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 2, nullptr, 10);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 150, 2, nullptr, 10);
         }
         if (type == "imp"){
             int w, h;
             SDL_QueryTexture(animation::impAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::impAnimations, w, h, 100, 1, nullptr, 2);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::impAnimations, w, h, 300, 1, nullptr, 2);
         }
         if (type == "goons"){
             int w, h;
             SDL_QueryTexture(animation::goblinAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::goblinAnimations, w, h, 100, 2, nullptr, 5);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::goblinAnimations, w, h, 250, 2, nullptr, 5);
         }
         if (type == "boss"){
             int w, h;
             SDL_QueryTexture(animation::big_zombieAnimations.idleAnimation[0], NULL, NULL, &w, &h);
-            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_zombieAnimations, w, h, 100, 3, nullptr, 200);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_zombieAnimations, w, h, 150, 3, nullptr, 300);
         }
     }
 
