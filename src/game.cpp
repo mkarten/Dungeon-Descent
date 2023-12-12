@@ -62,6 +62,9 @@ void Game::RestartGame()
     currentLevel = levels[levelPtr];
     player.pos = currentLevel.playerSpawnPoint;
     player.weapon.pos = player.pos;
+
+    // set the camera default position
+    renderer->camera.pos = Vector2f(0, 0);
 }
 
 
@@ -120,6 +123,8 @@ void Game::run()
                     eventManager.clearMessage(message.MessageID);
                     continue;
                 }
+                // add one damage to the weapon
+                player.weapon.dammage += 1;
                 currentLevel = levels[levelPtr];
                 player.weapon.isOnCooldown = false;
                 player.pos = currentLevel.playerSpawnPoint;
@@ -148,12 +153,6 @@ void Game::run()
             // render the game
             currentLevel.render(renderer);
         }
-
-
-
-        int roundFps = static_cast<int>(1.0f / frameTime);
-        utils::renderText(renderer->getRenderer(), "FPS: " + std::to_string(roundFps), 0, WINDOW_HEIGHT-50, {0, 0, 0, 255});
-
         SDL_RenderPresent(renderer->getRenderer());
     }
 }

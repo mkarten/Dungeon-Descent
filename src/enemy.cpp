@@ -21,7 +21,7 @@ Enemy::Enemy(Vector2f p_pos, Animations *e_anim, int width, int height,int trigg
     this->health = health;
     speed = 0;
     maxSpeed = 0.5f;
-    randomIdle = true;
+    randomIdle = false;
 }
 
 void Enemy::update(EventManager &eventManager)

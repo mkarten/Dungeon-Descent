@@ -268,6 +268,9 @@ void Level::render(Renderer *renderer){
         std::string timerText = stream.str();
         utils::renderText(renderer->getRenderer(), "Timer : "+timerText, WINDOW_WIDTH - 120, 20, SDL_Color{255, 255, 255});
     }
+    // render the remaining enemies under the timer
+        utils::renderText(renderer->getRenderer(), "Remaining :", WINDOW_WIDTH - 120, 60,SDL_Color{255, 255, 255});
+        utils::renderText(renderer->getRenderer(), std::to_string(enemies.size()), WINDOW_WIDTH - 120, 90,SDL_Color{255, 255, 255});
     // if the player is dead render the game over overlay
     if (player->health <= 0) {
         // change the blend mode to render the overlay
@@ -280,6 +283,8 @@ void Level::render(Renderer *renderer){
         utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-40, SDL_Color {255, 0, 0});
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
+        // add the credits text
+        utils::renderText(renderer->getRenderer(), "Made by : Luca Morgado", WINDOW_WIDTH/2, WINDOW_HEIGHT-50, SDL_Color {255, 255, 255});
     }
     // if the game is won render the game won overlay
     if (gameWon) {
@@ -293,6 +298,8 @@ void Level::render(Renderer *renderer){
         utils::renderText(renderer->getRenderer(), "You Won", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-40, SDL_Color {0, 255, 0});
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {0, 255, 0});
+        // add the credits text
+        utils::renderText(renderer->getRenderer(), "Made by : Luca Morgado", WINDOW_WIDTH/2, WINDOW_HEIGHT-50, SDL_Color {255, 255, 255});
     }
 
     // draw tutorial text if the level name is Level 1
