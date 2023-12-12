@@ -76,7 +76,7 @@ void MainMenu::render(Renderer *renderer)
 {
 
     // clear the screen
-    SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer->getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(renderer->getRenderer());
 
 

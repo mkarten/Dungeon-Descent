@@ -25,6 +25,7 @@ class Enemy : public Entity
         std::string texName;
         std::string type;
         bool flipSprite;
+        bool randomIdle;
     private:
         int health;
         int maxHealth;

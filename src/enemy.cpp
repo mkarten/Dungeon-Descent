@@ -21,6 +21,7 @@ Enemy::Enemy(Vector2f p_pos, Animations *e_anim, int width, int height,int trigg
     this->health = health;
     speed = 0;
     maxSpeed = 0.5f;
+    randomIdle = true;
 }
 
 void Enemy::update(EventManager &eventManager)
@@ -43,6 +44,11 @@ void Enemy::update(EventManager &eventManager)
             randomDirection = Vector2f{static_cast<float>(rand() % 200 - 100) / 100.0f, static_cast<float>(rand() % 200 - 100) / 100.0f};
             // pick a random speed between 0.01 and 0.2
             randomDirectionSpeed = static_cast<float>(rand() % 20 + 1) / 100.0f;
+            if (randomIdle) {
+                randomDirection = Vector2f{0, 0};
+                randomDirectionSpeed = 0;
+            }
+            randomIdle = !randomIdle;
         }
         randomDirectionTimer -= eventManager.deltaTime;
         // wander in the random direction

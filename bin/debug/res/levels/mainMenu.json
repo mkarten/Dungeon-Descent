@@ -1,60 +1,13 @@
-{
-  "levelName": "Test Level",
-  "playerSpawnPoint": {
-    "x": 20,
-    "y": 20
-  },
-  "staticEntities": [
+{"levelName":"Level Editor","playerSpawnPoint":{"x":-100,"y":-100},"staticEntities":[{"textureName":"floor_1","x":816.0,"y":784.0,"collidable":false,"width":336,"height":48},{"textureName":"floor_1","x":1152.0,"y":704.0,"collidable":false,"width":48,"height":128},{"textureName":"wall_mid","x":816.0,"y":832.0,"collidable":true,"width":16,"height":112},{"textureName":"wall_mid","x":1200.0,"y":704.0,"collidable":true,"width":16,"height":144},{"textureName":"wall_mid","x":1136.0,"y":704.0,"collidable":true,"width":16,"height":80},{"textureName":"wall_mid","x":1120.0,"y":704.0,"collidable":true,"width":16,"height":16},{"textureName":"wall_mid","x":1216.0,"y":704.0,"collidable":true,"width":16,"height":16},{"textureName":"wall_mid","x":832.0,"y":768.0,"collidable":true,"width":304,"height":16},{"textureName":"wall_mid","x":832.0,"y":832.0,"collidable":true,"width":368,"height":16},{"textureName":"wall_mid","x":640.0,"y":928.0,"collidable":true,"width":176,"height":16},{"textureName":"floor_1","x":32.0,"y":32.0,"collidable":false,"width":352,"height":160},{"textureName":"wall_mid","x":16.0,"y":16.0,"collidable":true,"width":384,"height":16},{"textureName":"wall_mid","x":16.0,"y":192.0,"collidable":true,"width":384,"height":16},{"textureName":"wall_mid","x":16.0,"y":32.0,"collidable":true,"width":16,"height":160},{"textureName":"wall_mid","x":384.0,"y":32.0,"collidable":true,"width":16,"height":160},{"textureName":"doors_leaf_closed","x":192.0,"y":0.0,"collidable":true,"width":32,"height":32},{"textureName":"doors_frame_right","x":224.0,"y":0.0,"collidable":true,"width":16,"height":32},{"textureName":"doors_frame_left","x":176.0,"y":0.0,"collidable":true,"width":16,"height":32},{"textureName":"wall_edge_top_right","x":240.0,"y":0.0,"collidable":true,"width":160,"height":16},{"textureName":"wall_edge_top_right","x":16.0,"y":0.0,"collidable":true,"width":160,"height":16}],
+  "enemies":[
+      {
+        "type": "bigDemon",
+        "x": 32,
+        "y": 32
+      },
     {
-      "textureName":"floor_1",
-      "x": 0,
-      "y": 0,
-      "width": 1280,
-      "height": 1280,
-      "collidable": false
-    },
-    {
-      "textureName":"wall_left",
-      "x": 0,
-      "y": 0,
-      "collidable": false
-    },
-    {
-      "textureName":"wall_mid",
-      "x": 100,
-      "y": 100,
-      "collidable": true
-    },
-    {
-      "textureName":"wall_right",
-      "x": 0,
-      "y": 32,
-      "collidable": false
-    },
-    {
-      "textureName":"wall_top_left",
-      "x": 16,
-      "y": 0,
-      "collidable": false
-    },
-    {
-      "textureName":"wall_top_mid",
-      "x": 16,
-      "y": 16,
-      "collidable": false
-    },
-    {
-      "textureName":"wall_top_right",
-      "x": 16,
-      "y": 32,
-      "collidable": false
+      "type": "imp",
+      "x": 64,
+      "y": 32
     }
-  ],
-  "enemies": [
-  {
-    "type": "enemy",
-    "x": 140,
-    "y": 140
-  }
-]
-}
+  ]}

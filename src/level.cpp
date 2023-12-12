@@ -277,7 +277,7 @@ void Level::render(Renderer *renderer){
         SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
         SDL_RenderFillRect(renderer->getRenderer(), &rect);
         // render the game over text
-        utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-20, SDL_Color {255, 0, 0});
+        utils::renderText(renderer->getRenderer(), "Game Over", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-40, SDL_Color {255, 0, 0});
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {255, 0, 0});
     }
@@ -290,7 +290,7 @@ void Level::render(Renderer *renderer){
         SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
         SDL_RenderFillRect(renderer->getRenderer(), &rect);
         // render the game won text
-        utils::renderText(renderer->getRenderer(), "You Won", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-20, SDL_Color {0, 255, 0});
+        utils::renderText(renderer->getRenderer(), "You Won", WINDOW_WIDTH/2, WINDOW_HEIGHT/2-40, SDL_Color {0, 255, 0});
         // render the restart text
         utils::renderText(renderer->getRenderer(), "Press Enter to restart", WINDOW_WIDTH/2, WINDOW_HEIGHT/2, SDL_Color {0, 255, 0});
     }
@@ -307,7 +307,7 @@ void Level::render(Renderer *renderer){
         textPos.x = 614;
         textPos.y = 87;
         pos = renderer->worldspaceToScreenspace(textPos);
-        utils::renderText(renderer->getRenderer(), "You can Right Click", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        utils::renderText(renderer->getRenderer(), "You can left click", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
         textPos.x = 614;
         textPos.y = 97;
         pos = renderer->worldspaceToScreenspace(textPos);
@@ -328,6 +328,14 @@ void Level::render(Renderer *renderer){
         textPos.y = 490;
         pos = renderer->worldspaceToScreenspace(textPos);
         utils::renderText(renderer->getRenderer(), "to clear the level", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 750;
+        textPos.y = 480;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "Your sword deals +1 damage", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
+        textPos.x = 750;
+        textPos.y = 490;
+        pos = renderer->worldspaceToScreenspace(textPos);
+        utils::renderText(renderer->getRenderer(), "for every level you clear", pos.x*SCALE_FACTOR, pos.y*SCALE_FACTOR, SDL_Color {255, 255, 255});
     }
 
 
@@ -474,6 +482,19 @@ bool LevelData::Deserialize(const rapidjson::Value &obj) {
             SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
             enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 1, nullptr, 2);
         }
+
+        if (type == "bigDemon") {
+            int w, h;
+            SDL_QueryTexture(animation::big_demonAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::big_demonAnimations, w, h, 100, 2, nullptr, 10);
+        }
+        if (type == "imp"){
+            int w, h;
+            SDL_QueryTexture(animation::impAnimations.idleAnimation[0], NULL, NULL, &w, &h);
+            enemies.emplace_back(Vector2f(xVal->value.GetDouble(), yVal->value.GetDouble()),&animation::impAnimations, w, h, 100, 1, nullptr, 2);
+        }
+
+
     }
 
     //calculate the level width and height based on the static entities
