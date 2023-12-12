@@ -65,6 +65,9 @@ void Game::RestartGame()
 
     // set the camera default position
     renderer->camera.pos = Vector2f(0, 0);
+
+    // restart the music
+    utils::playMusic();
 }
 
 
