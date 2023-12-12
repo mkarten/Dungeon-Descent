@@ -21,6 +21,7 @@ public:
         for (auto &tileInfo : tilesInfoMap)
         {
             tilesetTexs.push_back(utils::loadTileFromTileset(tilesetTex, tileInfo.second, renderer));
+            tilesetTexsNames.push_back(tileInfo.first);
         }
     }
     LevelEditor() {}
@@ -29,10 +30,12 @@ public:
 private:
     SDL_Texture *tilesetTex;
     std::vector<SDL_Texture *> tilesetTexs;
+    std::vector<std::string> tilesetTexsNames;
     int tilesetTexsIndex = 0;
     utils::TileMap tilesInfoMap;
     SDL_Rect placingCursor;
     SDL_Renderer *renderer;
+    bool isPlacedTileCollidable = false;
     Vector2f mousePos;
     Vector2f mouvingDirection;
 };

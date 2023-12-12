@@ -44,7 +44,7 @@ Game::Game()
     player = Player(Vector2f(0, 0), &animation::knight_mAnimations,knightWeaponTex, knightIdleTileInfo.w, knightIdleTileInfo.h);
 
     // create the level
-    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/debug.json", tileset, tilesInfoMap);
+    levels.emplace_back(renderer->getRenderer(), &player, "res/levels/save.json", tileset, tilesInfoMap);
     levelEditor = LevelEditor(renderer->getRenderer(), &player, "res/levels/editor.json", tileset, tilesInfoMap);
     mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 

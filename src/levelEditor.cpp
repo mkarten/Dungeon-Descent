@@ -31,7 +31,7 @@ void LevelEditor::update(EventManager &eventManager) {
         // set the texture of the new static entity to the texture of the tile under the cursor
         newStaticEntity.tex = tilesetTexs[tilesetTexsIndex];
         // set the name of the new static entity to the name of the tile under the cursor
-        newStaticEntity.texName = "floor_1";
+        newStaticEntity.texName = tilesetTexsNames[tilesetTexsIndex];
         int w, h;
         SDL_QueryTexture(newStaticEntity.tex, NULL, NULL, &w, &h);
         // check if we need to tile the texture
@@ -43,6 +43,8 @@ void LevelEditor::update(EventManager &eventManager) {
             newStaticEntity.width = w;
             newStaticEntity.height = h;
         }
+        // set the collidable of the new static entity to the isPlacedTileCollidable
+        newStaticEntity.collidable = isPlacedTileCollidable;
         // add the new static entity to the static entities
         std::vector<StaticEntity> staticEntities = *getStaticEntities();
         staticEntities.push_back(newStaticEntity);
@@ -70,7 +72,7 @@ void LevelEditor::update(EventManager &eventManager) {
         tilesetTexsIndex++;
         if (tilesetTexsIndex>=tilesetTexs.size()) tilesetTexsIndex = 0;
     }
-    if (eventManager.Keys[SDL_SCANCODE_KP_ENTER] && !eventManager.LastKeys[SDL_SCANCODE_KP_ENTER]){
+    if (eventManager.Keys[SDL_SCANCODE_RETURN] && !eventManager.LastKeys[SDL_SCANCODE_RETURN]){
         std::string cwd = utils::getCurrentWorkingDirectory();
         std::string path = utils::chooseFile("Save level", cwd, "Level files (*.json)\0*.lvl\0All files (*.*)\0*.*\0");
         if (path != ""){
@@ -78,6 +80,10 @@ void LevelEditor::update(EventManager &eventManager) {
             levelData.setStaticEntities(*getStaticEntities());
             getLevelData()->SerializeToFile(path);
         }
+    }
+    // if c is pressed, toggle the isPlacedTileCollidable
+    if (eventManager.Keys[SDL_SCANCODE_C] && !eventManager.LastKeys[SDL_SCANCODE_C]){
+        isPlacedTileCollidable = !isPlacedTileCollidable;
     }
 
     // change the mouving direction based on the keys pressed
@@ -117,6 +123,11 @@ void LevelEditor::render(Renderer *renderer) {
     // draw the current selected tile at the bottom right corner
     int w, h;
     SDL_QueryTexture(tilesetTexs[tilesetTexsIndex], NULL, NULL, &w, &h);
-    SDL_Rect scaledTilesetTex = {WINDOW_WIDTH-w*SCALE_FACTOR, WINDOW_HEIGHT-h*SCALE_FACTOR, w*SCALE_FACTOR, h*SCALE_FACTOR};
+    SDL_Rect scaledTilesetTex = {WINDOW_WIDTH-w*UI_SCALE_FACTOR, WINDOW_HEIGHT-h*UI_SCALE_FACTOR, w*UI_SCALE_FACTOR, h*UI_SCALE_FACTOR};
     SDL_RenderCopy(renderer->getRenderer(), tilesetTexs[tilesetTexsIndex], NULL, &scaledTilesetTex);
+
+    if (isPlacedTileCollidable){
+        // drawn text C on top of the selected tile at the Top right corner
+        utils::renderText(renderer->getRenderer(), "C", WINDOW_WIDTH-w*UI_SCALE_FACTOR, WINDOW_HEIGHT-h*UI_SCALE_FACTOR, SDL_Color{0, 0, 0, 255});
+    }
 }

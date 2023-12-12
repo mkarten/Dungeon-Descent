@@ -214,12 +214,13 @@ void Level::render(Renderer *renderer){
     if (renderer->camera.newPos.y < 0) {
         renderer->camera.newPos.y = 0;
     }
-    if (renderer->camera.newPos.x > levelData.getLevelWidth() - renderer->camera.w) {
-        renderer->camera.newPos.x = levelData.getLevelWidth() - renderer->camera.w;
+    if (renderer->camera.newPos.x > levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w) {
+        renderer->camera.newPos.x = levelData.getLevelWidth()*SCALE_FACTOR - renderer->camera.w;
     }
-    if (renderer->camera.newPos.y > levelData.getLevelHeight() - renderer->camera.h) {
-        renderer->camera.newPos.y = levelData.getLevelHeight() - renderer->camera.h;
+    if (renderer->camera.newPos.y > levelData.getLevelHeight()*SCALE_FACTOR - renderer->camera.h) {
+        renderer->camera.newPos.y = levelData.getLevelHeight()*SCALE_FACTOR - renderer->camera.h;
     }
+    std::cout << renderer->camera.newPos.x << " " << renderer->camera.newPos.y << std::endl;
     // lerping the camera position
     renderer->camera.pos = utils::lerpVector2f(renderer->camera.pos, renderer->camera.newPos, 0.07f);
 
