@@ -22,6 +22,7 @@ private:
     Player player;
     bool playerDead;
     int levelPtr;
+    bool leftTileScreen = false;
     std::vector<Level> levels;
     Level currentLevel;
     LevelEditor levelEditor;

@@ -24,3 +24,10 @@ The goal of the game is to reach the bottom of the tower and defeat the final bo
 
 - Reach the bottom of the tower.
 - Defeat the final boss.
+
+## Controls
+
+- `ZQSD` to move.
+- Your sword is always pointing towards the mouse cursor. Left click to attack.
+- `Space` to pause the game.
+- `Escape` to enter the level editor.

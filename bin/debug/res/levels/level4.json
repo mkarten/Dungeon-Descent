@@ -6,12 +6,12 @@
       "y":656
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":912,
       "y":528
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":624,
       "y":528
     },
@@ -21,7 +21,7 @@
       "y":528
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":480,
       "y":528
     },
@@ -36,7 +36,7 @@
       "y":80
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":512,
       "y":80
     },
@@ -46,7 +46,7 @@
       "y":208
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":720,
       "y":80
     },
@@ -56,12 +56,12 @@
       "y":208
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":928,
       "y":80
     },
     {
-      "type":"enemy",
+      "type":"bigDemon",
       "x":1152,
       "y":288
     },

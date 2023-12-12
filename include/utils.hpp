@@ -93,6 +93,10 @@ namespace utils
     void playPlayerHitSound();
 
     void playCooldownResetSound();
+
+    void setMusicVolume(int volume);
+
+    void setSoundEffectsVolume(int volume);
 }
 
 

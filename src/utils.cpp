@@ -310,5 +310,14 @@ namespace utils{
         Mix_PlayChannel(-1, cooldownResetSound, 0);
     }
 
+    // volume is between 0 and 100
+    void setMusicVolume(int volume){
+        Mix_VolumeMusic(MIX_MAX_VOLUME * volume / 100);
+    }
+
+    void setSoundEffectsVolume(int volume){
+        Mix_Volume(-1, MIX_MAX_VOLUME * volume / 100);
+    }
+
 }
 

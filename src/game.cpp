@@ -61,6 +61,7 @@ void Game::RestartGame()
     mainMenu = MainMenu(renderer->getRenderer(), &player,"res/levels/mainMenu.json", tileset, tilesInfoMap);
 
     inMainMenu = true;
+    leftTileScreen = false;
 
     levelPtr = 0;
     currentLevel = levels[levelPtr];
@@ -109,7 +110,7 @@ void Game::run()
         for (auto &message : eventManager.getMessages(Messages::IDs::GAME)) {
             if (message.message == Messages::START_GAME) {
                 inMainMenu = false;
-                eventManager.clearMessage(message.MessageID);
+                leftTileScreen = true;
                 eventManager.clearMessage(message.MessageID);
             }
             if (message.message == Messages::QUIT_GAME) {
@@ -164,6 +165,16 @@ void Game::run()
         // if i press the plus key, i go to the next level
         if (eventManager.Keys[SDL_SCANCODE_KP_PLUS] && !eventManager.LastKeys[SDL_SCANCODE_KP_PLUS]) {
             eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::GO_TO_NEXT_LEVEL);
+        }
+
+        if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
+            inEditorMode = !inEditorMode;
+        }
+
+        if (eventManager.Keys[SDL_SCANCODE_SPACE] && !eventManager.LastKeys[SDL_SCANCODE_SPACE] && leftTileScreen) {
+            // put the camera at 0 0
+            renderer->camera.pos = Vector2f(0, 0);
+            inMainMenu = !inMainMenu;
         }
 
 

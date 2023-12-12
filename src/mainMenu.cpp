@@ -8,6 +8,10 @@ void MainMenu::update(EventManager &eventManager)
 {
     bool lastStartButtonHovered = startButtonHovered;
     bool lastQuitButtonHovered = quitButtonHovered;
+    bool lastMusicVolumeButtonUpHovered = musicVolumeButtonUpHovered;
+    bool lastMusicVolumeButtonDownHovered = musicVolumeButtonDownHovered;
+    bool lastSoundEffectsVolumeButtonUpHovered = soundEffectsVolumeButtonUpHovered;
+    bool lastSoundEffectsVolumeButtonDownHovered = soundEffectsVolumeButtonDownHovered;
     if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, startGameButton)){
         startButtonHovered = true;
         if (!lastStartButtonHovered){
@@ -24,6 +28,38 @@ void MainMenu::update(EventManager &eventManager)
     } else{
         quitButtonHovered = false;
     }
+    if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, musicVolumeButtonUp)){
+        musicVolumeButtonUpHovered = true;
+        if (!lastMusicVolumeButtonUpHovered){
+            utils::playSelectSound();
+        }
+    } else{
+        musicVolumeButtonUpHovered = false;
+    }
+    if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, musicVolumeButtonDown)){
+        musicVolumeButtonDownHovered = true;
+        if (!lastMusicVolumeButtonDownHovered){
+            utils::playSelectSound();
+        }
+    } else{
+        musicVolumeButtonDownHovered = false;
+    }
+    if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, soundEffectsVolumeButtonUp)){
+        soundEffectsVolumeButtonUpHovered = true;
+        if (!lastSoundEffectsVolumeButtonUpHovered){
+            utils::playSelectSound();
+        }
+    } else{
+        soundEffectsVolumeButtonUpHovered = false;
+    }
+    if (utils::isPointInRect(eventManager.mouse.x, eventManager.mouse.y, soundEffectsVolumeButtonDown)){
+        soundEffectsVolumeButtonDownHovered = true;
+        if (!lastSoundEffectsVolumeButtonDownHovered){
+            utils::playSelectSound();
+        }
+    } else{
+        soundEffectsVolumeButtonDownHovered = false;
+    }
 
 
     // check if the start game button is pressed
@@ -37,6 +73,56 @@ void MainMenu::update(EventManager &eventManager)
         utils::playClickSound();
         eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::GAME, Messages::QUIT_GAME);
     }
+    if (musicVolumeButtonUpHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
+        // play click sound
+        utils::playClickSound();
+        musicVolume += 10;
+        if (musicVolume > 100){
+            musicVolume = 100;
+        }
+        if (musicVolume < 0){
+            musicVolume = 0;
+        }
+        utils::setMusicVolume(musicVolume);
+    }
+    if (musicVolumeButtonDownHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
+        // play click sound
+        utils::playClickSound();
+        musicVolume -= 10;
+        if (musicVolume > 100){
+            musicVolume = 100;
+        }
+        if (musicVolume < 0){
+            musicVolume = 0;
+        }
+        utils::setMusicVolume(musicVolume);
+    }
+    if (soundEffectsVolumeButtonUpHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
+        // play click sound
+        utils::playClickSound();
+        soundEffectsVolume += 10;
+        if (soundEffectsVolume > 100){
+            soundEffectsVolume = 100;
+        }
+        if (soundEffectsVolume < 0){
+            soundEffectsVolume = 0;
+        }
+        utils::setSoundEffectsVolume(soundEffectsVolume);
+    }
+    if (soundEffectsVolumeButtonDownHovered && eventManager.mouse.Buttons[SDL_BUTTON_LEFT] && !eventManager.mouse.LastButtons[SDL_BUTTON_LEFT]) {
+        // play click sound
+        utils::playClickSound();
+        soundEffectsVolume -= 10;
+        if (soundEffectsVolume > 100){
+            soundEffectsVolume = 100;
+        }
+        if (soundEffectsVolume < 0){
+            soundEffectsVolume = 0;
+        }
+        utils::setSoundEffectsVolume(soundEffectsVolume);
+    }
+
+
     // update the enemies
     for (int i = 0; i < enemies.size(); i++) {
         enemies[i].update(eventManager);
@@ -119,4 +205,56 @@ void MainMenu::render(Renderer *renderer)
     utils::renderText(renderer->getRenderer(), "QUIT GAME", quitButtonPos.x, quitButtonPos.y, {0, 0, 0, 255});
     // render the game name
     utils::renderText(renderer->getRenderer(), WINDOW_TITLE, WINDOW_WIDTH/2, 100, {0, 0, 0, 255});
+
+    // draw the music volume up button
+    musicVolumeButtonUp = {musicVolumeButtonUpPos.x - musicVolumeButtonUpSize.x/2, musicVolumeButtonUpPos.y - musicVolumeButtonUpSize.y/2, musicVolumeButtonUpSize.x, musicVolumeButtonUpSize.y};
+    if (musicVolumeButtonUpHovered){
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 200, 200, 200, 255);
+    } else{
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    }
+    SDL_RenderFillRect(renderer->getRenderer(), &musicVolumeButtonUp);
+    // draw the music volume up text at the center of the button
+    utils::renderText(renderer->getRenderer(), "+", musicVolumeButtonUpPos.x, musicVolumeButtonUpPos.y, {0, 0, 0, 255});
+
+    // draw the music volume down button
+    musicVolumeButtonDown = {musicVolumeButtonDownPos.x - musicVolumeButtonDownSize.x/2, musicVolumeButtonDownPos.y - musicVolumeButtonDownSize.y/2, musicVolumeButtonDownSize.x, musicVolumeButtonDownSize.y};
+    if (musicVolumeButtonDownHovered){
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 200, 200, 200, 255);
+    } else{
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    }
+    SDL_RenderFillRect(renderer->getRenderer(), &musicVolumeButtonDown);
+    // draw the music volume down text at the center of the button
+    utils::renderText(renderer->getRenderer(), "-", musicVolumeButtonDownPos.x, musicVolumeButtonDownPos.y, {0, 0, 0, 255});
+    // render the music volume value in the middle of the two buttons
+    utils::renderText(renderer->getRenderer(), std::to_string(musicVolume), musicVolumeButtonUpPos.x+100, musicVolumeButtonUpPos.y, {0, 0, 0, 255});
+    utils::renderText(renderer->getRenderer(), "MUSIC VOLUME", musicVolumeButtonUpPos.x+100, musicVolumeButtonUpPos.y-50, {0, 0, 0, 255});
+
+
+    // draw the sound effects volume up button
+    soundEffectsVolumeButtonUp = {soundEffectsVolumeButtonUpPos.x - soundEffectsVolumeButtonUpSize.x/2, soundEffectsVolumeButtonUpPos.y - soundEffectsVolumeButtonUpSize.y/2, soundEffectsVolumeButtonUpSize.x, soundEffectsVolumeButtonUpSize.y};
+    if (soundEffectsVolumeButtonUpHovered){
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 200, 200, 200, 255);
+    } else{
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    }
+    SDL_RenderFillRect(renderer->getRenderer(), &soundEffectsVolumeButtonUp);
+    // draw the sound effects volume up text at the center of the button
+    utils::renderText(renderer->getRenderer(), "+", soundEffectsVolumeButtonUpPos.x, soundEffectsVolumeButtonUpPos.y, {0, 0, 0, 255});
+
+    // draw the sound effects volume down button
+    soundEffectsVolumeButtonDown = {soundEffectsVolumeButtonDownPos.x - soundEffectsVolumeButtonDownSize.x/2, soundEffectsVolumeButtonDownPos.y - soundEffectsVolumeButtonDownSize.y/2, soundEffectsVolumeButtonDownSize.x, soundEffectsVolumeButtonDownSize.y};
+    if (soundEffectsVolumeButtonDownHovered){
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 200, 200, 200, 255);
+    } else{
+        SDL_SetRenderDrawColor(renderer->getRenderer(), 255, 255, 255, 255);
+    }
+    SDL_RenderFillRect(renderer->getRenderer(), &soundEffectsVolumeButtonDown);
+    // draw the sound effects volume down text at the center of the button
+    utils::renderText(renderer->getRenderer(), "-", soundEffectsVolumeButtonDownPos.x, soundEffectsVolumeButtonDownPos.y, {0, 0, 0, 255});
+    // render the sound effects volume value in the middle of the two buttons
+    utils::renderText(renderer->getRenderer(), std::to_string(soundEffectsVolume), soundEffectsVolumeButtonUpPos.x+100, soundEffectsVolumeButtonUpPos.y, {0, 0, 0, 255});
+    utils::renderText(renderer->getRenderer(), "SFX VOLUME", soundEffectsVolumeButtonUpPos.x+100, soundEffectsVolumeButtonUpPos.y-50, {0, 0, 0, 255});
+
 }

@@ -91,11 +91,6 @@ void Player::update(EventManager &eventManager)
                 currentFrameIndex = 0;
             }
         }
-
-
-        if (eventManager.Keys[SDL_SCANCODE_ESCAPE] && !eventManager.LastKeys[SDL_SCANCODE_ESCAPE]) {
-            eventManager.sendMessage(Messages::IDs::GAME, Messages::IDs::PLAYER, Messages::ENTER_EDITOR_MODE);
-        }
         if (!weapon.isOnCooldown){
             // put center of the weapon at center of the player
             weapon.newpos = Vector2f(pos.x + width/2-weapon.width/2, pos.y + height/2-weapon.height/2);
